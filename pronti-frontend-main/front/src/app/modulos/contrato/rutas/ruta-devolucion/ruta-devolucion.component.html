@@ -1,0 +1,168 @@
+<p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+<div class="mt-2"></div>
+<h2 class="text-center">Devolver Contrato</h2>
+<div class="mt-2"></div>
+
+<p-accordion [multiple]="true">
+
+  <p-accordionTab header="Valores a devolver">
+    <form [formGroup]="formDevolucion" (ngSubmit)="onSubmit(modelDevolucion)">
+      <formly-form [form]="formDevolucion" [fields]="fieldsDevolucion" [model]="modelDevolucion"></formly-form>
+      <!--      <button type="submit" class="btn btn-default">Submit</button>-->
+    </form>
+  </p-accordionTab>
+  <p-accordionTab header="Cliente">
+    <div class="row">
+      <div class="col-6">
+        <label class="form-label" for="nombre">Cliente: </label>
+        <input type="text" id="nombre" class="form-control"
+               value="{{modelCliente.nombres}} {{modelCliente.apellidos}}" disabled>
+      </div>
+      <div class="col-2">
+        <label class="form-label" for="documentoIdentidad">Doc. identidad: </label>
+        <input type="text" id="documentoIdentidad" class="form-control"
+               value="{{modelCliente.documentoIdentidad}}" disabled>
+      </div>
+      <div class="col-4">
+        <label class="form-label" for="medioContacto">Medio contacto: </label>
+        <input type="text" id="medioContacto" class="form-control"
+               value="{{modelCliente.medioContacto1}}" disabled>
+      </div>
+    </div>
+  </p-accordionTab>
+  <p-accordionTab header="Plan">
+    <div class="row">
+      <div class="col-3">
+        <label class="form-label" for="modelo">Plan: </label>
+        <input type="text" id="modelo" class="form-control" value="{{planContrato?.modelo }}" disabled>
+      </div>
+      <div class="col-3">
+        <label class="form-label" for="precioInfo">Monto: </label>
+        <input type="text" id="precioInfo" class="form-control" value="{{planContrato?.precio }}" disabled>
+      </div>
+      <div class="col-3">
+        <label class="form-label" for="inscripcionInfo">Inscripción: </label>
+        <input type="text" id="inscripcionInfo" class="form-control" value="{{planContrato?.inscripcion }}"
+               disabled>
+      </div>
+
+      <div class="col-3">
+        <label class="form-label" for="plazoMaxInfo">Plazo: </label>
+        <input class="form-control" type="text" id="plazoMaxInfo" value="{{contrato.plazoMesSeleccionado}}"
+               disabled>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <label class="form-label" for="dsctoInscripcion">Dscto. inscripción: </label>
+        <input class="form-control" type="text" id="dsctoInscripcion"
+               value="{{contrato?.dsctoInscripcion?contrato.dsctoInscripcion:0}}%"
+               disabled>
+      </div>
+      <div class="col-3">
+        <label class="form-label" for="dsctoPrimeraCuota">Dscto. primera cuota: </label>
+        <input class="form-control" type="text" id="dsctoPrimeraCuota"
+               value="{{contrato?.dsctoPrimeraCuota?contrato.dsctoPrimeraCuota:0}}%"
+               disabled>
+      </div>
+
+    </div>
+  </p-accordionTab>
+  <p-accordionTab header="Contrato">
+    <div class="row">
+      <div class="col-3">
+        <label class="form-label" for="numeroContrato">Número contrato: </label>
+        <input class="form-control" type="text" id="numeroContrato" value="{{contrato?.numeroDeContrato}}" disabled>
+      </div>
+      <div class="col-3">
+        <label class="form-label" for="fechaInicio">Fecha inicio: </label>
+        <input class="form-control" type="text" id="fechaInicio" value="{{contrato?.fechaInicio}}" disabled>
+      </div>
+      <div class="col-3">
+        <label class="form-label" for="fechaCobro">Fecha cobro: </label>
+        <input class="form-control" type="text" id="fechaCobro" value="{{contrato?.fechaIniciaCobro}}" disabled>
+      </div>
+      <div class="col-3">
+        <label class="form-label" for="grupo">Grupo: </label>
+        <input class="form-control" type="text" id="grupo"
+               value="{{contrato?.idClienteEnGrupo?.idGrupo?.nombreGrupo}}" disabled>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <label class="form-label" for="observacion">Observación: </label>
+        <input class="form-control" type="text" id="observacion"
+               value="{{contrato?.observacion?contrato.observacion:'Sin observación'}}" disabled>
+      </div>
+    </div>
+  </p-accordionTab>
+
+  <p-accordionTab header="Vendedor">
+    <div class="row">
+      <div class="col-6">
+        <label class="form-label" for="nombreVendedor">Nombre: </label>
+        <input class="form-control" type="text" id="nombreVendedor"
+               value="{{contrato?.idVendedor?.idTrabajador?.idUsuario?.nombres}} {{contrato?.idVendedor?.idTrabajador?.idUsuario?.apellidos}}"
+               disabled>
+      </div>
+      <div class="col-6">
+        <label class="form-label" for="agencia">Agencia: </label>
+        <input class="form-control" type="text" id="agencia"
+               value="{{contrato?.idVendedor?.idAgencia?.ciudad}} - {{contrato?.idVendedor?.idAgencia?.nombre}}"
+               disabled>
+      </div>
+      <div class="col-6">
+        <label class="form-label" for="supervisor">Supervisor: </label>
+        <input class="form-control" type="text" id="supervisor"
+               value="{{contrato?.idVendedor?.idAgencia?.supervisorCollection|supervisorActivo}}"
+               disabled>
+      </div>
+    </div>
+  </p-accordionTab>
+  <p-accordionTab header="Cuotas">
+    <p-table [value]="cuotas" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+             currentPageReportTemplate=" {first} - {last} de {totalRecords} registros"
+             [rowsPerPageOptions]="[5,10,20]">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>No. cuota</th>
+          <th>Fecha</th>
+          <th>Cuota total</th>
+          <th>Abono capital</th>
+          <th>Tasa adm.</th>
+          <th>Impuestos</th>
+          <th>Cobrado</th>
+          <th>Por cobrar</th>
+          <th>Pagado</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-cuota>
+        <tr>
+          <td>{{cuota.numeroCuota}}</td>
+          <td>{{cuota.fechaCobro|fecha}}</td>
+          <td>{{cuota.valorCuota|currency}}</td>
+          <td>{{cuota.abonoCapital|currency}}</td>
+          <td>{{cuota.valorTasaAdministrativa|currency}}</td>
+          <td>{{cuota.valorImpuesto|currency}}</td>
+          <td>{{cuota.valorPagadoCuota|currency}}</td>
+          <td>{{(cuota.valorCuota|saldoCuota:cuota.valorPagadoCuota)|currency}}</td>
+          <td>{{cuota.estaPagado|siNo}}</td>
+
+
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+
+
+</p-accordion>
+<button type="button" class="btn btn-primary float-end m-3" [disabled]="deshabilitarSubmit()" (click)="submitForm()">
+  Aceptar
+</button>
+<button type="button" class="btn btn-danger float-end m-3" (click)="cancelarDevolucion()">Cancelar</button>
+
+<div class="container">
+
+
+</div>

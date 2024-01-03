@@ -1,0 +1,57 @@
+import {ActivoInactivo} from '../../../../enums/activo-inactivo';
+import {ModalidadContratoEnum} from '../../../../enums/modalidad-contrato';
+import {SupervisorResponseDto} from '../../../supervisor/servicios/dto/supervisor.response-dto';
+import {GeneroEnum} from '../../../../enums/genero.enum';
+import {SiNoEnum} from '../../../../enums/si-no.enum';
+
+export interface TrabajadorCreateDto {
+  sisHabilitado: ActivoInactivo;
+  // modalidadContrato: ModalidadContratoEnum;
+  idUsuario: number;
+  estadoCivil?: string;
+  genero?: GeneroEnum;
+  grupoSanguineo?: string;
+  nivelEstudios?: string;
+  profesion?: string;
+  direccionDomiciliaria?: string;
+  estadoFamiliar?: string;
+  numeroAfiliacion?: string;
+  discapacidad: SiNoEnum;
+  tipoDiscapacidad?: string;
+  sueldo: number;
+  bonificacion?: number;
+  movilizacionEspecial?: number;
+  componenteSalarialUnifi?: number;
+  retencionesJudiciales?: number;
+  polizaPersonal?: number;
+  aporteIess?: SiNoEnum;
+  aporteIessAsumido?: SiNoEnum;
+  decimosAnio?: SiNoEnum;
+  impuestoRenta?: SiNoEnum;
+  fondoReservaIess?: SiNoEnum;
+  utilidades?: SiNoEnum;
+  pagoFondosReservaMes?: SiNoEnum;
+  impuestoRentaPatron?: SiNoEnum;
+  vacaciones?: SiNoEnum;
+  beneficios?: SiNoEnum;
+  pagoDecTercerCuartoMes?: SiNoEnum;
+  acumuladoAportePersonalIess?: number;
+  acumuladoDecimoTercero?: number;
+  acumuladoFondosReserva?: number;
+  acumuladoVacaciones?: number;
+  acumuladoImpuestoRenta?: number;
+  utilidadCargas?: number;
+  tiempoParcial?: SiNoEnum;
+  factorParcial?: number;
+  pasante?: SiNoEnum;
+  reingreso?: SiNoEnum;
+  fechaReingreso?: string;
+  fechaIngreso: string;
+  provDecimoTercero?: number;
+  decimoCuarto?: number;
+  provDecimoCuarto?: number;
+  provFondosReserva?: number;
+  provVacaciones?: number;
+  provAportePatronal?: number;
+
+}

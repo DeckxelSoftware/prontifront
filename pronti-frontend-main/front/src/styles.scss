@@ -1,0 +1,244 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'styles/main.scss';
+:root {
+  --main-color: #F42400;
+  --pale-main-color: #FF3E1C;
+  --light-color: #FFFFFF;
+  --dark-color: #222222;
+  --grey-color: #5E5E5E;
+  --light-grey-color: #7a7a7a;
+  --negro-menu: #212529;
+  --color-crema: #FF5E42
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.imagen-tabla {
+  max-height: 75px;
+}
+
+.imagen-icono {
+  max-height: 50px;
+  //max-width: 150px;
+}
+
+.cards-menu {
+  margin-top: 20px;
+  text-align: center;
+  margin-top: 15px;
+
+  .imagen-card {
+    margin-top: 15px;
+    max-width: 100px;
+  }
+  div.p-card-content {
+    padding: 0;
+  }
+  .p-card {
+    height: 283px;
+  }
+}
+
+//  MENU NAVBAR
+.menu-navbar {
+  border-bottom: solid 1px;
+  border-color: #E8E8E8;
+  padding-left: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+// perfil
+.btn-outline-dark {
+  color: var(--dark-color);
+  border-color: var(--dark-color)
+}
+
+.btn-outline-dark:hover {
+  color: var(--light-color);
+  border-color: var(--dark-color);
+  background-color: var(--dark-color);
+}
+
+.btn-outline-danger {
+  color: var(--main-color);
+  border-color: var(--main-color)
+}
+
+.btn-outline-danger:hover {
+  color: var(--light-color);
+  border-color: var(--main-color);
+  background-color: var(--main-color);
+}
+
+.btn-outline-secondary {
+  color: var(--light-grey-color);
+  border-color: var(--light-grey-color);
+}
+
+.btn-outline-secondary:hover {
+  color: var(--light-color);
+  border-color: var(--light-grey-color);
+  background-color: var(--light-grey-color);
+}
+
+// header
+.header {
+  background-color: var(--grey-color) !important;
+  color: var(--light-color)
+}
+
+mat-sidenav {
+  background: var(--negro-menu) !important;
+  color: #FFFFFF !important;
+}
+
+// table
+.p-datatable .p-datatable-header {
+  background: var(--pale-main-color);
+  //background: #FF2E09;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: var(--main-color);
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background: var(--grey-color);
+  text-align: center;
+  border-right: 1px solid;
+  color: var(--light-color);
+  /* border-left: 1px solid; */
+  border-color: var(--light-grey-color);
+}
+
+.pronti-logo {
+  //font-size: large;
+
+  background: var(--main-color);
+  color: #FFFFFF;
+
+  a {
+    font-family: Gubbi, serif;
+    color: #FFFFFF;
+  }
+
+}
+
+.btn-primary {
+  background-color: #FF5E42 !important;
+  border-color: #FF5E42 !important;
+  color: #FFFFFF !important;
+
+}
+
+
+.btn-outline-primary {
+  //background-color: #FF5E42 !important ;
+  border-color: #FF5E42 !important;
+  color: #FF5E42 !important;
+
+}
+
+.btn-outline-secondary {
+  //background-color: #FF5E42 !important ;
+  //border-color: #FF5E42 !important ;
+  color: #FFFFFF !important;
+
+}
+
+.btn-outline-primary:hover {
+  background-color: #FF5E42 !important;
+  border-color: #FF5E42 !important;
+  color: #FFFFFF !important;
+
+}
+
+.btn-outline-primary:focus {
+  box-shadow: 0 0 0 .25rem rgb(255, 94, 66) !important;
+}
+
+// MENU
+.list-group-item {
+  color: #ffffff !important;
+  text-decoration: none;
+  background-color: var(--negro-menu);
+}
+
+.list-group-item:hover {
+  color: #000000 !important;
+  text-decoration: none;
+  //background-color: var(--negro-menu);
+}
+
+.list-group-item, .list-group-item:hover {
+  //border: 5px solid rgba(0,0,0,.125);
+}
+
+.list-group-item-action:focus, .list-group-item-action:hover {
+  //color: black !important;
+  text-decoration: none;
+  background-color: var(--light-grey-color);
+}
+
+.p-button:enabled {
+  background: var(--color-crema);
+  color: #ffffff;
+  border-color: var(--color-crema);
+}
+
+
+.p-button:enabled:hover {
+  background: var(--main-color);
+  color: #ffffff;
+  border-color: var(--main-color);
+}
+
+// cliente-tabla
+
+.p-menu-crear {
+  .p-menu.p-menu-overlay {
+    top: 60px !important;
+  }
+}
+
+// ACCIONES EN CONTRATOS
+
+.botones-accion-contrato {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    margin: 5px;
+  }
+}
+
+// identificador fila registro local
+.back-registro-local {
+  background: var(--color-crema) !important;
+}
+
+// file upload
+.upload {
+  background: blueviolet;
+  border-color: blueviolet;
+  height: 38px;
+}
+
+.upload:hover {
+  background: blueviolet !important;
+  border-color: blueviolet !important;
+  height: 38px !important;
+}
+
+a {
+  text-decoration: none;
+}
+

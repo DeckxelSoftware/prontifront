@@ -1,0 +1,94 @@
+<p-table
+  [value]="tableData"
+  [dataKey]="'id'"
+  [rows]="startingRows"
+  [paginator]="true"
+  [lazy]="true"
+  (onLazyLoad)="lazyLoad($event)"
+  [totalRecords]="totalRecords"
+  [rowsPerPageOptions]="rowsPerPage"
+>
+
+  <ng-template pTemplate="caption">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      <span class="fw-bolder texto-titulo-tabla">Cesiones de derecho</span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+
+      <th>Contrato</th>
+      <th>Fecha inicio</th>
+      <th>Cliente</th>
+      <th>Plan</th>
+      <th>Valor acumulado</th>
+      <th>Acciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-registro let-expanded="expanded">
+    <tr>
+      <td>
+        <p>
+          <b>Nº Contrato: </b>
+          {{ registro.modelContratoDentroCliente.numeroDeContrato }}
+        </p>
+        <p>
+          <b>Versión: </b>
+          {{registro.modelContratoActual.version}}
+        </p>
+      </td>
+
+      <td>
+        <p>
+          {{registro.modelContratoDentroCliente.fechaInicio}}
+        </p>
+      </td>
+
+      <td>
+        <p><b>Nombres: </b>
+          {{registro.modelCliente.nombres}}
+          {{registro.modelCliente.apellidos}}
+        </p>
+
+        <p><b>Cédula: </b>
+          {{registro.modelCliente.documentoIdentidad}}
+        </p>
+      </td>
+      <td>
+        <p><b>Nombre: </b>
+          {{registro.modelContratoActual.planSeleccionado}}
+        </p>
+
+        <p><b>Monto: </b>
+          {{registro.modelContratoActual.precioPlanSeleccionado | currency}}
+        </p>
+
+        <p><b>Inscripción: </b>
+          {{registro.modelContratoActual.inscripcion | currency}}
+        </p>
+      </td>
+      <td>
+        {{(registro.modelContratoActual.totalMontoCobrado - registro.modelContratoActual.totalCobroPrimeraCuota) | currency}}
+      </td>
+
+      <td style="text-align: center">
+        <div class="espaciador"></div>
+        <button type="button"
+                [class]=" 'btn btn-sm btn-secondary'"
+                (click)="IrAConfirmar(registro)">
+          Confirmar
+        </button>
+
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-registro>
+
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <!-- El colspan tiene que ser igual al numero de columnas-->
+      <td colspan="7">No hay información.</td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -1,0 +1,26 @@
+<p>Seleccione un grupo que pertenezca el cliente</p>
+
+<label class="form-label">Grupos del cliente registrado</label>
+<p-autoComplete 
+field="detalleGrupo"
+[(ngModel)]="clienteGrupo" [dropdown]="true" [suggestions]="results" (completeMethod)="search($event)">
+    <ng-template let-clienteGrupo pTemplate="item">
+        <div>
+            <p style="display: inline-block;width:33.33%">
+                {{clienteGrupo.idGrupo.nombreGrupo}}
+            </p>
+            <p style="display: inline-block;width:33.33%">
+                {{clienteGrupo.idGrupo.totalContratosUsados}}/{{clienteGrupo.idGrupo.totalContratosPermitidos}}
+            </p>
+            <p style="display: inline-block;width:33.33%">
+                {{clienteGrupo.idGrupo.sumatoriaMontoMeta}}
+            </p>
+        </div>
+
+    </ng-template>
+</p-autoComplete>
+
+<button type="button" class="btn btn-primary float-end m-1 mt-3" [disabled]="!clienteGrupo.id" (click)="moverDeGrupo()">
+    Mover</button>
+  <button type="button" class="btn btn-secondary float-end m-1 mt-3" (click)="dialogRef.close(false)">Cancelar</button>
+

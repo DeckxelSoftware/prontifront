@@ -1,0 +1,71 @@
+<div class="text-center">
+
+
+  <div mat-dialog-content>
+    <div *ngIf="!editar">
+      <button
+        class="btn btn-primary m-3"
+        *ngIf="!mostrarTablaContratos"
+        (click)="cambiarMostrarTablaContrato()"
+      >Seleccionar contrato
+      </button>
+    </div>
+    <app-contrato-tabla (contratoSeleccionado)="recibirContratoSeleccionado($event)"
+                        [usarTablaParaSeleccionar]="true"
+                        *ngIf="mostrarTablaContratos"
+    >
+    </app-contrato-tabla>
+    <div mat-card-title *ngIf="!mostrarTablaContratos && contratoSeleccionado.numeroDeContrato">
+      Contrato seleccionado
+    </div>
+    <div *ngIf="contratoSeleccionado.estado" class="text-end mt-3">
+      <p><b>Estado contrato:</b> {{contratoSeleccionado.estado|estadoContrato}}</p>
+    </div>
+    <mat-card *ngIf="!mostrarTablaContratos && contratoSeleccionado.numeroDeContrato">
+
+      <div mat-card-content>
+
+        <form [formGroup]="formContrato">
+          <formly-form [form]="formContrato" [fields]="fieldsContrato" [model]="modelContrato"></formly-form>
+        </form>
+
+        <form [formGroup]="formPlan">
+          <formly-form [form]="formPlan" [fields]="fieldsPlan" [model]="modelPlan"></formly-form>
+        </form>
+
+        <form [formGroup]="formCliente">
+          <formly-form [form]="formCliente" [fields]="fieldsCliente" [model]="modelCliente"></formly-form>
+        </form>
+
+      </div>
+
+    </mat-card>
+    <div *ngIf="modelLicitacion.estado" class="text-end mt-3" style="">
+      <p><b>Estado licitación:</b> {{modelLicitacion.estado|estadoLicitacion}}</p>
+    </div>
+    <div class="mt-4 mb-4" *ngIf="contratoSeleccionado.numeroDeContrato">
+      <form [formGroup]="formLicitacion">
+        <formly-form [form]="formLicitacion" [fields]="fieldsLicitacion" [model]="modelLicitacion"></formly-form>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="mt-5"></div>
+  <div mat-dialog-actions style="display: flex; justify-content: end">
+
+
+    <button class="btn btn-secondary" mat-button (click)="cancelar()">Cancelar</button>
+
+
+    <button class="btn btn-primary mx-2" mat-button
+            [disabled]="!(modelLicitacion.estado && contratoSeleccionado.numeroDeContrato)"
+            (click)="crearEditar()">
+      Aceptar
+    </button>
+
+
+  </div>
+</div>
+
+

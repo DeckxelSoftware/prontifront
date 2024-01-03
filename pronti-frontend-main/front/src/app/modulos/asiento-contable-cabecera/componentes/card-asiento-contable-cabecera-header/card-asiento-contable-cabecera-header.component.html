@@ -1,0 +1,45 @@
+<div class="card-mlab">
+  <h5 class="text-center">Asiento contable cabecera</h5>
+  <hr>
+  <br>
+  <div class="row">
+    <div class="col-6" *ngIf="registro.tipoTransaccion">
+      <p><b>Tipo Transacción: </b>{{registro.tipoTransaccion | tipoTransaccion}}</p>
+    </div>
+    <div class="col-6" *ngIf="registro.tipoAsientoContable">
+      <p><b>Tipo Asiento Contable: </b>{{registro.tipoAsientoContable | tipoAsientoContable}}</p>
+    </div>
+    <div class="col-6" *ngIf="registro.asientoCerrado">
+      <p><b>Asiento cerrado: </b> {{registro.asientoCerrado === 'S'? 'Si' : 'No' }}</p>
+    </div>
+    <div class="col-6" *ngIf="registro.mesPeriodo">
+      <p><b>Mes periodo: </b> {{registro.mesPeriodo | mes}}</p>
+    </div>
+
+
+  </div>
+
+  <p><b>Descripcion: </b> {{registro.descripcion}}</p>
+  <div class="row">
+    <div class="col-6" *ngIf="registro.beneficiario">
+      <p><b>Beneficiario: </b> {{registro.beneficiario}}</p>
+    </div>
+
+    <div class="col-6" *ngIf="registro.anio">
+      <p><b>Año: </b> {{registro.anio}}</p>
+    </div>
+
+    <div class="col-6" *ngIf="registro.fecha">
+      <p><b>Fecha: </b>{{registro.fecha}}</p>
+    </div>
+
+    <div class="col-6" *ngIf="registro.idCheque">
+      <p><b>Cheque: </b>{{registro.idCheque?.numeroCheque}}</p>
+    </div>
+    <div class="col-6" *ngIf="registro.serie">
+      <p><b>Serie: </b>{{registro.serie}}</p>
+    </div>
+
+  </div>
+
+</div>

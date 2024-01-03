@@ -1,0 +1,24 @@
+<p-table [value]="cuotas" [paginator]="true" [rows]="5" [showCurrentPageReport]="true" responsiveLayout="scroll"
+         currentPageReportTemplate=" {first} - {last} de {totalRecords} registros"
+         [rowsPerPageOptions]="[5,10,20]">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>No. cuota</th>
+      <th>Fecha</th>
+      <th>Cuota total</th>
+      <th>Valor capital</th>
+      <th>Valor interés</th>
+      <th>Saldo</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-cuota>
+    <tr>
+      <td>{{cuota.numeroPago}}</td>
+      <td>{{cuota.fechaPago|fecha}}</td>
+      <td>{{cuota.valorCuota|currency}}</td>
+      <td>{{cuota.valorCapital|currency}}</td>
+      <td>{{cuota.valorTasaInteres|currency}}</td>
+      <td>{{cuota.saldo|currency}}</td>
+    </tr>
+  </ng-template>
+</p-table>

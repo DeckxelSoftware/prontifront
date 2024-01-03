@@ -1,0 +1,201 @@
+<div mat-dialog-title> Factura de compra electrónica</div>
+<div mat-dialog-content>
+  <form [formGroup]="formFactura">
+    <div class="row">
+
+      <div class="col-sm-12 col-md-6">
+        <label>Tipo de documento</label>
+        <p-autoComplete [showEmptyMessage]="true" [emptyMessage]="'No se encontraron registros'" field="nombre"
+                        [formControlName]="'tipoDocumento'"
+                        [suggestions]="opciones"
+                        (completeMethod)="buscarListaValoresDetalle(listaValoresEnum.tipoDocumento,$event.query)"
+                        [dropdown]="true"></p-autoComplete>
+      </div>
+      <div class="col-sm-12 col-md-6 ">
+        <label>Términos de pago</label>
+        <p-autoComplete ariaLabel="Terminos de pago" [showEmptyMessage]="true"
+                        [emptyMessage]="'No se encontraron registros'" field="nombre"
+                        [formControlName]="'terminosPago'" [suggestions]="opciones"
+                        (completeMethod)="buscarListaValoresDetalle(listaValoresEnum.terminosPago,$event.query)"
+                        [dropdown]="true"></p-autoComplete>
+      </div>
+      <div class="col-sm-12 col-md-6 ">
+        <label>Agencia</label>
+        <p-autoComplete ariaLabel="Agencia" [showEmptyMessage]="true"
+                        [emptyMessage]="'No se encontraron registros'" field="nombre"
+                        [formControlName]="'idAgencia'" [suggestions]="opcionesAgencia"
+                        (completeMethod)="buscarAgencia($event.query)"
+                        [dropdown]="true"></p-autoComplete>
+      </div>
+      <div class="col-sm-12 col-md-6 ">
+        <label>Recurso</label>
+        <p-autoComplete ariaLabel="Recurso" [showEmptyMessage]="true"
+                        [emptyMessage]="'No se encontraron registros'" field="nombre"
+                        [formControlName]="'idRecurso'" [suggestions]="opcionesRecurso"
+                        (completeMethod)="buscarRecurso($event.query)"
+                        [dropdown]="true"></p-autoComplete>
+      </div>
+      <div class="mt-2"></div>
+      <div class="col-sm-12 col-md-8">
+        <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+          <mat-label>Proveedor</mat-label>
+          <input matInput [formControlName]="'nombreProveedor'">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+          <mat-label>RUC</mat-label>
+          <input matInput [formControlName]="'rucProveedor'">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+          <mat-label>Num. documento</mat-label>
+          <input matInput [formControlName]="'numeroDocumento'">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-8">
+        <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+          <mat-label>Autorización</mat-label>
+          <input matInput [formControlName]="'autorizacion'">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+          <mat-label>Serie</mat-label>
+          <input matInput [formControlName]="'serie'">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+          <mat-label>Fecha recepción</mat-label>
+          <input [formControlName]="'fechaRecepcion'" matInput [matDatepicker]="pickerFechaRecepcion">
+          <mat-datepicker-toggle matSuffix [for]="pickerFechaRecepcion"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFechaRecepcion></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+
+      <div class="col-sm-12 col-md-4">
+        <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+          <mat-label>Fecha emisión</mat-label>
+          <input matInput [formControlName]="'fechaEmision'">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+          <mat-label>Fecha vencimiento</mat-label>
+          <input [formControlName]="'fechaVencimiento'" matInput [matDatepicker]="pickerFechaVencimiento">
+          <mat-datepicker-toggle matSuffix [for]="pickerFechaVencimiento"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFechaVencimiento></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+          <mat-label>Versión</mat-label>
+          <input matInput [formControlName]="'version'">
+        </mat-form-field>
+      </div>
+    </div>
+
+  </form>
+  <hr>
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Detalle">
+      <div *ngIf="datosTablaDetalle.length>0 ;else mensajeSinDatos">
+        <p-table class="mt-2" [value]="datosTablaDetalle" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Recurso</th>
+              <th>Descripción</th>
+              <th>Cantidad Factura</th>
+              <th>Precio Factura</th>
+              <th>Descuento</th>
+              <th>Tasa imponible</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-info>
+            <tr>
+              <td>{{info.recurso}}</td>
+              <td>{{info.descripcion}}</td>
+              <td>{{info.cantidadFactura}}</td>
+              <td>{{info.precioFactura|currency}}</td>
+              <td>{{info.descuento|currency}}</td>
+              <td>{{info.importe|currency}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <div class="row mt-3" style="width: 100%">
+          <div class="col-sm-12 col-md-2">
+            <strong>Sub Total</strong>
+            <br>
+            {{data.factura.factura.infoFactura.totalSinImpuestos._text|currency}}
+          </div>
+          <div class="col-sm-12 col-md-2">
+            <strong>Impuestos</strong>
+            <br>
+            {{impuestos|currency}}
+          </div>
+          <div class="col-sm-12 col-md-2">
+            <strong>Total factura</strong>
+            <br>
+            {{totalConImpuestos|currency}}
+          </div>
+          <div class="col-sm-12 col-md-2">
+            <strong>Retenciones</strong>
+            <br>
+            {{data.factura.factura.infoFactura|totalRetencionesFacturaExterna|currency}}
+          </div>
+          <div class="col-sm-12 col-md-2">
+            <strong>A pagar</strong>
+            <br>
+            {{data.factura.factura.infoFactura.importeTotal._text|currency}}
+          </div>
+
+        </div>
+      </div>
+      <ng-template class="mt-3" #mensajeSinDatos>
+        Seleccione un recurso para ver esta información
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Impuesto">
+      <div *ngIf="datosTablaImpuestos.length>0 ;else mensajeImpuestosSinDatos">
+        <p-table id="tableImpuestos" class="mt-2" [value]="datosTablaImpuestos" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Línea impuesto</th>
+              <th>Porcentaje</th>
+              <th>Base imponible</th>
+              <th>Valor del impuesto</th>
+              <th>Cuenta</th>
+
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-info>
+            <tr>
+              <td>{{info.lineaImpuesto}}</td>
+              <td>{{info.porcentaje}}</td>
+              <td>{{info.tasaImponible|currency}}</td>
+              <td>{{info.valorImpuesto|currency}}</td>
+              <td>{{info.cuentaContable}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+
+      </div>
+      <ng-template class="mt-3" #mensajeImpuestosSinDatos>
+        Seleccione un recurso para ver esta información
+      </ng-template>
+    </mat-tab>
+
+
+  </mat-tab-group>
+</div>
+
+<div mat-dialog-actions style="justify-content: end;">
+  <div class="justify-content-end">
+    <button class="btn btn-warning mx-1">Cancelar</button>
+    <button class="btn btn-primary"[disabled]="!formFactura.valid" (click)="crear()">Aceptar</button>
+  </div>
+
+</div>

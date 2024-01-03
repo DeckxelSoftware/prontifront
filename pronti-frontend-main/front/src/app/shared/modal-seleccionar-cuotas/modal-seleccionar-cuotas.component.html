@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Seleccinar Plan</h2>
+<div mat-dialog-content>
+  <form class="mb-3" [formGroup]="formGroupPlan">
+    <formly-form [form]="formGroupPlan" [fields]="fieldsPlan" [model]="modelPlanSeleccionado"></formly-form>
+
+    <!--      <button type="submit" class="btn btn-default">Submit</button>-->
+  </form>
+
+
+  <p-table [columns]="cols" [value]="datosPlan" responsiveLayout="scroll">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{col.header}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+
+        <td
+          *ngFor="let col of columns">
+          <div *ngIf="col.field!=='inscripcion' && col.field!=='precio' "
+          >
+            <button class="btn btn-sm btn-primary"
+              (click)="seleccionCuota(rowData[col.field], rowData['inscripcion'],rowData['precio'], col.field)"> {{rowData[col.field]|currency}}</button>
+          </div>
+          <div *ngIf="col.field==='inscripcion' || col.field==='precio' ">
+            {{rowData[col.field]|currency}}
+          </div>
+        </td>
+
+      </tr>
+    </ng-template>
+  </p-table>
+  <div class="mt-3" style="display: flex; justify-content: end">
+    <button class="btn btn-primary" [disabled]="deshabilitarSeleccionarPlan()" (click)="cerrarModal()">
+      Seleccionar plan
+    </button>
+  </div>
+</div>
+

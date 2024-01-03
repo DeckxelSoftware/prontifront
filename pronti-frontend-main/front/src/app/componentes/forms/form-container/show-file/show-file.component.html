@@ -1,0 +1,20 @@
+
+<div *ngIf="documentType" class="text-center">
+  <div *ngIf="documentType === imagen">
+    <img [title]="fileName" class="img-fluid imagen-tabla" [src]="showImage()" alt="">
+  </div>
+
+  <div *ngIf="documentType === archivo">
+    <img [title]="fileName" class="img-fluid imagen-tabla" src="assets/comun/pdf.svg" alt="">
+  </div>
+
+
+  <div class="espaciador"></div>
+  <button [title]="fileName" *ngIf="documentType === archivo || (documentType === imagen )"
+          class="btn btn-sm btn-primary icon-button"
+          (click)="downloadFile()"
+  ><i class="pi pi-download icon-file"></i></button>
+  <p class="file-text-size" [title]="fileName"><strong>Nombre: </strong>
+    <span *ngIf="isMoreThanSliceEnd">...</span>{{fileName.slice(this.sliceStart,this.sliceEnd)}}
+  </p>
+</div>

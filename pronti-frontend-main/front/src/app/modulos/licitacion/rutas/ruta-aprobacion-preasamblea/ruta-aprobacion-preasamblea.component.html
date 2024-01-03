@@ -1,0 +1,77 @@
+<div class="espaciador"></div>
+<p-breadcrumb [model]="items"></p-breadcrumb>
+<div class="espaciador"></div>
+<div class="row">
+
+    <div class="card-mlab col-sm-12 col-md-6 col-lg-6">
+
+        <h4 class="text-center">Plan</h4>
+        <p><b>Plan Seleccionado: </b>
+            {{licitacion.planSeleccionado}}
+        </p>
+        <p><b>Precion del Plan: </b>
+
+            {{licitacion.precioPlan}}
+        </p>
+        <p><b>Plazo seleccionado: </b>
+
+            {{licitacion.idContrato?.plazoMesSeleccionado}}
+        </p>
+
+    </div>
+
+    <div class="card-mlab col-sm-12 col-md-6 col-lg-6">
+
+        <h4 class="text-center">Contrato</h4>
+
+        <p>
+            <b>Número de Contrato:</b>
+            {{licitacion.idContrato?.numeroDeContrato}}
+        </p>
+        <p><b>Fecha de Inicio: </b>
+            {{licitacion.idContrato?.fechaInicio}}
+        </p>
+
+        <p><b>Estado: </b>
+            {{licitacion.idContrato?.estado}}
+        </p>
+
+        <!-- {{licitacion.idContrato?.historicoPlanContratoCollection[histororicoPlanContratoCollection.length - 1].totalCuotasCobradas}} -->
+
+        <p><b>Grupo: </b>
+            {{licitacion.idContrato?.nombreGrupo}}
+        </p>
+
+    </div>
+    <div class="espaciador"></div>
+
+    <div class="card-mlab">
+
+        <h4 class="text-center">Cliente</h4>
+        <p><b>Nombres: </b>
+            {{licitacion.idContrato?.nombresCliente}}
+        </p>
+        <p><b>CI: </b>
+            {{licitacion.idContrato?.documentoIdentidad}}
+        </p>
+        <!-- Medio de contacto -->
+    </div>
+
+    <div class="espaciador"></div>
+
+    <div class="card-mlab">
+        <form [formGroup]="formPreasamblea">
+            <formly-form [form]="formPreasamblea" [fields]="fieldsPreasamblea" [model]="modelPreasamblea"></formly-form>
+        </form>
+
+
+         
+        <button class="btn btn-primary float-end m-3" *ngIf="!seGuardoPreasamblea"  [disabled]="formPreasamblea.invalid"
+            (click)="confirmarAprobacion()">Confirmar</button>
+
+        <button class="btn btn-secondary float-end m-3" routerLink="/licitacion-modulo/gestion-preasamblea">{{textoBotonCancelarVoler}}</button>
+
+
+    </div>
+
+</div>

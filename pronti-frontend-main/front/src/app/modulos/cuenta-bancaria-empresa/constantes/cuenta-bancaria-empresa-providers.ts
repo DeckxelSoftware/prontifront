@@ -1,0 +1,1 @@
+export const CUENTA_BANCARIA_EMPRESA_PROVIDERS = [];

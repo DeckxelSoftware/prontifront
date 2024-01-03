@@ -1,0 +1,9 @@
+<div mat-dialog-content>
+  <app-form-container
+    [matStepperArray]="data.arregloFormulario"
+    [matStepperConfig]="data.matStepperConfig"
+    (fieldChanged)="searchFieldChanged($event)"
+    (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+    (confirmFormEmitter)="confirmFormEmitter($event)"
+  ></app-form-container>
+</div>

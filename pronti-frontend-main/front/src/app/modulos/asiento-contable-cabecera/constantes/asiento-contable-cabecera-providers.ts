@@ -1,0 +1,1 @@
+export const ASIENTO_CONTABLE_CABECERA_PROVIDERS = [];

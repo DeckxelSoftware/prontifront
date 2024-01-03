@@ -1,0 +1,132 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+        (click)="searchData()"
+        [disabled]="searchButtonDisabled"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <br/>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [rows]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Prestamo</span>
+          <button class="btn btn-sm btn-success float-end" (click)="createOrEdit()"> Crear</button>
+          <button class="btn btn-sm btn-secondary float-end mx-2" (click)="navegar('aprobacion-prestamo')"> Generar
+            prestamos
+          </button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th>Información</th>
+          <th>Valores</th>
+          <th>Estados</th>
+          <th> Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr
+          [class]="registro.sisHabilitado === 'A' ? '' : 'back-deshabilitado'">
+          <td>
+            <button
+              type="button"
+              pButton
+              pRipple
+              [pRowToggler]="registro"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            ></button>
+          </td>
+          <td>
+            <!--            {{registro|json}}-->
+            <p>
+              <b>Trabajador: </b>{{registro.idTrabajador?.idUsuario?.nombres}} {{registro.idTrabajador?.idUsuario?.apellidos}}
+            </p>
+            <p><b>Tipo: </b>{{registro.tipoPrestamo}}</p>
+            <p><b>Fecha: </b>{{registro.fechaPrestamo|fecha}}</p>
+            <p><b>Comprobante egreso: </b>{{registro.comprobanteEgreso}}</p>
+            <p><b>Concepto: </b>{{registro.concepto}}</p>
+          </td>
+          <td>
+            <p><b>Valor: </b>{{registro.valor}}</p>
+            <p><b>Cuotas: </b>{{registro.cuotas}}</p>
+            <p><b>Tasa interes: </b>{{registro.tasaInteres}}</p>
+          </td>
+          <td>
+            <p><b>Habilitado: </b>{{ registro.sisHabilitado === 'A' ? 'Si' : 'No' }}</p>
+            <p><b>Estado: </b>{{registro.estado|estadoPrestamo}}</p>
+          </td>
+          <td style="text-align: center">
+            <div>
+
+              <button type="button" class="btn btn-sm btn-warning" (click)="createOrEdit(registro)">
+                Editar
+              </button>
+              <div class="espaciador"></div>
+              <button type="button"
+                      [class]="registro.sisHabilitado === 'A'  ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"
+                      (click)="confirmChangeEnable(registro.sisHabilitado === 'A' , registro)">
+                {{ registro.sisHabilitado === 'A' ? 'Habilitar' : 'Deshabilitar' }}
+              </button>
+              <!--              <div class="espaciador"></div>-->
+              <!--              <button type="button"-->
+              <!--                      class="btn btn-sm btn-secondary"-->
+              <!--                      (click)="navegar(registro.id ,'abono-modulo')">-->
+              <!--                Estado de cuenta-->
+              <!--              </button>-->
+
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="5">
+            <app-solicitud-prestamo-perfil [registro]="registro"></app-solicitud-prestamo-perfil>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="5">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+

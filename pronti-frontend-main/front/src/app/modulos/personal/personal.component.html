@@ -1,0 +1,191 @@
+
+<div class="espaciador"></div>
+<!-- <p-breadcrumb [model]="items"></p-breadcrumb> -->
+<div class="row">
+  <div class="col-3 cards-menu">
+    <a routerLink="'agencias-modulo'">
+      <p-card header="Agencias" subheader="Gestión de agencias"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/agencia/image.png" alt="card-agencias" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-3 cards-menu">
+    <a routerLink="trabajadores-modulo">
+      <p-card header="Trabajadores" subheader="Gestión de trabajadores"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/trabajador/image.png" alt="card-trabajadores" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-3 cards-menu">
+    <a routerLink="supervisores-modulo">
+      <p-card header="Supervisores" subheader="Gestión de supervisores"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/supervisor/image.png" alt="card-supervisores" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+
+  <div class="col-3 cards-menu">
+    <a routerLink="vendedores-modulo">
+      <p-card header="Vendedores" subheader="Gestión de vendedores"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/vendedor/image.png" alt="card-vendedores" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-3 cards-menu">
+    <a routerLink="area-modulo">
+      <p-card header="Areas" subheader="Gestión de areas"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/area/image.png" alt="card-areas" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-3 cards-menu">
+    <a routerLink="rubros-rol-modulo">
+      <p-card header="Rubros rol" subheader="Gestión de rubros rol"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/rubros-rol/image.png" alt="card-areas" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-3 cards-menu">
+    <a routerLink="periodo-laboral-modulo">
+      <p-card header="Periodo Laboral"
+              subheader="Gestión de periodo laboral"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/periodo-laboral/imagen.png"
+               alt="card-areas"
+               class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-3 cards-menu">
+    <a routerLink="division-administrativa-modulo">
+      <p-card header="Division administrativa" subheader="Gestión de división administrativa"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/division-administrativa/image.png" alt="card-division-administrativa" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-3 cards-menu">
+    <a routerLink="trabajadores-modulo/ingresos-descuentos">
+      <p-card header="Ingresos y descuentos fijos" subheader="Gestión de ingresos y descuentos fijos"
+              (click)="navegar([''])"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="../../../assets/ingresos-descuentos-fijos/image-descuentos.png"
+               alt="card-ingresos-descuentos-fijos" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-3 cards-menu">
+    <a routerLink="rol-pago-modulo">
+      <p-card header="Rol de pagos" subheader="Gestión rol"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="../../../assets/rol-pago/image.png"
+               alt="card-rol-pagos" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-3 cards-menu">
+    <a routerLink="cuenta-contable-modulo/cuenta-agencia">
+      <p-card header="Cuenta contable agencia" subheader="Gestión de cuentas por agencia"
+              (click)="navegar([])"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="../../../assets/agencia/image.png"
+               alt="card-cuenta-agencia" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-3 cards-menu">
+    <a routerLink="rol-pago-modulo/rol-pago-individual">
+      <p-card header="Rol individual" subheader="Gestión de rol individual"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="../../../assets/rol-pago/rol-individual.png"
+               alt="card-cuenta-agencia" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+
+  <div class="col-3 cards-menu">
+    <a routerLink="rol-pago-modulo/calcular-rol">
+      <p-card header="Calcular rol" subheader="Calcular rol"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="../../../assets/rol-pago/calculo-rol.png"
+               alt="card-cuenta-agencia" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+
+  <div class="col-3 cards-menu">
+    <a routerLink="rol-pago-modulo/rol-historico">
+      <p-card header="Rol histórico" subheader="Gestión de rol histórico"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="../../../assets/rol-pago/historico-rol.png"
+               alt="card-cuenta-agencia" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+
+  <div class="col-3 cards-menu">
+    <a routerLink="finiquito-modulo">
+      <p-card header="Finiquito" subheader="Gestión de finiquito"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="../../../assets/finiquito/image.png"
+               alt="card-finiquito" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+
+  <div class="col-3 cards-menu">
+    <a routerLink="reportes-personal">
+      <p-card header="Reportes" subheader="Reportes"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="../../../assets/reportes/report-cargo-vacacion.png"
+               alt="card-reportes" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+
+

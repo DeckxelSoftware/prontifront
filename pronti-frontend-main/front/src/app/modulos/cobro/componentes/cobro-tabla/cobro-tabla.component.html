@@ -1,0 +1,102 @@
+<!--<div class="card-mlab">-->
+
+<!--  <div class="row">-->
+<!--    <div class="col-sm-10">-->
+<!--      <app-form-container-->
+<!--        [fieldsArray]="searchBarFormFields"-->
+<!--        (fieldChanged)="searchFieldChanged($event)"-->
+<!--        (autoCompleteChangedEmitter)="searchAutoComplete($event)"-->
+<!--      ></app-form-container>-->
+<!--    </div>-->
+<!--    <div class="col-sm-2">-->
+<!--      <button-->
+<!--        type="button"-->
+<!--        class="btn btn-primary btn-sm float-end boton-busqueda"-->
+<!--        (click)="searchData()"-->
+<!--        [disabled]="searchButtonDisabled"-->
+<!--      >-->
+<!--        Buscar-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="row">
+  <br/>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [rows]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Cobro</span>
+<!--          <button class="btn btn-sm btn-success float-end" (click)="createOrEdit()"> Crear</button>-->
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th>Valor</th>
+          <th>Cuotas cobradas</th>
+          <th> Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr
+          [class]="registro.sisHabilitado ? '' : 'back-deshabilitado'">
+          <td>
+            <button
+              type="button"
+              pButton
+              pRipple
+              [pRowToggler]="registro"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            ></button>
+          </td>
+          <td>{{ registro.valorACobrar|currency }}</td>
+          <td>{{registro|cuotasCobradas}}</td>
+          <td style="text-align: center">
+            <div>
+
+              <button type="button" class="btn btn-sm btn-warning">
+                Anular
+              </button>
+
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">
+            <app-pago-tabla [pagos]="registro.pagoCollection"></app-pago-tabla>
+
+          </td>
+        </tr>
+
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+

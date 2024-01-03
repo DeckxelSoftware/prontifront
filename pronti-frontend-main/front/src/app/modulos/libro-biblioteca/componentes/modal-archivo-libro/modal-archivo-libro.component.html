@@ -1,0 +1,34 @@
+<div *ngIf="showHtml">
+  <h1 mat-dialog-title class="text-center">{{ modalTitle }}</h1>
+  <p>{{ modalDescription }}</p>
+  <mat-dialog-content class="mat-typography">
+
+    <div>
+      <app-form-container
+        [matStepperArray]="arrayAccordeon"
+        [fieldsArray]="arrayForms"
+        (fieldChanged)="fieldChanged($event)"
+        (autoCompleteChangedEmitter)="autocompleteChanged($event)"
+      ></app-form-container>
+      <br>
+      <br>
+      <p class="blanco">x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+        x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+        x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+        x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x.</p>
+    </div>
+  </mat-dialog-content>
+  <div mat-dialog-actions align="end">
+    <div class="row">
+      <div class="col-md-12">
+        <button
+          [disabled]="submitButtonDisabled"
+          class="btn-sm btn btn-primary"
+          (click)="cambiarImagen()"
+        >
+          {{this.buttonLabel}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

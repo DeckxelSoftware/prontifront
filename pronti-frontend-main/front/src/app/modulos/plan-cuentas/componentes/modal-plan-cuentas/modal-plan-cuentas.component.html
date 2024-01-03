@@ -1,0 +1,100 @@
+<div class="row">
+
+  <div class="col-6">
+    <label class="form-label">Nivel 1</label>
+
+    <p-autoComplete
+      [suggestions]="cuentasContables"
+      (completeMethod)="buscarCuentaContable($event, 1)"
+      field="nombre"
+      inputId="id"
+      [dropdown]="true"
+      [(ngModel)]="cuentaContableL1"
+      (ngModelChange)="validarNivelIdentificador(1)"
+    >
+      <ng-template let-cuentaContable pTemplate="item">
+        <div class="country-item">
+          <div>{{cuentaContable.nombre}}</div>
+        </div>
+      </ng-template>
+    </p-autoComplete>
+  </div>
+
+  <div class="col-6">
+
+    <label class="form-label">Nivel 2</label>
+    <p-autoComplete
+      [suggestions]="cuentasContables"
+      (completeMethod)="buscarCuentaContable($event, 2)"
+      field="nombre"
+      inputId="id"
+      [dropdown]="true"
+      [(ngModel)]="cuentaContableL2"
+      (ngModelChange)="validarNivelIdentificador(2)"
+      [disabled]="nivelEscrito<2"
+    >
+      <ng-template let-cuentaContable pTemplate="item">
+        <div class="country-item">
+          <div>{{cuentaContable.nombre}}</div>
+        </div>
+      </ng-template>
+    </p-autoComplete>
+
+
+  </div>
+  <div class="col-6">
+
+    <label class="form-label">Nivel 3</label>
+    <p-autoComplete
+      [suggestions]="cuentasContables"
+      (completeMethod)="buscarCuentaContable($event, 3)"
+      field="nombre"
+      inputId="id"
+      [dropdown]="true"
+      [(ngModel)]="cuentaContableL3"
+      (ngModelChange)="validarNivelIdentificador(3)"
+      [disabled]="nivelEscrito<3"
+    >
+      <ng-template let-cuentaContable pTemplate="item">
+        <div class="country-item">
+          <div>{{cuentaContable.nombre}}</div>
+        </div>
+      </ng-template>
+    </p-autoComplete>
+
+  </div>
+
+  <div class="col-6">
+    <label class="form-label">Nivel 4</label>
+
+    <p-autoComplete
+      [suggestions]="cuentasContables"
+      (completeMethod)="buscarCuentaContable($event, 4)"
+      field="nombre"
+      inputId="id"
+      [dropdown]="true"
+      [(ngModel)]="cuentaContableL4"
+      (ngModelChange)="validarNivelIdentificador(4)"
+      [disabled]="nivelEscrito<4"
+    >
+      <ng-template let-cuentaContable pTemplate="item">
+        <div class="country-item">
+          <div>{{cuentaContable.nombre}}</div>
+        </div>
+      </ng-template>
+    </p-autoComplete>
+  </div>
+</div>
+
+<!--<form action="" [formGroup]="formularioNiveles">-->
+<!--  <input type="text" pInputText placeholder="Ingrese el identificador 2" formControlName="identificador" [maxLength]="identificadorLength">-->
+<!--  <pre>{{formularioNiveles.valid}}</pre>-->
+<!--</form>-->
+
+<form [formGroup]="form">
+  <formly-form  [form]="form" [fields]="fields" [model]="model"></formly-form>
+
+  <button type="button" class="btn btn-primary float-end m-1 mt-3" [disabled]="validarEnvioCuentaContable()" (click)="enviarCrearCuentaContable()">
+    {{data.id? 'Editar': 'Crear'}}</button>
+  <button type="button" class="btn btn-secondary float-end m-1 mt-3" (click)="dialogRef.close()">Cancelar</button>
+</form>

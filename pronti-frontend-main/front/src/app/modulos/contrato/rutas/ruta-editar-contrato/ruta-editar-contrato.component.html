@@ -1,0 +1,182 @@
+<p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+<div *ngIf="esRutaEditarContrato" style="display: flex; justify-content: space-around" class="m-4">
+  <button class="btn btn-secondary" [disabled]="contrato.estado==='REG'"
+          (click)="seleccionarTipoCambio(enumTipoCambioContrato.plan)"> Cambiar plan
+  </button>
+  <button class="btn btn-secondary" [disabled]="contrato.estado==='REG'"
+          (click)="seleccionarTipoCambio(enumTipoCambioContrato.monto)"> Cambiar monto
+  </button>
+  <button class="btn btn-secondary" [disabled]="contrato.estado==='REG'"
+          (click)="seleccionarTipoCambio(enumTipoCambioContrato.plazo)"> Cambiar plazo
+  </button>
+</div>
+<p-accordion [multiple]="true">
+  <p-accordionTab [header]=retornarTituloAcordeonCambio(tipoDeCambioContrato) *ngIf="tipoDeCambioContrato ">
+    <div class="text-center" *ngIf="tipoDeCambioContrato!=='plazo'">
+      <button class="btn btn-primary mb-3" (click)="mostrarTablaCambioPlan = true">Seleccionar plan</button>
+    </div>
+    <div class="text-center" *ngIf="tipoDeCambioContrato==='plazo'">
+      <button class="btn btn-primary mb-3" (click)="abrirModalSeleccionarPlan(planContrato)">Seleccionar plazo</button>
+    </div>
+    <div>
+      <app-plan-tabla *ngIf="mostrarTablaCambioPlan" [vieneDesdeContrato]="true"
+                      (seleccionoPlan)="abrirModalSeleccionarPlan($event)"></app-plan-tabla>
+    </div>
+
+    <div class="card" *ngIf="!mostrarTablaCambioPlan && precioSeleccionado">
+      <div class="row">
+        <div class="col-3">
+          <label class="form-label" for="precioCambioPlan">Plan: </label>
+          <input type="text" id="plan" class="form-control" value="{{precioSeleccionado?.plan }}"
+                 disabled>
+        </div>
+        <div class="col-3">
+          <label class="form-label" for="precioCambioPlan">Monto: </label>
+          <input type="text" id="precioCambioPlan" class="form-control"
+                 value="{{precioSeleccionado?.precioSeleccionado }}"
+                 disabled>
+        </div>
+        <div class="col-3">
+          <label class="form-label" for="inscripcionCambioPlan">Inscripción: </label>
+          <input type="text" id="inscripcionCambioPlan" class="form-control"
+                 value="{{precioSeleccionado?.inscripcion }}"
+                 disabled>
+        </div>
+
+        <div class="col-3">
+          <label class="form-label" for="plazoMaxCambioPlan">Plazo: </label>
+          <input class="form-control" type="text" id="plazoMaxCambioPlan"
+                 value="{{precioSeleccionado?.plazoSeleccionado}}"
+                 disabled>
+        </div>
+        <div class="col-3">
+          <label class="form-label" for="cuota">Cuota: </label>
+          <input class="form-control" type="text" id="cuota"
+                 value="{{precioSeleccionado?.cuotaSeleccionada}}"
+                 disabled>
+        </div>
+
+      </div>
+
+    </div>
+
+<!--    <div *ngIf="this.esCambioDeMonto">-->
+
+<!--      <p>-->
+<!--        Inscripción: {{inscripcionCambioMonto | currency}}-->
+<!--      </p>-->
+<!--      <p>-->
+<!--        Valor cuota: {{valorCuotaCambioMonto | currency}}-->
+<!--      </p>-->
+<!--      <p>-->
+<!--        Inscripción + cuota : {{inscripcionCambioMonto + valorCuotaCambioMonto | currency}}-->
+<!--      </p>-->
+
+<!--    </div>-->
+
+  </p-accordionTab>
+
+  <p-accordionTab header="Plan">
+    <div class="card" *ngIf="planContrato">
+      <div class="row">
+        <div class="col-3">
+          <label class="form-label" for="precio">Plan: </label>
+          <input type="text" id="modelo" class="form-control" value="{{planContrato?.modelo }}" disabled>
+        </div>
+        <div class="col-3">
+          <label class="form-label" for="precio">Monto: </label>
+          <input type="text" id="precio" class="form-control" value="{{planContrato?.precio }}" disabled>
+        </div>
+        <div class="col-3">
+          <label class="form-label" for="inscripcion">Inscripción: </label>
+          <input type="text" id="inscripcion" class="form-control" value="{{planContrato?.inscripcion }}" disabled>
+        </div>
+
+        <!--        <div class="col-3">-->
+        <!--          <label class="form-label" for="plazoMax">Plazo: </label>-->
+        <!--          <input class="form-control" type="text" id="plazoMax" value="{{planContrato?.plazoMesMaximo}}" disabled>-->
+        <!--        </div>-->
+
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <label class="form-label" for="dsctoPrimeraCuota">Dscto. primera cuota: </label>
+          <input class="form-control" type="text" id="dsctoPrimeraCuota"
+                 value="{{contrato?.dsctoPrimeraCuota? contrato.dsctoPrimeraCuota : 0}}%"
+                 disabled>
+        </div>
+
+        <div class="col-3">
+          <label class="form-label" for="dsctoInscripcion">Dscto. inscripción: </label>
+          <input class="form-control" type="text" id="dsctoInscripcion"
+                 value="{{contrato?.dsctoInscripcion? contrato.dsctoInscripcion : 0}}%"
+                 disabled>
+        </div>
+
+        <div class="col-3">
+          <label class="form-label" for="numeroContrato">Número contrato: </label>
+          <input class="form-control" type="text" id="numeroContrato" value="{{contrato?.numeroDeContrato}}" disabled>
+        </div>
+      </div>
+    </div>
+
+  </p-accordionTab>
+  <p-accordionTab header="Contrato" *ngIf="!esCambioDePlazo">
+    <form [formGroup]="formContrato" (ngSubmit)="onSubmit(modelContrato)">
+      <formly-form [form]="formContrato" [fields]="fieldsContrato" [model]="modelContrato"></formly-form>
+      <!--      <button type="submit" class="btn btn-default">Submit</button>-->
+    </form>
+
+
+  </p-accordionTab>
+  <p-accordionTab header="Contrato" *ngIf="esCambioDePlazo">
+    <form [formGroup]="formContratoCambioDePlazo">
+      <formly-form [form]="formContratoCambioDePlazo" [fields]="fieldsContratoCambioDePlazo"
+                   [model]="modelContratoCambioDePlazo"></formly-form>
+      <!--      <button type="submit" class="btn btn-default">Submit</button>-->
+    </form>
+
+
+  </p-accordionTab>
+
+
+  <p-accordionTab header="Cliente">
+    <form [formGroup]="formCliente" (ngSubmit)="onSubmit(modelCliente)">
+      <formly-form [form]="formCliente" [fields]="fieldsCliente" [model]="modelCliente"></formly-form>
+      <!--      <button type="submit" class="btn btn-default">Submit</button>-->
+    </form>
+  </p-accordionTab>
+
+  <p-accordionTab header="Vendedor">
+    <!--    <div class="text-center">-->
+    <!--      <button class="btn btn-primary" (click)="mostrarTablaVendedor = true" *ngIf="!mostrarTablaVendedor">Seleccionar-->
+    <!--        vendedor-->
+    <!--      </button>-->
+    <!--    </div>-->
+
+    <!--    <app-vendedor-tabla *ngIf="mostrarTablaVendedor" [vieneDesdeContrato]="true"-->
+    <!--                        (seleccionoVendedor)="mostrarVendedorSeleccionado($event)"></app-vendedor-tabla>-->
+
+    <form [formGroup]="formVendedor" (ngSubmit)="onSubmit(modelVendedor)">
+      <formly-form [form]="formVendedor" [fields]="fieldsVendedor" [model]="modelVendedor"></formly-form>
+
+      <!--      <button type="submit" class="btn btn-default">Submit</button>-->
+    </form>
+  </p-accordionTab>
+
+  <p-accordionTab header="Cuotas">
+<!--    <app-cuota-tabla></app-cuota-tabla>-->
+    <app-cuotas-view-table></app-cuotas-view-table>
+  </p-accordionTab>
+
+
+</p-accordion>
+<button type="button" class="btn btn-primary float-end m-3" [disabled]="deshabilitarSubmit()" (click)="submitForm()">
+  Editar
+</button>
+<button type="button" class="btn btn-danger float-end m-3" (click)="cancelarCrearContrato()">Cancelar</button>
+
+<div class="container">
+
+
+</div>

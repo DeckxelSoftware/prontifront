@@ -1,0 +1,127 @@
+<p-breadcrumb [model]="items"></p-breadcrumb>
+
+<p-accordion [multiple]="true">
+
+  <p-accordionTab header="Plan">
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="mostrarTablaPlan = true">Seleccionar plan</button>
+    </div>
+    <div>
+      <app-plan-tabla *ngIf="mostrarTablaPlan" [vieneDesdeContrato]="true"
+                      (seleccionoPlan)="mostrarPlanSeleccionado($event)"></app-plan-tabla>
+    </div>
+
+
+    <div *ngIf="!mostrarTablaPlan && planSeleccionado" class="row">
+      <div class="col-4">
+        <label class="form-label" for="precio">Monto: </label>
+        <input type="text" id="precio" class="form-control" value="{{planSeleccionado?.precio }}" disabled>
+      </div>
+      <div class="col-4">
+        <label class="form-label" for="inscripcion">Inscripción: </label>
+        <input type="text" id="inscripcion" class="form-control" value="{{planSeleccionado?.inscripcion }}" disabled>
+      </div>
+      <div class="col-4">
+        <label class="form-label" for="inscripcion">Cuota: </label>
+        <input type="text" id="cuota" class="form-control" value="{{parametrosCalculoCuotas?.cuota }}" disabled>
+      </div>
+
+      <!--      <div class="col-4">-->
+      <!--        <label class="form-label" for="plazoMax">Plazo Máximo: </label>-->
+      <!--        <input class="form-control" type="text" id="plazoMax" value="{{planSeleccionado?.plazoMesMaximo}}" disabled>-->
+      <!--      </div>-->
+
+    </div>
+
+
+  </p-accordionTab>
+  <p-accordionTab header="Contrato">
+    <!--    <app-form-container-->
+    <!--      [fieldsArray]="formularioContrato"-->
+    <!--      (fieldChanged)="searchFieldChanged($event)"-->
+    <!--      (autoCompleteChangedEmitter)="searchAutoComplete($event)"-->
+    <!--    ></app-form-container>-->
+    <form [formGroup]="formContrato" (ngSubmit)="onSubmit(modelContrato)">
+      <formly-form [form]="formContrato" [fields]="fieldsContrato" [model]="modelContrato"></formly-form>
+
+      <!--      <button type="submit" class="btn btn-default">Submit</button>-->
+    </form>
+    <div class="col-sm-12 col-md-4">
+      <label>Medio de captación</label>
+      <div class="mt-2"></div>
+      <p-autoComplete [dropdown]="true" [suggestions]="mediosDeCaptacion" [(ngModel)]="medioCaptacionSeleccionado"
+                      field="nombre"
+                      [showEmptyMessage]="true" emptyMessage="No hay registros" optionValue="nombre"
+                      (completeMethod)="buscarAutocompleteListaValorDetalle($event)"
+                      [forceSelection]="true">
+
+      </p-autoComplete>
+    </div>
+
+    <!--    <form *ngIf="idContratoEditar" [formGroup]="formEditarContrato" (ngSubmit)="onSubmit(modelEditarContrato)">-->
+    <!--      <formly-form [form]="formEditarContrato" [fields]="fieldsEditarContrato" [model]="modelEditarContrato"></formly-form>-->
+
+    <!--      &lt;!&ndash;      <button type="submit" class="btn btn-default">Submit</button>&ndash;&gt;-->
+    <!--    </form>-->
+
+
+  </p-accordionTab>
+
+
+  <p-accordionTab header="Cliente">
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="mostrarTablaCliente = true" *ngIf="!mostrarTablaCliente">Seleccionar
+        cliente
+      </button>
+    </div>
+
+    <!--   <p-autoComplete  [suggestions]="clientes" (completeMethod)="buscarCliente($event)"
+                       [dropdown]="true"
+       field="label"
+       (onSelect)="eventoSelectCliente($event)"></p-autoComplete>-->
+
+    <app-cliente-tabla *ngIf="mostrarTablaCliente" [vieneDesdeContrato]="true"
+                       (seleccionoCliente)="mostrarClienteSeleccionado($event)"></app-cliente-tabla>
+
+
+    <form [formGroup]="formCliente" (ngSubmit)="onSubmit(modelCliente)">
+      <formly-form [form]="formCliente" [fields]="fieldsCliente" [model]="modelCliente"></formly-form>
+
+      <!--      <button type="submit" class="btn btn-default">Submit</button>-->
+    </form>
+
+  </p-accordionTab>
+  <p-accordionTab header="Vendedor">
+
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="mostrarTablaVendedor = true" *ngIf="!mostrarTablaVendedor">Seleccionar
+        vendedor
+      </button>
+    </div>
+
+    <!--    <p-autoComplete  [suggestions]="vendedores" (completeMethod)="buscarVendedores($event)"
+                         [dropdown]="true"
+                         field="label"
+                         (onSelect)="eventoSelectVendedor($event)"></p-autoComplete>-->
+
+    <app-vendedor-tabla *ngIf="mostrarTablaVendedor" [vieneDesdeContrato]="true"
+                        (seleccionoVendedor)="mostrarVendedorSeleccionado($event)"></app-vendedor-tabla>
+
+    <form [formGroup]="formVendedor" (ngSubmit)="onSubmit(modelVendedor)">
+      <formly-form [form]="formVendedor" [fields]="fieldsVendedor" [model]="modelVendedor"></formly-form>
+
+      <!--      <button type="submit" class="btn btn-default">Submit</button>-->
+    </form>
+  </p-accordionTab>
+
+  <p-accordionTab header="Cuotas">
+    <app-cuotas-view-table></app-cuotas-view-table>
+  </p-accordionTab>
+</p-accordion>
+<div class="botones-accion-contrato">
+  <button type="button" class="btn btn-secondary" (click)="cancelarCrearContrato()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="!validarBotonCrear()"
+          (click)="editandoContrato?enviarEditarContrato():enviarCrearContrato()">{{editandoContrato ? 'Editar' : 'Crear'}}</button>
+</div>
+
+

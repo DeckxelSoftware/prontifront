@@ -1,0 +1,156 @@
+<h5>FACTURA</h5>
+<hr>
+<div class="row">
+  <div class="col-5">
+    <mat-card>
+      <div mat-card-content>
+        <p>
+          <b>Razón social:</b> {{jsonFactura.infoTributario.razonSocial}}
+        </p>
+        <p>
+          <b>Nombre comercial:</b> {{jsonFactura.infoTributario.nombreComercial}}
+        </p>
+        <p>
+          <b>RUC:</b> {{jsonFactura.infoTributario.ruc}}
+        </p>
+        <p>
+          <b>Cod. documento:</b> {{jsonFactura.infoTributario.codDoc}}
+          <b>Establecimiento:</b> {{jsonFactura.infoTributario.estab}}
+          <b>Pto. emisión:</b> {{jsonFactura.infoTributario.ptoEmision}}
+        </p>
+        <p>
+          <b>Secuencial:</b> {{jsonFactura.infoTributario.secuencial}}
+        </p>
+        <p>
+          <b>Dir. matriz:</b> {{jsonFactura.infoTributario.dirMatriz}}
+        </p>
+      </div>
+    </mat-card>
+  </div>
+  <div class="col-5">
+    <mat-card style="height: 100%">
+      <div mat-card-content>
+        <p>
+          <b>Fecha emisión:</b> {{jsonFactura.infoFactura.fechaEmision}}
+        </p>
+        <p>
+          <b>Razón social comprador:</b> {{jsonFactura.infoFactura.razonSocialComprador}}
+        </p>
+        <p>
+          <b>Dirección comprador:</b> {{jsonFactura.infoFactura.direccionComprador}}
+        </p>
+      </div>
+    </mat-card>
+  </div>
+  <div class="col-2">
+    <mat-card style="height: 100%">
+      <div mat-card-content>
+        <p>
+          <b>Total sin imp.:</b> {{jsonFactura.infoFactura.totalSinImpuestos|currency}}
+        </p>
+        <p>
+          <b>Total descuento:</b> {{jsonFactura.infoFactura.totalDescuento|currency}}
+        </p>
+        <p *ngFor="let impuesto of jsonFactura.infoFactura.totalConImpuestos">
+          <b>{{impuesto.codigo|codigoImpuesto}} {{impuesto.codigoPorcentaje|codigoPorcentajeIva}}
+            : </b>{{impuesto.valor|currency}}
+        </p>
+
+        <p>
+          <b>Importe total:</b> {{jsonFactura.infoFactura.importeTotal|currency}}
+        </p>
+      </div>
+    </mat-card>
+  </div>
+
+
+</div>
+<hr>
+<div class="row mt-3 " style="display: flex; justify-content: left">
+  <div class="col-sm-12 col-lg-3" *ngIf="mostrarBotonNotaCredito">
+    <button class="btn  btn-primary" (click)="navegarANotaDeCredito(factura.itNumeroDocumento+'')">Consultar notas de
+      crédito
+    </button>
+  </div>
+
+
+</div>
+<hr>
+<div class="row mt-3">
+  <div class="col-12">
+    <mat-card>
+      <p-table [value]="jsonFactura.detalles">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Código</th>
+            <th>Descripción</th>
+            <th>Cantidad</th>
+            <th>Precio unitario</th>
+            <th>Dscto.</th>
+            <th>Precio sin imp.</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-detalle>
+          <tr>
+            <td>{{detalle.codigoPrincipal}}</td>
+            <td>{{detalle.descripcion}}</td>
+            <td>{{detalle.cantidad}}</td>
+            <td>{{detalle.precioUnitario|currency}}</td>
+            <td>{{detalle.descuento|currency}}</td>
+            <td>{{detalle.precioTotalSinImpuesto|currency}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </mat-card>
+  </div>
+</div>
+<div class="row mt-3">
+  <p-tabView>
+    <p-tabPanel header="Detalles adicionales">
+      <div *ngIf="jsonFactura.infoAdicional">
+        <p-table [value]="jsonFactura.infoAdicional">
+          <ng-template pTemplate="header">
+            <tr>
+              <th></th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-detalle>
+            <tr>
+              <td><b>{{detalle.nombre}}:</b></td>
+              <td>{{detalle.valor}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div *ngIf="!jsonFactura.infoAdicional">
+        No tiene informacion adicional
+      </div>
+
+    </p-tabPanel>
+    <p-tabPanel header="Pagos">
+      <p>
+        <b>Valor Ret. IVA: </b>{{jsonFactura.infoFactura.valorRetIva|currency}}
+        <b>Valor Ret. Renta: </b>{{jsonFactura.infoFactura.valorRetRenta|currency}}
+      </p>
+      <p-table [value]="jsonFactura.infoFactura.pagos">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Forma de pago</th>
+            <th>total</th>
+            <th>plazo</th>
+            <th>unidad de tiempo</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-pago>
+          <tr>
+            <td>{{pago.formaPago|codigoFormaPago}}</td>
+            <td>{{pago.total|currency}}</td>
+            <td>{{pago.plazo}}</td>
+            <td>{{pago.unidadTiempo}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+  </p-tabView>
+</div>

@@ -1,0 +1,1 @@
+export const PERIODO_CONTABLE_PROVIDERS = [];

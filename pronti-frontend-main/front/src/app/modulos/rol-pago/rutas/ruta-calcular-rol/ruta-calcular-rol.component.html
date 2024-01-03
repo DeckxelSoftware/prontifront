@@ -1,0 +1,30 @@
+<app-route-header
+  [title]="'Calcular Rol'"
+  [help]="'Calcule el rol del periodo actual'"
+  [imagePath]="'assets/rol-pago/calculo-rol.png'"
+></app-route-header>
+<p-breadcrumb [model]="items"></p-breadcrumb>
+<div class="espaciador"></div>
+
+<div class="card">
+  <div class="card-body">
+
+    <h3 class="card-title">Perido actual</h3>
+    <div class="row">
+      <div class="col-6">
+        <p><b>Año: </b>{{periodoLaboral.anio}}</p>
+        <p><b>Mes: </b>{{periodoLaboral.mes}}</p>
+        <p><b>Activo: </b>{{periodoLaboral.activo === 'A' ? 'Si' : 'No'}}</p>
+      </div>
+      <div class="col-6">
+        <p><b>Fecha inicio: </b>{{periodoLaboral.fechaInicio}}</p>
+        <p><b>Fecha fin: </b>{{periodoLaboral.fechaFin}}</p>
+        <button type="button" class="btn btn-primary" (click)="calcularRol()">Calcular Rol</button>
+        <div class="espaciador"></div>
+        <button type="button" class="btn btn-primary" *ngIf="mostrarPuedeCerrarRol"(click)="cerrarRol()">Cerrar Rol
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

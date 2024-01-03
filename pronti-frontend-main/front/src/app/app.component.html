@@ -1,0 +1,76 @@
+<p-toast position="top-center"></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"
+                 rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-blockUI [blocked]="habilitarBlockUi"></p-blockUI>
+
+<nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid menu-navbar ">
+    <button class="navbar-menu" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation" (click)="matSidenavOpened = !matSidenavOpened">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!--    <div class="pronti-logo">-->
+    <a class="navbar-brand" (click)="matSidenavOpened = !matSidenavOpened">
+      <img src="assets/prontiauto.png" class="imagen-icono" alt="logo prontiauto">
+      <!--        <h2>ProntiAuto</h2>-->
+    </a>
+    <!--    </div>-->
+  </div>
+</nav>
+
+
+<mat-sidenav-container class="example-container">
+
+  <mat-sidenav #sidenav mode="side" [position]="'start'" [(opened)]="matSidenavOpened"
+               *ngIf="_authService.tieneSesion$ | async">
+
+    <div class="text-center mb-3">
+      <div>
+        <h4>Bienvenido</h4>
+        <app-perfil-usuario-tabla></app-perfil-usuario-tabla>
+      </div>
+    </div>
+    <div class="text-center mb-3">
+      <div>
+        <input class="mx-1" type="text" pInputText [(ngModel)]="busquedaMenu"/>
+        <button class="mx-1" pButton class="btn-primary" type="button" icon="pi pi-search"
+                (click)="buscarOpcionMenu()"></button>
+      </div>
+    </div>
+
+    <ul class="list-group">
+      <div *ngFor="let opcion of opcionesMenuMostrar">
+        <a class="list-group-item list-group-item-action" [routerLink]="opcion.routerLink">{{opcion.nombre}}</a>
+      </div>
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['configuraciones']">Gestión de Configuraciones-->
+      <!--      </li>-->
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['personal']">Gestión de Personal</li>-->
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['bienes']">Bienes</li>-->
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['contratos']">Contratos</li>-->
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['proveedores']">Proveedores</li>-->
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['inventarios']">Gestión Inventarios</li>-->
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['contabilidad']">Contabilidad</li>-->
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['documentos-electronicos']">Documentos-->
+      <!--        electrónicos-->
+      <!--      </li>-->
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['licitacion-modulo']">Gestión de oferta</li>-->
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['prestamo']">Préstamos</li>-->
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['novedades-menu']">Novedades</li>-->
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['preasamblea']">Gestión asamblea</li>-->
+      <!--      <li class="list-group-item list-group-item-action" [routerLink]="['caracteristicas-anuales-menu']">Características-->
+      <!--        anuales-->
+      <!--      </li>-->
+    </ul>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <div class="container">
+
+      <!--      <p-breadcrumb [model]="items" [home]="home" ></p-breadcrumb>-->
+      <router-outlet></router-outlet>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

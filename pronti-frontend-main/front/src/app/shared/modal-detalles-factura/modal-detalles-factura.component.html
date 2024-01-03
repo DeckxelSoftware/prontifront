@@ -1,0 +1,24 @@
+<h1 mat-dialog-title class="text-center">
+  Detalles factura
+</h1>
+<div mat-dialog-content>
+
+  <app-mostrar-factura [mostrarBotonNotaCredito]="false" [factura]="data.factura">
+
+  </app-mostrar-factura>
+</div>
+<div mat-dialog-actions style="display:flex; justify-content: end">
+  <div class="row ">
+
+
+    <div class="col-6">
+      <button class="btn btn-primary" mat-button
+              (click)="cerrarModal()">Cerrar
+      </button>
+    </div>
+
+
+  </div>
+</div>
+
+

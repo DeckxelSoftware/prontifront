@@ -1,0 +1,1 @@
+export const DETALLE_NOVEDAD_ROL_PAGO_PROVIDERS = [];

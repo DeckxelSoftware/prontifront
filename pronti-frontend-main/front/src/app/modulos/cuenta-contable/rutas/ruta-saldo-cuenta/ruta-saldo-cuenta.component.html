@@ -1,0 +1,10 @@
+<app-route-header
+  [title]="'Saldos de cuentas'"
+  [help]="'Gestione los saldos de cuentas'"
+  [imagePath]="'assets/saldo-cuenta/image.png'"
+></app-route-header>
+<div class="espaciador"></div>
+<p-breadcrumb [model]="items"></p-breadcrumb>
+<div class="card-mlab">
+  <app-saldo-cuenta-tabla></app-saldo-cuenta-tabla>
+</div>

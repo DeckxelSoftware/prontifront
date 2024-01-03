@@ -1,0 +1,1 @@
+export const ROWSPERPAGE = [1,2,3,5,10,30]

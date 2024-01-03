@@ -1,0 +1,1 @@
+export const LONGITUD_MAXIMA_COMUN = 100;

@@ -1,0 +1,32 @@
+.imagen-login {
+  max-width: 400px;
+}
+
+.btn {
+  //width: 30%;
+}
+
+span {
+}
+
+span:hover {
+  color: red;
+  cursor: pointer;
+}
+
+.card {
+  padding: 40px;
+}
+
+button {
+  background: #5A5757;
+  color: #FFF;
+}
+
+.botones-reset {
+  display: flex;
+  justify-content: space-around;
+  button {
+    width: 200px
+  }
+}

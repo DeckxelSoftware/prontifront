@@ -1,0 +1,72 @@
+<div *ngIf="showForm">
+  <div *ngIf="matStepperArray.length === 0 && formGroup">
+    <form [formGroup]="formGroup">
+      <div class="row">
+        <div *ngFor="let field of fieldsArray" [class]="'col-sm-'+(field.column ? field.column : '6')">
+          <app-form-field [field]="field"
+                          *ngIf="field.type !== 'separator'"
+                          (fieldChanged)="fieldChangedEvent($event)"
+                          (autoCompleteChangedEmitter)="autoCompleteChanged($event)"></app-form-field>
+          <div *ngIf="field.type === 'separator' && field.separator">
+            <div [innerHTML]="field.separator.html"></div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="matStepperArray.length > 0 && matStepperConfig">
+    <mat-stepper [orientation]="matStepperConfig.orientation ? matStepperConfig.orientation : 'horizontal' "
+                 [linear]="matStepperConfig.linear ? matStepperConfig.linear : true"
+                 #stepper
+    >
+      <mat-step *ngFor="let matStepper of matStepperArray; let i = index"
+                [stepControl]="matStepper.formGroup"
+                [editable]="matStepper.editable ? matStepper.editable : false"
+                #matStep
+      >
+        <form [formGroup]="matStepper.formGroup" *ngIf="matStepper.formGroup && matStepper.fieldsArray">
+          <ng-template matStepLabel>
+            <div [innerHTML]="matStepper.labelHtml"></div>
+          </ng-template>
+          <div class="row">
+            <div *ngFor="let field of matStepper.fieldsArray" [class]="'col-sm-'+(field.column ? field.column : '6')">
+              <app-form-field [field]="field"
+                              *ngIf="field.type !== 'separator'"
+                              (fieldChanged)="fieldChangedEvent($event, matStepper)"
+                              (autoCompleteChangedEmitter)="autoCompleteChanged($event, matStepper)"></app-form-field>
+              <div *ngIf="field.type === 'separator' && field.separator">
+                <div [innerHTML]="field.separator.html"></div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-4" *ngIf="matStepper.editable">
+              <button *ngIf="i > 0" class="btn btn-sm btn-light w-100" matStepperPrevious>Atras</button>
+            </div>
+            <div class="col-sm-4" *ngIf="i !== (matStepperArray.length - 1)">
+              <button class="btn btn-sm btn-primary w-100" matStepperNext [disabled]="matStepper.formGroup.invalid">
+                Siguiente
+              </button>
+            </div>
+            <div class="col-sm-4" *ngIf="i === (matStepperArray.length - 1)">
+              <button class="btn btn-sm btn-success w-100" matStepperNext [disabled]="matStepper.formGroup.invalid" (click)="confirmForm()">
+                Confirmar
+              </button>
+            </div>
+            <div class="col-sm-4">
+              <button *ngIf="i > 0" class="btn btn-sm btn-secondary w-100" (click)="stepper.reset()">Reset</button>
+            </div>
+          </div>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </div>
+</div>

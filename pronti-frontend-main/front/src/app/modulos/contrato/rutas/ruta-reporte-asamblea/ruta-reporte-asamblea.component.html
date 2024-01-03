@@ -1,0 +1,49 @@
+<app-route-header title="Informe de asamblea" help="Informe de asamblea" imagePath="/assets/preasamblea/image.png">
+</app-route-header>
+<p-breadcrumb [model]="items"></p-breadcrumb>
+<div class="espaciador"></div>
+
+<div class="card-mlab">
+    <div class="row">
+        <div class="col-6">
+
+            <label for="multiplemonths">Mes: </label>
+            <p-calendar [(ngModel)]="value" view="month" dateFormat="mm/yy" inputId="multiplemonths"
+                (onSelect)="buscar()"></p-calendar>
+        </div>
+        <div class="col-6">
+            <button type="button" class="btn btn-primary m-2" (click)="confirmar()">Consultar</button>
+            <button type="button" class="btn btn-primary" (click)="exportExcel()"
+                *ngIf="contratos.length > 0 ">Descargar excel</button>
+        </div>
+    </div>
+</div>
+
+<div class="card-mlab">
+    <table id="tablaReporteAsamblea" [hidden]="true">
+        <tr>
+            <th>MES</th>
+            <th>NUMERO DE CEDULA</th>
+            <th>CLIENTE</th>
+            <th>status</th>
+            <th>PLAN SISTEMA</th>
+            <th>CERTIFICADO O PLAN</th>
+            <th>PLAZO</th>
+            <th>PLAN</th>
+            <th>CONTRATO</th>
+            <th>GRUPO</th>
+            <th>FONDO</th>
+            <th>FECHA INGRESO</th>
+            <th>CUOTAS PAGADAS</th>
+            <th>CUOTAS MORA</th>
+            <th>CUOTAS MENSUAL</th>
+            <th>COSTO PARA CONSORCIO</th>
+            <th>LICITACION</th>
+            <th>%</th>
+            <th>% ACUMULADO</th>
+            <th>ADJUDICACION</th>
+            <th>APROBACION</th>
+            <th>OBSERVACION</th>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,1 @@
+export const INFORMACION_FINANCIERA_PROVIDERS = [];

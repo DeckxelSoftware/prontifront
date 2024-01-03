@@ -1,0 +1,287 @@
+<p-breadcrumb [model]="items" ></p-breadcrumb>
+<div class="espaciador"></div>
+<h2 class="text-center">Estado de Cuenta</h2>
+<div class="mt-2"></div>
+<div class="row">
+  <div class="col-1">
+    <button class="btn  btn-primary" mat-button [matMenuTriggerFor]="menu">Exportar</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="exportarEstadoCuenta('P')">PDF</button>
+      <button mat-menu-item (click)="exportarEstadoCuenta('E')">Excel</button>
+    </mat-menu>
+  </div>
+
+</div>
+<div class="espaciador"></div>
+<p-accordion [multiple]="true">
+
+
+  <p-accordionTab header="Datos del contrato">
+
+    <div class="row">
+      <div class="col-4">
+        <label class="form-label" for="numeroContrato">Número contrato: </label>
+        <input class="form-control" type="text" id="numeroContrato" value="{{contrato?.numeroDeContrato}}" disabled>
+      </div>
+      <div class="col-4">
+        <label class="form-label" for="fechaInicio">Fecha inicio: </label>
+        <input class="form-control" type="text" id="fechaInicio" value="{{contrato?.fechaInicio}}" disabled>
+      </div>
+      <div class="col-4">
+        <label class="form-label" for="dsctoInscripcion">Dscto. inscripción: </label>
+        <input class="form-control" type="text" id="dsctoInscripcion"
+               value="{{contrato?.dsctoInscripcion?contrato.dsctoInscripcion:0}}%"
+               disabled>
+      </div>
+      <div class="col-4">
+        <label class="form-label" for="version">Versión: </label>
+        <input class="form-control" type="text" id="version"
+               value="{{contrato?.version}}"
+               disabled>
+      </div>
+      <div class="col-4">
+        <label class="form-label" for="plazoMaxInfo">Plazo: </label>
+        <input class="form-control" type="text" id="plazoMaxInfo" value="{{contrato.plazoMesSeleccionado}}"
+               disabled>
+      </div>
+
+      <div class="col-4">
+        <label class="form-label" for="dsctoPrimeraCuota">Dscto. primera cuota: </label>
+        <input class="form-control" type="text" id="dsctoPrimeraCuota"
+               value="{{contrato?.dsctoPrimeraCuota?contrato.dsctoPrimeraCuota:0}}%"
+               disabled>
+      </div>
+
+      <div class="col-4">
+        <label class="form-label" for="modelo">Plan: </label>
+        <input type="text" id="modelo" class="form-control" value="{{planContrato?.modelo }}" disabled>
+      </div>
+
+      <div class="col-4">
+        <label class="form-label" for="inscripcionInfo">Inscripción cobrada: </label>
+        <input type="text" id="inscripcionInfo" class="form-control"
+               value="{{historico?.totalCobroInscripcion|currency }}"
+               disabled>
+      </div>
+
+      <div class="col-4">
+        <label class="form-label" for="precioInfo">Monto: </label>
+        <input type="text" id="precioInfo" class="form-control" value="{{planContrato?.precio|currency }}" disabled>
+      </div>
+
+
+      <div class="col-6">
+        <label class="form-label" for="Vendedor">Vendedor: </label>
+        <input class="form-control" type="text" id="Vendedor"
+               value="{{contrato?.idVendedor?.idTrabajador?.idUsuario?.nombres}} {{contrato?.idVendedor?.idTrabajador?.idUsuario?.apellidos}}"
+               disabled>
+      </div>
+
+
+      <div class="col-2">
+        <label class="form-label" for="grupo">Grupo: </label>
+        <input class="form-control" type="text" id="grupo"
+               value="{{contrato?.idClienteEnGrupo?.idGrupo?.nombreGrupo}}" disabled>
+      </div>
+      <!--      <div class="col-4">-->
+      <!--        <label class="form-label" for="contratoOrigen">Contrato origen: </label>-->
+      <!--        <input class="form-control" type="text" id="contratoOrigen"-->
+      <!--               value="" disabled>-->
+      <!--      </div>-->
+      <div class="col-12">
+        <label class="form-label" for="observacion">Observación: </label>
+        <input class="form-control" type="text" id="observacion"
+               value="{{contrato?.observacion?contrato.observacion:'Sin observación'}}" disabled>
+      </div>
+
+
+    </div>
+  </p-accordionTab>
+  <p-accordionTab header="Datos Cliente">
+    <div class="row">
+      <div class="col-8">
+        <div class="row">
+          <div class="col-12">
+            <label class="form-label" for="nombre">Cliente: </label>
+            <input type="text" id="nombre" class="form-control"
+                   value="{{modelCliente.nombres}} {{modelCliente.apellidos}}" disabled>
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="documentoIdentidad">Doc. identidad: </label>
+            <input type="text" id="documentoIdentidad" class="form-control"
+                   value="{{modelCliente.documentoIdentidad}}" disabled>
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="medioContacto">Medio contacto: </label>
+            <input type="text" id="medioContacto" class="form-control"
+                   value="{{modelCliente.medioContacto1}}" disabled>
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="correo">Correo: </label>
+            <input type="text" id="correo" class="form-control"
+                   value="{{modelCliente.correo}}" disabled>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="col-4">
+        <div class="row">
+          <div class="col-12">
+            <label class="form-label" for="estado">Estado: </label>
+            <input type="text" id="estado" class="form-control"
+                   value="{{contrato?.estado|estadoContrato}}" disabled>
+          </div>
+          <div class="col-12">
+            <form [formGroup]="formFechaCobro">
+              <formly-form [form]="formFechaCobro" [fields]="fieldFechaCobro" [model]="modelFechaCobro"></formly-form>
+            </form>
+          </div>
+
+          <button class="col-12 mt-3 btn btn-primary" (click)="actualizarFechaCobro()">Cambiar fecha pago</button>
+
+        </div>
+      </div>
+
+
+    </div>
+    <div class="row">
+
+
+    </div>
+  </p-accordionTab>
+
+  <p-accordionTab header="Cuotas">
+    <table id="tablaHistorico" [hidden]="true">
+      <tr>
+        <th>Cuota</th>
+        <th>Valor inscripción</th>
+        <th>Dscto.
+          inscripción
+        </th>
+      </tr>
+      <tr>
+        <td>{{cuotas[0].valorCuota}}</td>
+        <td>{{historico.totalInscripcionPlan|currency}}</td>
+        <td> {{historico.totalInscripcionPlan|currency}}</td>
+      </tr>
+
+      <tr>
+        <th>Total cobro inscripción</th>
+        <th>Capital total</th>
+        <th>Capital por refinanciamiento</th>
+      </tr>
+      <tr>
+        <td>{{historico.totalCobroInscripcion|currency}}</td>
+        <td>{{historico.capitalTotal|currency}}</td>
+        <td> {{historico.capitalPorRefinanciamiento|currency}}</td>
+      </tr>
+
+
+      <tr>
+        <th>Abonos capital actual</th>
+        <th>Saldo capital</th>
+        <th>Valor tasa adm.</th>
+        <th>Total tasa adm. cobrada</th>
+      </tr>
+      <tr>
+        <td>{{historico.abonosCapitalActual|currency}}</td>
+        <td>{{historico.saldoCapital|currency}}</td>
+        <td>{{historico.valorTasaAdministrativa|currency}}</td>
+        <td>{{historico.totalTasaAdministrativaCobrada|currency}}</td>
+      </tr>
+
+      <tr>
+        <th>Total cuotas cobradas</th>
+        <th>Total cuotas mora actual</th>
+        <th>Total cuotas mora</th>
+        <th>Total monto cobrado</th>
+        <th>Valor dscto. primera cuota</th>
+        <th>Total cobro primera cuota</th>
+        <th>Valor recargo</th>
+      </tr>
+      <tr>
+        <td> {{historico.totalCuotasCobradas}}</td>
+        <td>{{historico.totalCuotasMoraActual}}</td>
+        <td>{{historico.totalCuotasMora}}</td>
+        <td>{{historico.totalMontoCobrado|currency}}</td>
+        <td>{{historico.valorDsctoPrimeraCuota ? historico.valorDsctoPrimeraCuota + '%' : '0%'}}</td>
+        <td>{{historico.totalCobroPrimeraCuota|currency}}</td>
+        <td>{{historico.valorRecargo|currency}}</td>
+      </tr>
+
+
+    </table>
+    <table id="tablaCuotas" [hidden]="true">
+      <tr>
+        <th>N Cuota</th>
+        <th>Fecha</th>
+        <th>Cuota Total</th>
+        <th>Abono Capital</th>
+        <th>Tasa Adm</th>
+        <th>Impuestos</th>
+        <th>Valor Cobrado</th>
+        <th>Saldo</th>
+        <th>Pagado</th>
+        <th *ngIf="contrato.estado === 'ADJ'">Dispositivo</th>
+        <th *ngIf="contrato.estado === 'ADJ'">Rastreo</th>
+      </tr>
+      <tr *ngFor="let cuota of cuotas">
+        <td>{{cuota.numeroCuota}}</td>
+        <td>{{cuota.fechaCobro|fecha}}</td>
+        <td>{{cuota.valorCuota|currency}}</td>
+        <td>{{cuota.abonoCapital|currency}}</td>
+        <td>{{cuota.valorTasaAdministrativa|currency}}</td>
+        <td>{{cuota.valorImpuesto|currency}}</td>
+        <td>{{cuota.valorPagadoCuota|currency}}</td>
+        <td>{{(cuota.valorCuota |saldoCuota: cuota.valorPagadoCuota)|currency}}</td>
+        <td>{{cuota.estaPagado|siNo}}</td>
+        <td *ngIf="contrato.estado === 'ADJ'">{{cuota.dispositivo | currency}}</td>
+        <td *ngIf="contrato.estado === 'ADJ'">{{cuota.rastreo | currency}}</td>
+      </tr>
+    </table>
+    <p-table [value]="cuotas" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+             currentPageReportTemplate=" {first} - {last} de {totalRecords} registros"
+             [rowsPerPageOptions]="[5,10,20]">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>No. cuota</th>
+          <th>Fecha</th>
+          <th>Cuota total</th>
+          <th>Abono capital</th>
+          <th>Tasa adm.</th>
+          <th>Impuestos</th>
+          <th>Cobrado</th>
+          <th>Por cobrar</th>
+          <th>Estado</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-cuota>
+        <tr>
+          <td>{{cuota.numeroCuota}}</td>
+          <td>{{cuota.fechaCobro|fecha}}</td>
+          <td>{{cuota.valorCuota|currency}}</td>
+          <td>{{cuota.abonoCapital|currency}}</td>
+          <td>{{cuota.valorTasaAdministrativa|currency}}</td>
+          <td>{{cuota.valorImpuesto|currency}}</td>
+          <td>{{cuota.valorPagadoCuota|currency}}</td>
+          <td>{{(cuota.valorCuota|saldoCuota:cuota.valorPagadoCuota)|currency}}</td>
+          <td>{{cuota.estaPagado === 'S' ? 'Pagado' : 'Pendiente'}}</td>
+
+
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+  <p-accordionTab header="Histórico">
+    <app-historico-plan-contrato-tabla [idContrato]="contrato?.id">
+
+    </app-historico-plan-contrato-tabla>
+  </p-accordionTab>
+
+</p-accordion>
+
+<button type="button" class="btn btn-primary float-end m-3">
+  Aceptar
+</button>
+<button type="button" class="btn btn-danger float-end m-3">Cancelar</button>

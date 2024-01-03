@@ -1,0 +1,121 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+        (click)="searchData()"
+        [disabled]="searchButtonDisabled"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <br/>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [rows]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Orden De Compra</span>
+          <button class="btn btn-sm btn-success float-end" (click)="createOrEdit()"> Crear</button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th>Información</th>
+          <th>Cliente</th>
+          <th>Habilitado</th>
+          <th> Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr
+          [class]="registro.sisHabilitado ? '' : 'back-deshabilitado'">
+          <td>
+            <button
+              type="button"
+              pButton
+              pRipple
+              [pRowToggler]="registro"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            ></button>
+          </td>
+          <td>
+            <p><b>Número de orden contrato: </b>{{registro.numeroOrdenContrato}}</p>
+            <p><b>Fecha inicio: </b>{{registro.fechaInicio}}</p>
+            <p><b>Fecha carta oferta: </b>{{registro.fechaCartaOferta}}</p>
+            <p><b>Fecha registro oferta: </b>{{registro.fechaRegistroOferta}}</p>
+
+          </td>
+          <td>
+            <p><b>Nombre cliente: </b>{{registro.nombreCliente}}</p>
+            <p><b>Correo: </b>{{registro.correo}}</p>
+            <p><b>Teléfono: </b>{{registro.telefono}}</p>
+            <p><b>Tipo documento de identidad: </b>{{registro.tipoDocumentoIdentidad}}</p>
+            <p><b>Documento identidad: </b>{{registro.documentoIdentidad}}</p>
+            <p><b>Beneficiario cheque: </b>{{registro.beneficiarioCheque}}</p>
+          </td>
+
+          <td>{{ registro.sisHabilitado ? 'Si' : 'No' }}</td>
+          <td style="text-align: center">
+            <div>
+
+              <button type="button" class="btn btn-sm btn-warning" (click)="createOrEdit(registro)">
+                Editar
+              </button>
+              <div class="espaciador"></div>
+              <button type="button"
+                      [class]="!registro.sisHabilitado ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"
+                      (click)="confirmChangeEnable(registro.sisHabilitado, registro)">
+                {{ !registro.sisHabilitado ? 'Habilitar' : 'Deshabilitar' }}
+              </button>
+
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="5">
+            <app-orden-de-compra-perfil [registro]="registro"></app-orden-de-compra-perfil>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="5">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+

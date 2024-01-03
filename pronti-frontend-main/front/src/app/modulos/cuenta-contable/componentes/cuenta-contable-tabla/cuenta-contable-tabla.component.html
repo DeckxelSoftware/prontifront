@@ -1,0 +1,210 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+        (click)="searchData()"
+        [disabled]="searchButtonDisabled"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <br/>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [rows]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Cuenta Contable</span>
+          <button class="btn btn-sm btn-success float-end" (click)="createOrEdit()"> Crear</button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <!--            <th></th>-->
+          <th>Detalle</th>
+          <!--            <th>Habilitado</th>-->
+          <th> Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr
+          [class]="registro.sisHabilitado ? '' : 'back-deshabilitado'">
+          <!--            <td>-->
+          <!--              <button-->
+          <!--                type="button"-->
+          <!--                pButton-->
+          <!--                pRipple-->
+          <!--                [pRowToggler]="registro"-->
+          <!--                class="p-button-text p-button-rounded p-button-plain"-->
+          <!--                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"-->
+          <!--              ></button>-->
+          <!--            </td>-->
+          <td>
+            <p><b>Nombre:</b>{{registro.nombre}} </p>
+
+            <p><b>Nivel:</b>{{registro.nivel}} <b>Tipo de cuenta:</b> {{registro.tipoCuenta|tipoCuenta}} <b>Movimiento:</b> {{registro.movimiento|tipoMovimiento}}</p>
+
+            <table>
+              <tr>
+                <th></th>
+                <th>
+                  Débito
+                </th>
+                <th>
+                  Crédito
+                </th>
+                <th>
+                  Saldo
+                </th>
+              </tr>
+              <tr>
+                <td><b>Anterior</b></td>
+                <td>{{registro.anteriorDebito|currency}}</td>
+                <td>{{registro.anteriorCredito|currency}}</td>
+                <td>{{registro.anteriorSaldo|currency}}</td>
+              </tr>
+              <tr>
+                <td><b>Actual</b></td>
+                <td>{{registro.actualDebito|currency}}</td>
+                <td>{{registro.actualCredito|currency}}</td>
+                <td>{{registro.actualSaldo|currency}}</td>
+              </tr>
+              <tr>
+                <td><b>Enero</b></td>
+                <td>{{registro.eneroDebito|currency}}</td>
+                <td>{{registro.eneroCredito|currency}}</td>
+                <td>{{registro.eneroSaldo|currency}}</td>
+              </tr>
+
+              <tr>
+                <td><b>Febrero</b></td>
+                <td>{{registro.febreroDebito|currency}}</td>
+                <td>{{registro.febreroCredito|currency}}</td>
+                <td>{{registro.febreroSaldo|currency}}</td>
+              </tr>
+              <tr>
+                <td><b>Marzo</b></td>
+                <td>{{registro.marzoDebito|currency}}</td>
+                <td>{{registro.marzoCredito|currency}}</td>
+                <td>{{registro.marzoSaldo|currency}}</td>
+              </tr>
+              <tr>
+                <td><b>Abril</b></td>
+                <td>{{registro.abrilDebito|currency}}</td>
+                <td>{{registro.abrilCredito|currency}}</td>
+                <td>{{registro.abrilSaldo|currency}}</td>
+              </tr>
+              <tr>
+                <td><b>Mayo</b></td>
+                <td>{{registro.mayoDebito|currency}}</td>
+                <td>{{registro.mayoCredito|currency}}</td>
+                <td>{{registro.mayoSaldo|currency}}</td>
+              </tr>
+              <tr>
+                <td><b>Junio</b></td>
+                <td>{{registro.junioDebito|currency}}</td>
+                <td>{{registro.junioCredito|currency}}</td>
+                <td>{{registro.junioSaldo|currency}}</td>
+              </tr>
+              <tr>
+                <td><b>Julio</b></td>
+                <td>{{registro.julioDebito|currency}}</td>
+                <td>{{registro.julioCredito|currency}}</td>
+                <td>{{registro.julioSaldo|currency}}</td>
+              </tr>
+              <tr>
+                <td><b>Agosto</b></td>
+                <td>{{registro.agostoDebito|currency}}</td>
+                <td>{{registro.agostoCredito|currency}}</td>
+                <td>{{registro.agostoSaldo|currency}}</td>
+              </tr>
+              <tr>
+                <td><b>Septiembre</b></td>
+                <td>{{registro.septiembreDebito|currency}}</td>
+                <td>{{registro.septiembreCredito|currency}}</td>
+                <td>{{registro.septiembreSaldo|currency}}</td>
+              </tr>
+              <tr>
+                <td><b>Octubre</b></td>
+                <td>{{registro.octubreDebito|currency}}</td>
+                <td>{{registro.octubreCredito|currency}}</td>
+                <td>{{registro.octubreSaldo|currency}}</td>
+              </tr>
+              <tr>
+                <td><b>Noviembre</b></td>
+                <td>{{registro.noviembreDebito|currency}}</td>
+                <td>{{registro.noviembreCredito|currency}}</td>
+                <td>{{registro.noviembreSaldo|currency}}</td>
+              </tr>
+              <tr>
+                <td><b>Diciembre</b></td>
+                <td>{{registro.diciembreDebito|currency}}</td>
+                <td>{{registro.diciembreCredito|currency}}</td>
+                <td>{{registro.diciembreSaldo|currency}}</td>
+              </tr>
+
+            </table>
+          </td>
+          <!--          <td>{{ registro.sisHabilitado ? 'Si' : 'No' }}</td>-->
+          <td style="text-align: center">
+            <div>
+
+              <button type="button" class="btn btn-sm btn-warning" (click)="createOrEdit(registro)">
+                Editar
+              </button>
+              <div class="espaciador"></div>
+              <!--                <button type="button"-->
+              <!--                        [class]="!registro.sisHabilitado ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"-->
+              <!--                        (click)="confirmChangeEnable(registro.sisHabilitado, registro)">-->
+              <!--                  {{ !registro.sisHabilitado ? 'Habilitar' : 'Deshabilitar' }}-->
+              <!--                </button>-->
+
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">
+            <app-cuenta-contable-perfil [registro]="registro"></app-cuenta-contable-perfil>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+

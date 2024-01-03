@@ -1,0 +1,162 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+        (click)="searchData()"
+        [disabled]="searchButtonDisabled"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <br/>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [rows]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Nota Credito</span>
+          <button class="btn btn-sm btn-success float-end" (click)="createOrEdit()"> Crear</button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th>Información Tributaria</th>
+          <th>Información Nota de crédito</th>
+          <th>Habilitado</th>
+          <th> Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr
+          [class]="registro.sisHabilitado ? '' : 'back-deshabilitado'">
+          <td>
+            <button
+              type="button"
+              pButton
+              pRipple
+              [pRowToggler]="registro"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            ></button>
+          </td>
+          <td>
+            <p>
+              <b>Ruc: </b>
+              {{registro.itRuc}}
+            </p>
+            <p>
+              <b>Razón social: </b>
+              {{registro.itRazonSocial}}
+            </p>
+            <p>
+              <b>Nombre comercial: </b>
+              {{registro.itRazonSocial}}
+            </p>
+          </td>
+          <td>
+            <p>
+              <b>Identificación comprador: </b>
+              {{registro.inIdentificacionComprador}}
+            </p>
+
+            <p>
+              <b>Razón social de comprador: </b>
+              {{registro.inRazonSocialComprador}}
+            </p>
+
+            <p>
+              <b>Número de documento modificado: </b>
+              {{registro.inNumDocModificado}}
+            </p>
+
+            <p>
+              <b>Dirección establecimiento: </b>
+              {{registro.inDirEstablecimiento}}
+            </p>
+
+
+            <p>
+              <b>Fecha de emisión: </b>
+              {{registro.inFechaEmision}}
+            </p>
+
+            <p>
+              <b>Motivo: </b>
+              {{registro.inMotivo}}
+            </p>
+
+            <p>
+              <b>Total sin impuestos: </b>
+              {{registro.inTotalSinImpuesto}}
+            </p>
+
+            <p>
+              <b>Valor modificado: </b>
+              {{registro.inValorModificado}}
+            </p>
+          </td>
+
+          <td>{{ registro.sisHabilitado ? 'Si' : 'No' }}</td>
+          <td style="text-align: center">
+            <div>
+
+              <button type="button" class="btn btn-sm btn-warning" (click)="createOrEdit(registro)">
+                Editar
+              </button>
+              <div class="espaciador"></div>
+              <button type="button"
+                      [class]="!registro.sisHabilitado ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"
+                      (click)="confirmChangeEnable(registro.sisHabilitado, registro)">
+                {{ !registro.sisHabilitado ? 'Habilitar' : 'Deshabilitar' }}
+              </button>
+
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="5">
+            <app-nota-credito-detail [jsonFactura]="parserJsonFactura(registro.jsonFactura)" [itNumeroDocumento]="registro.itNumeroDocumento" ></app-nota-credito-detail>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="5">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+

@@ -1,0 +1,47 @@
+image: node:16.14.2
+
+before_script:
+  - cd ./front
+  - npm i
+
+stages:
+  - lint
+  - build
+  - test
+  - deploy
+
+lint:
+  stage: lint
+  only:
+    - main
+  script:
+    - npm run lint
+
+build:
+  stage: build
+  only:
+    - main
+  script:
+    - npm run build
+
+
+
+
+deploy-test:
+  stage: deploy
+  only:
+    - testing
+  script:
+    - npm i -g firebase-tools
+    - npm run build
+    - npm run deploy
+
+    
+deploy-prod:
+  stage: deploy
+  only:
+    - prod
+  script:
+    - npm i -g firebase-tools
+    - npm run build
+    - npm run deploy:prod

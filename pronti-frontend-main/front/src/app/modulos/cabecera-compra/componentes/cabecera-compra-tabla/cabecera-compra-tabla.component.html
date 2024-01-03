@@ -1,0 +1,106 @@
+<!--<div class="card-mlab">-->
+
+<!--  <div class="row">-->
+<!--    <div class="col-sm-10">-->
+<!--      <app-form-container-->
+<!--        [fieldsArray]="searchBarFormFields"-->
+<!--        (fieldChanged)="searchFieldChanged($event)"-->
+<!--        (autoCompleteChangedEmitter)="searchAutoComplete($event)"-->
+<!--      ></app-form-container>-->
+<!--    </div>-->
+<!--    <div class="col-sm-2">-->
+<!--      <button-->
+<!--        type="button"-->
+<!--        class="btn btn-primary btn-sm float-end boton-busqueda"-->
+<!--        (click)="searchData()"-->
+<!--        [disabled]="searchButtonDisabled"-->
+<!--      >-->
+<!--        Buscar-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="row">
+  <br/>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+    >
+      <!--      [value]="tableData"-->
+      <!--      [dataKey]="'id'"-->
+      <!--      [rows]="startingRows"-->
+      <!--      [paginator]="true"-->
+      <!--      [lazy]="true"-->
+      <!--      (onLazyLoad)="lazyLoad($event)"-->
+      <!--      [totalRecords]="totalRecords"-->
+      <!--      [rowsPerPageOptions]="rowsPerPage"-->
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Cabecera Compra</span>
+          <button class="btn btn-sm btn-success float-end" (click)="createOrEdit()"> Crear</button>
+        </div>
+      </ng-template>
+<!--      <ng-template pTemplate="header">-->
+<!--        <tr>-->
+<!--          <th>Detalles</th>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--      <ng-template pTemplate="body" let-registro let-expanded="expanded">-->
+<!--        <tr>-->
+<!--          <td>-->
+<!--            <mat-card>-->
+<!--              info de la factura xD-->
+<!--            </mat-card>-->
+<!--          </td>-->
+<!--          &lt;!&ndash;            <td>&ndash;&gt;-->
+<!--          &lt;!&ndash;              <button&ndash;&gt;-->
+<!--          &lt;!&ndash;                type="button"&ndash;&gt;-->
+<!--          &lt;!&ndash;                pButton&ndash;&gt;-->
+<!--          &lt;!&ndash;                pRipple&ndash;&gt;-->
+<!--          &lt;!&ndash;                [pRowToggler]="registro"&ndash;&gt;-->
+<!--          &lt;!&ndash;                class="p-button-text p-button-rounded p-button-plain"&ndash;&gt;-->
+<!--          &lt;!&ndash;                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"&ndash;&gt;-->
+<!--          &lt;!&ndash;              ></button>&ndash;&gt;-->
+<!--          &lt;!&ndash;            </td>&ndash;&gt;-->
+<!--          &lt;!&ndash;            <td>{{ registro.id }}</td>&ndash;&gt;-->
+<!--          &lt;!&ndash;            <td>{{ registro.sisHabilitado ? 'Si' : 'No' }}</td>&ndash;&gt;-->
+<!--          &lt;!&ndash;            <td style="text-align: center">&ndash;&gt;-->
+<!--          &lt;!&ndash;              <div>&ndash;&gt;-->
+
+<!--          &lt;!&ndash;                <button type="button" class="btn btn-sm btn-warning" (click)="createOrEdit(registro)">&ndash;&gt;-->
+<!--          &lt;!&ndash;                  Editar&ndash;&gt;-->
+<!--          &lt;!&ndash;                </button>&ndash;&gt;-->
+<!--          &lt;!&ndash;                <div class="espaciador"></div>&ndash;&gt;-->
+<!--          &lt;!&ndash;                <button type="button"&ndash;&gt;-->
+<!--          &lt;!&ndash;                        [class]="!registro.sisHabilitado ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"&ndash;&gt;-->
+<!--          &lt;!&ndash;                        (click)="confirmChangeEnable(registro.sisHabilitado, registro)">&ndash;&gt;-->
+<!--          &lt;!&ndash;                  {{ !registro.sisHabilitado ? 'Habilitar' : 'Deshabilitar' }}&ndash;&gt;-->
+<!--          &lt;!&ndash;                </button>&ndash;&gt;-->
+
+<!--          &lt;!&ndash;              </div>&ndash;&gt;-->
+<!--          &lt;!&ndash;            </td>&ndash;&gt;-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--      <ng-template pTemplate="rowexpansion" let-registro>-->
+<!--        <tr>-->
+<!--          &lt;!&ndash; El colspan tiene que ser igual al numero de columnas&ndash;&gt;-->
+<!--          <td colspan="4">-->
+<!--            <app-cabecera-compra-perfil [registro]="registro"></app-cabecera-compra-perfil>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--      <ng-template pTemplate="emptymessage">-->
+<!--        <tr>-->
+<!--          &lt;!&ndash; El colspan tiene que ser igual al numero de columnas&ndash;&gt;-->
+<!--          <td colspan="4">No hay información.</td>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+    </p-table>
+  </div>
+</div>
+
+

@@ -1,0 +1,61 @@
+<div *ngIf="control && field">
+  <div class="alert alert-warning" *ngIf="( control.hasError('required') || control.hasError('validadorFechaIngreso') || control.hasError('minlength') || control.hasError('maxlength') || control.hasError('max') || control.hasError('min')||
+                    control.hasError('email') || control.hasError('pattern') ) &&
+                    control.dirty &&
+                    control.touched">
+    <div *ngIf="control.hasError('required') &&
+                    control.dirty &&
+                    control.touched">
+      {{ label }} es requerido.
+    </div>
+
+    <div *ngIf="control.hasError('max') &&
+                    control.dirty &&
+                    control.touched">
+      Debe ser menor que <span *ngIf="control.errors">{{control.errors['max'].max }}</span>.
+    </div>
+    <div *ngIf="control.hasError('min') &&
+                    control.dirty &&
+                    control.touched">
+      Debe ser mayor que <span *ngIf="control.errors">{{control.errors['min'].min }}</span>.
+    </div>
+    <div *ngIf="control.hasError('confirmacionPassword') &&
+                    control.dirty &&
+                    control.touched">
+      Su nuevo password y confirmación no coinciden.
+    </div>
+    <div *ngIf="control.hasError('validadorFechaIngreso') &&
+                    control.dirty &&
+                    control.touched">
+      La fecha de ingreso debe ser mayor o igual a la fecha actual.
+    </div>
+    <div *ngIf="control.hasError('pattern') &&
+                    control.dirty &&
+                    control.touched">
+      Existen caracteres incorrectos.
+    </div>
+    <div *ngIf="control.hasError('minlength') &&
+                    control.dirty &&
+                    control.touched">
+      {{ label }} debe tener mas de<span *ngIf="control.errors"> {{ control.errors['minlength'].min }} </span>caracteres.
+    </div>
+    <div *ngIf="control.hasError('maxlength') &&
+                    control.dirty &&
+                    control.touched">
+      {{ label }} debe tener menos de<span *ngIf="control.errors"> {{ control.errors['maxlength'].max }} </span>caracteres.
+    </div>
+    <div *ngIf="control.hasError('email') &&
+                    control.dirty &&
+                    control.touched">
+      {{ label }} debe ser un correo valido.
+    </div>
+  </div>
+  <div class="alert alert-warning" *ngIf="(control.hasError('archivo'))">
+    <div *ngIf="control.hasError('archivo')">
+      <span *ngIf="field.file">
+      {{ label }} no es valido. El archivo debe tener no mas de {{field.file.tamanioMaximoEnBytes / 1000000}} Mb.
+      </span>
+    </div>
+  </div>
+
+</div>

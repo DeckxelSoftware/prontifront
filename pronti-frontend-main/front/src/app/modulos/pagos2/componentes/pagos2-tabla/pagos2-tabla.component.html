@@ -1,0 +1,174 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container [fieldsArray]="searchBarFormFields" (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-primary btn-sm float-end boton-busqueda" (click)="obtenerDatos()" (click)="llenarDatosEnTabla()"
+        [disabled]="searchButtonDisabled">
+        Buscar
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <br />
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <button class="btn btn-primary m-3" *ngIf="registrosUtilidades.length > 0" (click)="exportExcel()">Exportar Excel</button>
+    <button class="btn btn-primary m-3" *ngIf="registrosUtilidades.length > 0" (click)="exportPDF()">Exportar PDF</button>
+
+    <table id="tablaPago2" [hidden]="true">
+      <tr>
+        <th>UTILIDAD</th>
+        <th>PARTICIPACIÓN 10%</th>
+        <th>PARTICIPACIÓN 5%</th>
+        <th>TOTAL UTILIDAD</th>
+      </tr>
+      <tr>
+        <td>{{calculos.utilidad}}</td>
+        <td>{{calculos.participacion10}}</td>
+        <td>{{calculos.participacion5}}</td>
+        <td>{{calculos.participacion10 + calculos.participacion5}}</td>
+      </tr>
+
+      <tr></tr>
+      <tr></tr>
+
+      <tr>
+
+        <th colspan="2">FECHA HISTORICO DEL INGRESO</th>
+        <th colspan="2"></th>
+        <th colspan="2">Participación Personal 10%</th>
+        <th colspan="2">Participación Personal Cargas 5%</th>
+      </tr>
+      <tr>
+        <th>INICIO</th>
+        <th>FIN</th>
+        <th>DOCUMENTO DE IDENTIFICACIÓN</th>
+        <th>NOMBRE</th>
+        <th>Dias Iess</th>
+        <th>Monto 10% Recibido</th>
+        <th>NUMERO DE CARGAS</th>
+        <th>ESTADO CIVIL</th>
+        <th>TOTAL DE CARGAS</th>
+        <th>Días Laborados</th>
+        <th>Monto 5% Recibir</th>
+        <th>TOTAL A RECIBIR</th>
+        <th>GENERO</th>
+        <th>CORREO ELECTRÓNICO</th>
+        <th>ESTADO</th>
+        <th>CARGA LABORAL</th>
+        <th>CUENTA</th>
+        <th>TIPO DE CUENTA</th>
+        <th>NÚMERO DE CUENTA</th>
+      </tr>
+      <!-- <tr>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+        <td>12</td>
+      </tr> -->
+      <tr *ngFor="let pago of registrosUtilidades">
+        <td>{{pago.idTrabajador?.fechaIngreso}}</td>
+        <td>{{periodoLaboralActual.fechaFin}}</td>
+        <td>{{pago.idTrabajador?.idUsuario?.documentoIdentidad}}</td>
+        <td>{{pago.idTrabajador?.idUsuario?.nombres}} {{pago.idTrabajador?.idUsuario?.apellidos}}</td>
+        <td>{{pago.diasLaboradosAlAnio}}</td>
+        <td>{{pago.valorReal}}</td>
+        <td>{{ pago | obtenerCargas }}</td>
+        <td>{{pago.idTrabajador?.estadoCivil}}</td>
+        <td>{{ pago | obtenerCargas}}</td>
+        <td>{{pago | calcularDiasLaborados}}</td>
+        <td>{{pago.valorMes1}}</td>
+        <td>{{pago | obtenerUtilidad}}</td>
+        <td>{{pago.idTrabajador?.genero}}</td>
+        <td>{{pago.idTrabajador?.idUsuario?.correo}}</td>
+        <td>{{pago.idTrabajador?.sisHabilitado}}</td>
+        <td>{{ (pago | obtenerCargas) > 0? 'SI': 'NO'}}</td>
+        <td>{{pago | getCuentaBancariaEmpresa: 'nombre'}}</td>
+        <td>{{pago | getCuentaBancariaEmpresa: 'tipoCuenta'}}</td>
+        <td>{{pago | getCuentaBancariaEmpresa : 'numeroCuenta'}}</td>
+      </tr>
+    </table>
+
+
+    <!--
+    <p-table id="tabla" [value]="tableData" [dataKey]="'id'" [rows]="startingRows" [paginator]="true" [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [rowsPerPageOptions]="rowsPerPage">
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Pagos 2</span>
+          <button class="btn btn-sm btn-success float-end" (click)="createOrEdit()"> Crear </button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Trabajador</th>
+          <th> Acciones </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr [class]="registro.sisHabilitado ? '' : 'back-deshabilitado'">
+
+          <td>{{ registro.idTrabajador.idUsuario.nombres}} {{ registro.idTrabajador.idUsuario.apellidos}}</td>
+          <td style="text-align: center">
+            <div>
+              <button type="button"
+                [class]="!registro.sisHabilitado ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"
+                (click)="exportPDF(registro)">
+                Exportar PDF
+              </button>
+              <div class="espaciador"></div>
+              <button type="button"
+                [class]="!registro.sisHabilitado ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"
+                (click)="exportExcel(registro)">
+                Exportar excel
+              </button>
+
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <td colspan="4">
+            <app-pagos2-perfil [registro]="registro"></app-pagos2-perfil>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  -->
+  </div>
+</div>
+
+<ng-template>
+
+
+</ng-template>

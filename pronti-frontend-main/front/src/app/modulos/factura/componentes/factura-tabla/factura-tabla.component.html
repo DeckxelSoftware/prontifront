@@ -1,0 +1,129 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+        (click)="searchData()"
+        [disabled]="searchButtonDisabled"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <br/>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [rows]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Factura</span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th>Información</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr>
+          <td>
+            <button
+              type="button"
+              pButton
+              pRipple
+              [pRowToggler]="registro"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            ></button>
+          </td>
+          <td>
+            <div class="row">
+              <div class="col-lg-4 col-sm-12">
+                <b>RUC:</b> {{registro.itRuc}}
+              </div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Razón social:</b> {{registro.itRazonSocial}}
+              </div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Nombre comercial:</b> {{registro.itNombreComercial}}
+              </div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Identificación comprador:</b> {{registro.ifIdentificacionComprador}}
+              </div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Razón social comprador:</b> {{registro.ifRazonSocialComprador}}
+              </div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Dirección establecimiento:</b> {{registro.ifDirEstablecimiento}}
+              </div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Fecha emisión:</b> {{registro.ifFechaEmision}}
+              </div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Importe total:</b> {{registro.ifImporteTotal|currency}}
+              </div>
+
+            </div>
+
+          </td>
+          <!--          <td style="text-align: center">-->
+          <!--            <div>-->
+
+          <!--              <button type="button" class="btn btn-sm btn-warning" (click)="createOrEdit(registro)">-->
+          <!--                Editar-->
+          <!--              </button>-->
+          <!--              <div class="espaciador"></div>-->
+          <!--              <button type="button"-->
+          <!--                      [class]="!(registro.sisHabilitado==='A') ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"-->
+          <!--                      (click)="confirmChangeEnable(registro.sisHabilitado==='A', registro)">-->
+          <!--                {{ !(registro.sisHabilitado==='A') ? 'Habilitar' : 'Deshabilitar' }}-->
+          <!--              </button>-->
+
+          <!--            </div>-->
+          <!--          </td>-->
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">
+            <app-mostrar-factura [factura]="registro"></app-mostrar-factura>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+

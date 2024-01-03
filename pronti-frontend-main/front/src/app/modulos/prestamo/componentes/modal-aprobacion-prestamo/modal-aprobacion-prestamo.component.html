@@ -1,0 +1,16 @@
+<div class="container">
+  <div mat-dialog-title> Aprobación de prestamos</div>
+  <div mat-dialog-content>
+    <form [formGroup]="formPrestamo">
+      <formly-form [form]="formPrestamo" [fields]="fieldsPrestamo" [model]="modelPrestamo"></formly-form>
+    </form>
+    <div class="row mt-3">
+      <app-cuota-prestamo-tabla [prestamo]="this.data.registro"></app-cuota-prestamo-tabla>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button class="btn btn-small btn-secondary mx-2" (click)="cancelar()">Cancelar</button>
+    <button class="btn btn-small btn-primary" [disabled]="!formPrestamo.valid" (click)="submit()">Aceptar</button>
+  </div>
+
+</div>

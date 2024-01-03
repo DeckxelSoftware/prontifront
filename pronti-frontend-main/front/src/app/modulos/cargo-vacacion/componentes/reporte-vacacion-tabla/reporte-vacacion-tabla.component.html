@@ -1,0 +1,122 @@
+<div *ngIf="mostrarBuscador">
+
+  <div class="card-mlab">
+    <div class="row">
+      <div class="col-sm-10">
+        <app-form-container [fieldsArray]="searchBarFormFields" (fieldChanged)="searchFieldChanged($event)"
+          (autoCompleteChangedEmitter)="searchAutoComplete($event)"></app-form-container>
+      </div>
+      <div class="col-sm-2">
+        <button type="button" class="btn btn-primary btn-sm float-end boton-busqueda" (click)="searchData()"
+          [disabled]="searchButtonDisabled">
+          Buscar
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <br />
+  </div>
+
+
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table [value]="tableData" [dataKey]="'id'" [rows]="startingRows" [paginator]="true" [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [rowsPerPageOptions]="rowsPerPage">
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Cargo Vacación</span>
+          <button type="button" class="btn btn-sm btn-success float-end" (click)="generarPdfTodosVacaciones()">Descargar Reportes</button>
+          <!--          <button class="btn btn-sm btn-success float-end" (click)="createOrEdit()"> Crear</button>-->
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Trabajador</th>
+          <th>Detalles días vacaciones</th>
+          <th>Detalles valores vacaciones</th>
+          <th>Acciones</th>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr [class]="registro.sisHabilitado==='A' ? '' : 'back-deshabilitado'">
+          <!-- <td>
+            <button type="button" pButton pRipple [pRowToggler]="registro"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td> -->
+
+          <td>
+            <p>
+                <b>Nombres: </b> 
+                {{registro.idTrabajador?.idUsuario?.nombres}}
+
+               
+            </p>
+            <p>
+                <b>Apellidos: </b>
+                {{registro.idTrabajador?.idUsuario?.apellidos}}
+            </p>
+          </td>
+
+
+          <td>
+            <p>
+                <b>Días vacaciones: </b> {{registro.diasVacaciones}}
+            </p>
+
+            <p>
+              <b>Días tomados: </b> {{registro.diasTomados}}
+            </p>
+
+            <p><b>Días saldo: </b> {{registro.diasSaldo}} </p>
+          </td>
+
+          <td>
+            <p>
+                <b>Total ingreso: </b>
+                {{registro.totalIngresosAnio|currency}}
+            </p>
+
+            <p>
+                <b>Valor vacación: </b>
+                {{registro.valorVacacion | currency}} 
+            </p>
+
+            <p>
+                <b>Valor saldo: </b> 
+                {{registro.valorSaldo|currency}}
+            </p>
+
+          </td>
+
+          <td>
+            <button type="button" class="btn btn-primary" (click)="exportPdf(registro)">Descargar reporte</button>
+          </td>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">
+            <app-registro-vacacion-tabla [idCargoVacacion]="registro.id" [registroCargoVacacion]="registro">
+
+            </app-registro-vacacion-tabla>
+            <!--            <app-cargo-vacacion-perfil [registro]="registro"></app-cargo-vacacion-perfil>-->
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

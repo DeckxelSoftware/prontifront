@@ -1,0 +1,33 @@
+<div class="card-mlab">
+  <app-list-info [tabArray]="tabsArray" [record]="registro"></app-list-info>
+  <b>Informacion complementaria:</b>
+  <hr>
+  <div class="row">
+<!--    <div class="col-lg-4 col-sm-12 mb-2 mx-lg-4">-->
+<!--      <b>Código sectorial: </b>{{registroTrabajador.codigoSectorial}}-->
+<!--    </div>-->
+    <div class="col-lg-4 col-sm-12 mb-2">
+      <b>Estado civil:</b> {{registroTrabajador.estadoCivil}}
+    </div>
+    <div class="col-lg-4 col-sm-12 mb-2 mx-lg-4">
+      <b>Grupo sanguineo:</b>  {{registroTrabajador.grupoSanguineo}}
+    </div>
+    <div class="col-lg-4 col-sm-12 mb-2">
+      <b>Genero:</b>  {{registroTrabajador.genero|genero}}
+    </div>
+    <div class="col-lg-4 col-sm-12 mb-2 mx-lg-4">
+      <b>Nivel de estudios:</b> {{registroTrabajador.nivelEstudios}}
+    </div>
+    <div class="col-lg-4 col-sm-12 mb-2">
+      <b>Profesión: </b>{{registroTrabajador.profesion}}
+    </div>
+    <div class="col-lg-4 col-sm-12 mb-2 mx-lg-4">
+      <b>Estado familiar:</b> {{registroTrabajador.estadoFamiliar|estadoFamliar}}
+    </div>
+    <div class="col-lg-4 col-sm-12 mb-2">
+      <b>Dirección de domicilio:</b> {{registroTrabajador.direccionDomiciliaria}}
+    </div>
+
+
+  </div>
+</div>

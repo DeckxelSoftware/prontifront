@@ -1,0 +1,10 @@
+<app-route-header
+  [title]="'Gestión de rol de pago individual'"
+  [help]="'Gestione los roles de pago individuales'"
+  [imagePath]="'assets/rol-pago/rol-individual.png'"
+></app-route-header>
+<p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+<div class="espaciador"></div>
+<div class="card-mlab">
+  <app-rol-pago-tabla [ocultarBotonesGestion]="true" [mostrarBotonExportar]="true"></app-rol-pago-tabla>
+</div>

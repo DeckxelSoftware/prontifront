@@ -1,0 +1,497 @@
+<div class="container">
+
+
+  <div class="col-12 mb-3">
+    <label class="form-label is_required">Tipo Cliente</label>
+    <p-dropdown [options]="tiposCliente" [(ngModel)]="tipoClienteSeleccionado" optionValue="code"
+                optionLabel="name" (onChange)="cambioSelectTipoCliente($event)"></p-dropdown>
+    <div class="alert alert-warning" *ngIf="formularioCrearCliente.get('tipoCliente')?.errors?.['required']">
+      Tipo de cliente es requerido.
+    </div>
+  </div>
+
+
+  <mat-stepper #stepper>
+
+    <mat-step [stepControl]="formularioCrearCliente">
+
+      <form [formGroup]="formularioCrearCliente">
+
+        <ng-template matStepLabel>Datos de usuario</ng-template>
+        <div class="row">
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Nombres</label>
+            <input formControlName="nombres" type="text" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedUsuario('nombres')">
+              Los nombres son requeridos.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioCrearCliente.get('nombres')?.errors?.['maxlength']">
+              Los nombres debe tener un máximo
+              de {{formularioCrearCliente.get('nombres')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Apellidos</label>
+            <input formControlName="apellidos" type="text" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedUsuario('apellidos')">
+              Los apellidos son requeridos.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioCrearCliente.get('apellidos')?.errors?.['maxlength']">
+              Los apellidos debe tener un máximo
+              de {{formularioCrearCliente.get('apellidos')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label">Fecha de nacimiento</label>
+            <input formControlName="fechaNacimiento" type="date" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedUsuario('fechaNacimiento')">
+              La fecha de nacimiento es requerida.
+            </div>
+          </div>
+
+          <div class="col-6 mb-3" *ngIf="!estaEditando">
+            <label class="form-label is_required">Correo</label>
+            <input formControlName="correo" type="email" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedUsuario('correo')">
+              El correo es requerido.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioCrearCliente.get('correo')?.errors?.['maxlength']">
+              El correo debe tener un máximo
+              de {{formularioCrearCliente.get('correo')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+
+<!--          <div class="col-6 mb-3" *ngIf="!estaEditando">-->
+<!--            <label class="form-label is_required">Usuario</label>-->
+<!--            <input type="text" formControlName="username" class="form-control" [ngClass]="{'is-valid': ''}"-->
+<!--                   placeholder="Ingrese el username">-->
+<!--            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedUsuario('username')">-->
+<!--              El usuario es requerido.-->
+<!--            </div>-->
+
+<!--            <div class="alert alert-warning" *ngIf="formularioCrearCliente.get('username')?.errors?.['maxlength']">-->
+<!--              El username debe tener un máximo-->
+<!--              de {{formularioCrearCliente.get('username')?.errors?.['maxlength']?.requiredLength }} caracteres.-->
+<!--            </div>-->
+<!--          </div>-->
+
+
+<!--          <div class="col-6 mb-3" *ngIf="!estaEditando">-->
+<!--            <label class="form-label is_required">Clave</label>-->
+<!--            <input formControlName="password" type="password" class="form-control">-->
+<!--            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedUsuario('password')">-->
+<!--              La contraseña es requerida.-->
+<!--            </div>-->
+
+<!--            <div class="alert alert-warning" *ngIf="formularioCrearCliente.get('password')?.errors?.['minlength']">-->
+<!--              La contraseña debe tener un mínimo-->
+<!--              de {{formularioCrearCliente.get('password')?.errors?.['minlength']?.requiredLength }} caracteres.-->
+<!--            </div>-->
+
+<!--            <div class="alert alert-warning" *ngIf="formularioCrearCliente.get('password')?.errors?.['maxlength']">-->
+<!--              El password debe tener un máximo-->
+<!--              de {{formularioCrearCliente.get('password')?.errors?.['maxlength']?.requiredLength }} caracteres.-->
+<!--            </div>-->
+<!--          </div>-->
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Tipo medio contacto</label>
+            <p-autoComplete id="tipoMedioContacto1" formControlName="tipoMedioContacto1" [suggestions]="results" field="nombre"
+                            [dropdown]="true"
+                            (completeMethod)="buscarPorAutocomplete($event, 'tipoMedioContacto1')"></p-autoComplete>
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedUsuario('tipoMedioContacto1')">
+              El tipo medio contacto es requerido.
+            </div>
+
+            <div class="alert alert-warning"
+                 *ngIf="formularioCrearCliente.get('tipoMedioContacto1')?.errors?.['maxlength']">
+              El tipo Medio Contacto debe tener un máximo
+              de {{formularioCrearCliente.get('tipoMedioContacto1')?.errors?.['maxlength']?.requiredLength }}
+              caracteres.
+            </div>
+
+          </div>
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Medio contacto</label>
+            <input formControlName="medioContacto1" type="text" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedUsuario('medioContacto1')">
+              El medio contacto es requerido.
+            </div>
+
+            <div class="alert alert-warning"
+                 *ngIf="formularioCrearCliente.get('medioContacto1')?.errors?.['maxlength']">
+              El Medio Contacto debe tener un máximo
+              de {{formularioCrearCliente.get('medioContacto1')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Tipo documento de identidad</label>
+            <p-autoComplete id="tipoDocumentoIdentidad" formControlName="tipoDocumentoIdentidad" [suggestions]="results" field="nombre"
+                            [dropdown]="true"
+                            (completeMethod)="buscarPorAutocomplete($event, 'tipoDocumentoIdentidad')"></p-autoComplete>
+            <div class="alert alert-warning"
+                 *ngIf="mostrarErrorRequiredTouchedUsuario('tipoDocumentoIdentidad')">
+              El tipo de documento de identidad es requerido.
+            </div>
+
+            <div class="alert alert-warning"
+                 *ngIf="formularioCrearCliente.get('tipoDocumentoIdentidad')?.errors?.['maxlength']">
+              El tipo de documento de identidad debe tener un máximo
+              de {{formularioCrearCliente.get('tipoDocumentoIdentidad')?.errors?.['maxlength']?.requiredLength }}
+              caracteres.
+            </div>
+          </div>
+
+
+          <div class="col-6 mb-3" *ngIf="!estaEditando">
+            <label class="form-label is_required">Documento de identidad</label>
+            <input formControlName="documentoIdentidad" type="text" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedUsuario('documentoIdentidad')">
+              El documento de identidad es requerido.
+            </div>
+
+            <div class="alert alert-warning"
+                 *ngIf="formularioCrearCliente.get('documentoIdentidad')?.errors?.['maxlength']">
+              El documento de identidad debe tener un máximo
+              de {{formularioCrearCliente.get('documentoIdentidad')?.errors?.['maxlength']?.requiredLength }}
+              caracteres.
+            </div>
+          </div>
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">País</label>
+
+
+            <p-autoComplete formControlName="pais" [suggestions]="results" field="nombre" [dropdown]="true"
+                            (completeMethod)="buscarPorAutocomplete($event, 'pais')"></p-autoComplete>
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedUsuario('pais')">
+              El país es requerido.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioCrearCliente.get('pais')?.errors?.['maxlength']">
+              El país debe tener un máximo
+              de {{formularioCrearCliente.get('pais')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Provincia</label>
+
+            <p-autoComplete id="provincia" formControlName="provincia" [suggestions]="results" field="nombre"
+                            [dropdown]="true"
+                            (completeMethod)="buscarPorAutocomplete($event, 'provincia')"></p-autoComplete>
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedUsuario('provincia')">
+              La provincia es requerida.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioCrearCliente.get('provincia')?.errors?.['maxlength']">
+              La provincia debe tener un máximo
+              de {{formularioCrearCliente.get('provincia')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+          <div class="col-6 mb-3">
+
+            <label class="form-label is_required">Ciudad</label>
+            <p-autoComplete id="ciudad" formControlName="ciudad" [suggestions]="results" field="nombre"
+                            [dropdown]="true"
+                            (completeMethod)="buscarPorAutocomplete($event, 'ciudad')"></p-autoComplete>
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedUsuario('ciudad')">
+              La ciudad es requerida.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioCrearCliente.get('ciudad')?.errors?.['maxlength']">
+              La ciudad debe tener un máximo
+              de {{formularioCrearCliente.get('ciudad')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+
+        </div>
+
+
+      </form>
+      <div *ngIf="tipoClienteSeleccionado === 'E'">
+
+        <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+      </div>
+      <!--      <div>-->
+      <!--        <button mat-button matStepperPrevious>Back</button>-->
+      <!--        <button mat-button (click)="stepper.reset()">Reset</button>-->
+      <!--      </div>-->
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" *ngIf="tipoClienteSeleccionado === 'E'">
+      <form [formGroup]="formularioEmpresa" *ngIf="(tipoClienteSeleccionado === 'E' || mostrarFormularioEmpresa)">
+        <ng-template matStepLabel>Datos de empresa</ng-template>
+        <div class="row">
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Nombre comercial</label>
+            <input formControlName="nombreComercial" type="text" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedEmpresa('nombreComercial')">
+              Los nombreComercial son requeridos.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('nombreComercial')?.errors?.['maxlength']">
+              El nombre Comercial debe tener un máximo
+              de {{formularioEmpresa.get('nombreComercial')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Razón Social</label>
+            <input formControlName="razonSocial" type="text" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedEmpresa('razonSocial')">
+              La razón social es requerida.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('razonSocial')?.errors?.['maxlength']">
+              La razón social debe tener un máximo
+              de {{formularioEmpresa.get('razonSocial')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Ruc Empresa</label>
+            <input formControlName="rucEmpresa" type="text" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedEmpresa('rucEmpresa')">
+              El RUC de empresa es requerido.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('rucEmpresa')?.errors?.['maxlength']">
+              El ruc de empresa debe tener un máximo
+              de {{formularioEmpresa.get('rucEmpresa')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Dirección Empresa</label>
+            <input formControlName="direccionEmpresa" type="text" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedEmpresa('direccionEmpresa')">
+              La dirección de empresa es requerida.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('direccionEmpresa')?.errors?.['maxlength']">
+              La dirección de empresa debe tener un máximo
+              de {{formularioEmpresa.get('direccionEmpresa')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Teléfono empresa</label>
+            <input formControlName="telefonoEmpresa" type="text" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedEmpresa('telefonoEmpresa')">
+              El teléfono de empresa es requerido.
+            </div>
+
+
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('telefonoEmpresa')?.errors?.['maxlength']">
+              El teléfono debe tener un máximo
+              de {{formularioEmpresa.get('telefonoEmpresa')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Documento representante legal</label>
+            <input formControlName="documentoRepresentanteLegal" type="text" class="form-control">
+            <div class="alert alert-warning"
+                 *ngIf="mostrarErrorRequiredTouchedEmpresa('documentoRepresentanteLegal')">
+              El documento del representante legal es requerido.
+            </div>
+
+            <div class="alert alert-warning"
+                 *ngIf="formularioEmpresa.get('documentoRepresentanteLegal')?.errors?.['maxlength']">
+              El documento debe tener un máximo
+              de {{formularioEmpresa.get('documentoRepresentanteLegal')?.errors?.['maxlength']?.requiredLength }}
+              caracteres.
+            </div>
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Nombre representante legal</label>
+            <input formControlName="nombreRepresentanteLegal" type="text" class="form-control">
+            <div class="alert alert-warning"
+                 *ngIf="mostrarErrorRequiredTouchedEmpresa('nombreRepresentanteLegal')">
+              El nombre del representante legal es requerido.
+            </div>
+
+            <div class="alert alert-warning"
+                 *ngIf="formularioEmpresa.get('nombreRepresentanteLegal')?.errors?.['maxlength']">
+              El nombre del representante legal debe tener un máximo
+              de {{formularioEmpresa.get('nombreRepresentanteLegal')?.errors?.['maxlength']?.requiredLength }}
+              caracteres.
+            </div>
+
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Nombre contador</label>
+            <input formControlName="nombreContador" type="text" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedEmpresa('nombreContador')">
+              El nombre del contador es requerido.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('nombreContador')?.errors?.['maxlength']">
+              El nombre del contador debe tener un máximo
+              de {{formularioEmpresa.get('nombreContador')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">RUC contador</label>
+            <input formControlName="rucContador" type="text" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedEmpresa('rucContador')">
+              El RUC del contador es requerido.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('rucContador')?.errors?.['maxlength']">
+              El ruc del contador debe tener un máximo
+              de {{formularioEmpresa.get('rucContador')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Teléfono contador</label>
+            <input formControlName="telefonoContador" type="text" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedEmpresa('telefonoContador')">
+              El teléfono del contador es requerido.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('telefonoContador')?.errors?.['maxlength']">
+              El teléfono debe tener un máximo
+              de {{formularioEmpresa.get('telefonoContador')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Correo empresa</label>
+            <input formControlName="correoEmpresa" type="email" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedEmpresa('correoEmpresa')">
+              El correo de empresa es requerido.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('correoEmpresa')?.errors?.['maxlength']">
+              El correo de empresa debe tener un máximo
+              de {{formularioEmpresa.get('correoEmpresa')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Correo contador</label>
+            <input formControlName="correoContador" type="email" class="form-control">
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedEmpresa('correoContador')">
+              El correo de contador es requerido.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('correoContador')?.errors?.['maxlength']">
+              El correo del contador debe tener un máximo
+              de {{formularioEmpresa.get('correoContador')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Correo representante legal</label>
+            <input formControlName="correoRepresentanteLegal" type="email" class="form-control">
+            <div class="alert alert-warning"
+                 *ngIf="mostrarErrorRequiredTouchedEmpresa('correoRepresentanteLegal')">
+              El correo del representante legal es requerido.
+            </div>
+
+            <div class="alert alert-warning"
+                 *ngIf="formularioEmpresa.get('correoRepresentanteLegal')?.errors?.['maxlength']">
+              El correo del representante legal debe tener un máximo
+              de {{formularioEmpresa.get('correoRepresentanteLegal')?.errors?.['maxlength']?.requiredLength }}
+              caracteres.
+            </div>
+
+          </div>
+
+          <div class="col-6 mb-3">
+
+            <label class="form-label is_required">Tipo Empresa</label>
+            <p-autoComplete id="tipoEmpresa" formControlName="tipoEmpresa" [suggestions]="results" field="nombre"
+                            [dropdown]="true"
+                            (completeMethod)="buscarPorAutocomplete($event, 'tipoEmpresa')"></p-autoComplete>
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedEmpresa('tipoEmpresa')">
+              El tipo empresa es requerido.
+            </div>
+
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('tipoEmpresa')?.errors?.['maxlength']">
+              El tipo de empresa debe tener un máximo
+              de {{formularioEmpresa.get('tipoEmpresa')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Clase contribuyente</label>
+            <p-autoComplete id="claseContribuyente" formControlName="claseContribuyente" [suggestions]="results"
+                            field="nombre" [dropdown]="true"
+                            (completeMethod)="buscarPorAutocomplete($event, 'claseContribuyente')"></p-autoComplete>
+            <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedEmpresa('claseContribuyente')">
+              La clase de contribuyente es requerida.
+            </div>
+
+
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('claseContribuyente')?.errors?.['maxlength']">
+              La clase contribuyente debe tener un máximo
+              de {{formularioEmpresa.get('claseContribuyente')?.errors?.['maxlength']?.requiredLength }} caracteres.
+            </div>
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Obligado llevar contabilidad</label>
+            <p-dropdown [options]="opcionesSINO" formControlName="obligadoLlevarContabilidad" optionValue="code"
+                        optionLabel="name"></p-dropdown>
+            <div class="alert alert-warning"
+                 *ngIf="formularioEmpresa.get('obligadoLlevarContabilidad')?.errors?.['required']">
+              Obligado llevar contabilidad es requerido.
+            </div>
+          </div>
+
+
+          <div class="col-6 mb-3">
+            <label class="form-label is_required">Agente de Retención</label>
+            <p-dropdown [options]="opcionesSINO" formControlName="agenteRetencion" optionLabel="name"
+                        optionValue="code"></p-dropdown>
+            <div class="alert alert-warning" *ngIf="formularioEmpresa.get('agenteRetencion')?.errors?.['required']">
+              Agente de retención es requerido.
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+
+
+  <div mat-dialog-actions align="end">
+    <button class="btn btn-primary" [disabled]="!disabledButton" (click)="editarCrear()">
+      {{
+      estaEditando ? "EDITAR" : "CREAR"
+      }}
+    </button>
+
+  </div>
+</div>
+

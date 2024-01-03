@@ -1,0 +1,29 @@
+<div class="espaciador"></div>
+<p-breadcrumb [model]="items"></p-breadcrumb>
+<app-route-header title="Informe préstamos" help="" imagePath="/assets/prestamo/imagen.png"></app-route-header>
+<div class="card-mlab">
+  <!--  <app-prestamo-tabla></app-prestamo-tabla>-->
+  <div class="card-mlab">
+
+    <div class="row">
+      <div class="col-sm-10">
+        <app-form-container
+          [fieldsArray]="searchBarFormFields"
+          (fieldChanged)="searchFieldChanged($event)"
+          (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+        ></app-form-container>
+      </div>
+      <div class="col-sm-2">
+        <button
+          type="button"
+          class="btn btn-primary btn-sm float-end boton-busqueda"
+          (click)="buscarDatosYGenerarPDF()"
+          [disabled]="searchButtonDisabled"
+        >
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

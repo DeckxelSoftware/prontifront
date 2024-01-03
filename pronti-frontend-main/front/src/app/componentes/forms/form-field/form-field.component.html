@@ -1,0 +1,172 @@
+<div *ngIf="field">
+  <div [formGroup]="field.formGroup">
+    <div
+      *ngIf="field.type === 'text' || field.type === 'password' || field.type === 'date' || field.type === 'email'">
+      <label [for]="field.formControlName" class="form-label">{{field.label}} <span *ngIf="required">*</span> :</label>
+      <input [type]="field.type" [formControlName]="field.formControlName" class="form-control"
+             [id]="field.formControlName" [placeholder]="field.placeholder ? field.placeholder : ''"
+             [email]="field.type === 'email' ? true : false">
+      <div [id]="field.formControlName + 'Help'" class="form-text">{{field.help}}</div>
+      <app-form-validations-messages [label]="field.label"
+                                     [control]="field.formGroup.get(field.formControlName)"
+                                     [field]="field"></app-form-validations-messages>
+    </div>
+    <div
+      *ngIf="field.type === 'number' && field.number">
+      <label [for]="field.formControlName" class="form-label">{{field.label}} <span *ngIf="required">*</span> :</label>
+      <input [type]="field.type"
+             [formControlName]="field.formControlName"
+             class="form-control"
+             [id]="field.formControlName"
+             [placeholder]="field.placeholder ? field.placeholder : ''"
+             [step]="field.number.step ? field.number.step : ''"
+             [min]="field.number.min ? field.number.min : ''"
+             [max]="field.number.max ? field.number.max : ''"
+      >
+      <div [id]="field.formControlName + 'Help'" class="form-text">{{field.help}}</div>
+      <app-form-validations-messages [label]="field.label"
+                                     [control]="field.formGroup.get(field.formControlName)"
+                                     [field]="field"></app-form-validations-messages>
+    </div>
+    <div *ngIf="field.type === 'textarea' && field.textarea">
+      <label [for]="field.formControlName" class="form-label">{{field.label}} <span *ngIf="required">*</span> :</label>
+      <textarea [formControlName]="field.formControlName" class="form-control"
+                [id]="field.formControlName"
+                [rows]="field.textarea.rows ? field.textarea.rows : 1"
+                [placeholder]="field.placeholder ? field.placeholder : ''"></textarea>
+      <div [id]="field.formControlName + 'Help'" class="form-text">{{field.help}}</div>
+      <app-form-validations-messages [label]="field.label"
+                                     [control]="field.formGroup.get(field.formControlName)"
+                                     [field]="field"
+      ></app-form-validations-messages>
+    </div>
+    <div *ngIf="field.type === 'select' && field.select">
+      <label [for]="field.formControlName" class="form-label">{{field.label}} <span *ngIf="required">*</span> :</label>
+      <div>
+        <p-dropdown
+          [dataKey]="field.select.dataKey"
+          [options]="field.select.options"
+          [formControlName]="field.formControlName"
+          [optionLabel]="field.select.optionLabel"
+          [filter]="true"
+          [filterBy]="field.select.filterBy"
+          [showClear]="true"
+          [placeholder]="field.placeholder ? field.placeholder : ''"
+          [filterPlaceholder]="field.select.filterPlaceholder ? field.select.filterPlaceholder : ''"
+          autoWidth="false" [style]="{'width':'100%'}">
+        </p-dropdown>
+      </div>
+      <div [id]="field.formControlName + 'Help'" class="form-text">{{field.help}}</div>
+      <app-form-validations-messages [label]="field.label"
+                                     [control]="field.formGroup.get(field.formControlName)"
+                                     [field]="field"></app-form-validations-messages>
+    </div>
+    <div *ngIf="field.type === 'mask' && field.mask">
+      <label [for]="field.formControlName" class="form-label">{{field.label}} <span *ngIf="required">*</span> :</label>
+      <div>
+        <p-inputMask [formControlName]="field.formControlName"
+                     [mask]="field.mask.maskTemplate"
+                     [autoClear]="field.mask.autoClear !== undefined ? field.mask.autoClear : true"
+                     autoWidth="false" [style]="{'width':'100%'}"></p-inputMask>
+      </div>
+      <div [id]="field.formControlName + 'Help'" class="form-text">{{field.help}}</div>
+      <app-form-validations-messages [label]="field.label"
+                                     [control]="field.formGroup.get(field.formControlName)"
+                                     [field]="field"></app-form-validations-messages>
+    </div>
+    <div *ngIf="field.type === 'autoComplete' && field.autoComplete">
+      <label [for]="field.formControlName" class="form-label">{{field.label}} <span *ngIf="required">*</span> :</label>
+      <div>
+        <p-autoComplete
+
+          [formControlName]="field.formControlName"
+          [suggestions]="field.autoComplete.suggestions"
+          [field]="field.autoComplete.field"
+          [dropdown]="true"
+          [forceSelection]="true"
+          [delay]="field.autoComplete.delay ? field.autoComplete.delay: 1200"
+          [emptyMessage]="field.autoComplete.emptyMessage ? field.autoComplete.emptyMessage : 'Not found'"
+          [inputId]="field.autoComplete.inputId"
+          (completeMethod)="autoCompleteChanged($event)"
+          [placeholder]="field.placeholder ? field.placeholder : '' "
+          [showEmptyMessage]="true"
+        >
+        </p-autoComplete>
+
+      </div>
+      <div [id]="field.formControlName + 'Help'" class="form-text">{{field.help}}</div>
+      <app-form-validations-messages [label]="field.label"
+                                     [control]="field.formGroup.get(field.formControlName)"
+                                     [field]="field"></app-form-validations-messages>
+    </div>
+    <div *ngIf="field.type === 'inputNumber' && field.inputNumber">
+      <label [for]="field.formControlName" class="form-label">{{field.label}} <span *ngIf="required">*</span> :</label>
+      <div>
+        <p-inputNumber class="input-number"
+                       [styleClass]="'input-number'"
+          [formControlName]="field.formControlName"
+          [placeholder]="field.placeholder ? field.placeholder : '' "
+          [mode]="field.inputNumber.mode ? field.inputNumber.mode : 'decimal'"
+          [suffix]="field.inputNumber.suffix ? field.inputNumber.suffix : ''"
+          [prefix]="field.inputNumber.prefix ? field.inputNumber.prefix : ''"
+          [min]="field.inputNumber.min ? field.inputNumber.min : 0"
+          [max]="field.inputNumber.max ? field.inputNumber.max : 99999999999"
+          [step]="field.inputNumber.step ? field.inputNumber.step : 1"
+          [allowEmpty]="field.inputNumber.allowEmpty ? field.inputNumber.allowEmpty : true"
+          [minFractionDigits]="field.inputNumber.minFractionDigits ? field.inputNumber.minFractionDigits : 0"
+          [maxFractionDigits]="field.inputNumber.maxFractionDigits ? field.inputNumber.maxFractionDigits : 0"
+        ></p-inputNumber>
+
+      </div>
+      <div [id]="field.formControlName + 'Help'" class="form-text">{{field.help}}</div>
+      <app-form-validations-messages [label]="field.label"
+                                     [control]="field.formGroup.get(field.formControlName)"
+                                     [field]="field"></app-form-validations-messages>
+    </div>
+
+    <div class="row" *ngIf="field.type === 'file' && field.file">
+
+      <div class="col-md-12">
+        <label class="form-label"
+               [for]="field.formControlName"
+        >
+          {{field.label}}<span *ngIf="required">*</span> :
+        </label>
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label btn btn-outline-success w-100"
+               [id]="field.formControlName + 'label'"
+               [for]="field.formControlName" s
+        >
+          Seleccionar archivo
+        </label>
+      </div>
+      <div class="contenedor-archivo">
+        <input
+          class="form-control ocultar-input-file"
+          [id]="field.formControlName"
+          [name]="field.formControlName"
+          [formControlName]="field.formControlName"
+          [type]="'file'"
+          [placeholder]="field.placeholder"
+          (change)="cambioArchivo($event)"
+          [accept]='field.file.accept'
+        >
+      </div>
+      <div [id]="field.formControlName + 'Help'" class="form-text">{{field.help}}</div>
+      <app-form-validations-messages [label]="field.label"
+                                     [control]="field.formGroup.get(field.formControlName)"
+                                     [field]="field"></app-form-validations-messages>
+
+
+      <div class="col-md-12" *ngIf="validarImagenesSoportadas(file?.type)">
+        <img [src]="src" class="img-fluid imagen-previsualizacion" alt="">
+      </div>
+      <div class="col-md-12 text-center espacio-tipo-archivo" *ngIf="file">
+        <strong>Tipo de archivo:</strong> {{file.type}} <img class="imagen-icono"
+                                                             src="assets/libreria/icono-archivo.svg" alt="">
+      </div>
+    </div>
+  </div>
+</div>

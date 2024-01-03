@@ -1,0 +1,153 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+        (click)="searchData()"
+        [disabled]="searchButtonDisabled"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <br />
+</div>
+
+
+
+
+  <div class="row">
+    <div class="col-sm-12">
+      <p-table
+        [value]="tableData"
+        [dataKey]="'id'"
+        [rows]="startingRows"
+        [paginator]="true"
+        [lazy]="true"
+        (onLazyLoad)="lazyLoad($event)"
+        [totalRecords]="totalRecords"
+        [rowsPerPageOptions]="rowsPerPage"
+      >
+
+
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <span class="fw-bolder texto-titulo-tabla">Cliente</span>
+
+<!--            <button class="btn btn-sm btn-success float-end m-1" (click)="createOrEdit()"> Crear </button>-->
+<!--            <p-splitButton label="Cliente Natural" class="float-end" icon="pi pi-plus"  (onClick)="crearClienteInicial()" [model]="items"></p-splitButton>-->
+
+            <p-splitButton label="Asignar datos para cliente" class="float-end" icon="pi pi-plus"  (onClick)="createOrEdit()" [model]="itemsFormaAsignacion"></p-splitButton>
+<!--            <button  class=" float-end" type="button" pButton icon="pi pi-plus" label="Crear" (click)="menu.toggle($event)"></button>-->
+<!--            <p-menu class="p-menu-crear" #menu [popup]="true" [model]="items"></p-menu>-->
+            <button class="btn btn-sm btn-success float-end m-1" (click)="crearDesdeCero()"> Crear Nuevo Cliente</button>
+
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th></th>
+            <th>Usuario</th>
+            <th>Empresa</th>
+            <th>Habilitado</th>
+            <th> Acciones </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-registro let-expanded="expanded">
+          <tr
+            [class]="registro.sisHabilitado === 'A' ? '' : 'back-deshabilitado'">
+            <td>
+              <button
+                type="button"
+                pButton
+                pRipple
+                [pRowToggler]="registro"
+                class="p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+              ></button>
+            </td>
+            <td>
+              <p><b>Tipo cliente: </b>
+                {{ registro.tipoCliente | tipoCliente}}
+              </p>
+              <p><b>Nombres y apellidos: </b>
+
+                {{ registro.idUsuario?.nombres}}
+                {{ registro.idUsuario?.apellidos}}
+              </p>
+
+              <p><b>Documento identidad: </b>
+                {{ registro.idUsuario?.documentoIdentidad}}
+              </p>
+            </td>
+            <td>
+              <p><b>Nombre comercial: </b>
+                {{ registro.idEmpresa?.nombreComercial }}
+              </p>
+
+              <p><b>Razón social: </b>
+                {{ registro.idEmpresa?.razonSocial }}
+              </p>
+
+              <p><b>RUC: </b>
+                {{ registro.idEmpresa?.rucEmpresa}}
+              </p>
+            </td>
+            <td>{{ registro.sisHabilitado === 'A' ? 'Si' : 'No' }}</td>
+            <td style="text-align: center">
+              <div>
+
+                <button type="button" class="btn btn-sm btn-warning" (click)="createOrEdit(registro)">
+                  Reasignar datos
+                </button>
+                <div class="espaciador"></div>
+                <button type="button" class="btn btn-sm btn-warning" (click)="crearDesdeCero(registro)">
+                  Editar datos cliente
+                </button>
+                <div class="espaciador"></div>
+                <button type="button"
+                        [class]="registro.sisHabilitado === 'A'? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"
+                        (click)="confirmChangeEnable(registro.sisHabilitado, registro)">
+                  {{ registro.sisHabilitado === 'I' ? 'Habilitar' : 'Deshabilitar' }}
+                </button>
+                <div class="espaciador"></div>
+                <button type="button" *ngIf="vieneDesdeContrato"
+                        [class]="registro.sisHabilitado === 'A'? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"
+                        (click)="seleccionarCliente(registro)">
+                  Seleccionar Cliente
+                </button>
+
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-registro>
+          <tr>
+            <!-- El colspan tiene que ser igual al numero de columnas-->
+            <td colspan="5">
+              <app-cliente-perfil [registro]="registro"></app-cliente-perfil>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <!-- El colspan tiene que ser igual al numero de columnas-->
+            <td colspan="5">No hay información.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+

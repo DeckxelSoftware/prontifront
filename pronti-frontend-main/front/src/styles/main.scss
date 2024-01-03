@@ -1,0 +1,65 @@
+@import 'tables/table.scss';
+
+.card-mlab {
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0px 4px 1px -1px rgb(0 0 0 / 20%), 0px 3px 1px 0px rgb(0 0 0 / 14%), 6px 2px 4px 0px rgb(0 0 0 / 12%)
+}
+
+.p-autocomplete {
+  width: 100%;
+}
+
+.back-deshabilitado {
+  background: #d9d9d9 !important;
+}
+
+.espaciador {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+
+.example-container {
+  width: 100%;
+  height: 94%;
+ // border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
+
+.container-full {
+  height: 100%;
+}
+
+.container-content {
+  height: 93%;
+}
+
+.navbar-menu {
+  padding: 0.25rem 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid #00000033;
+  border-radius: 0.25rem;
+  margin-right: 10px;
+}
+
+.texto-titulo-tabla {
+  color: #ecf4ff;
+  font-size: 1.3rem;
+}
+
+.p-tabview-nav{
+  justify-content: center;
+}

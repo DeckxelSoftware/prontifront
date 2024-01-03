@@ -1,0 +1,30 @@
+<h1 mat-dialog-title class="text-center">
+  <div *ngIf="data.icono">
+    <i [class]="'pi  pi-'+data.icono" style="font-size: 2rem"></i></div>
+  {{data.titulo}}</h1>
+<div mat-dialog-content>
+
+  <div class="content m-2">
+    {{data.mensaje}}
+    <div [innerHTML]="data.html">
+
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions style="display:flex; justify-content: end">
+  <div class="row ">
+    <div class="col-6" [hidden]="!data.mostrarBotonCancelar">
+      <button class="btn btn-secondary" mat-button
+              (click)="cerrarModalConfirmacion(false)">{{data.textoBotonCancelar}}</button>
+    </div>
+
+    <div class="col-6" [hidden]="!data.mostrarBotonAceptar">
+      <button class="btn btn-primary" mat-button
+              (click)="cerrarModalConfirmacion(true)">{{data.textoBotonAceptar}}</button>
+    </div>
+
+
+  </div>
+</div>
+
+

@@ -1,0 +1,264 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+        (click)="searchData()"
+        [disabled]="searchButtonDisabled"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <br/>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [rows]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Impuesto Renta</span>
+          <button class="btn btn-sm btn-success float-end" (click)="createOrEdit()"> Crear</button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Detalle</th>
+          <!--            <th>Habilitado</th>-->
+          <th> Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr
+          [class]="registro.sisHabilitado ==='A'? '' : 'back-deshabilitado'">
+          <!--            <td>-->
+          <!--              <button-->
+          <!--                type="button"-->
+          <!--                pButton-->
+          <!--                pRipple-->
+          <!--                [pRowToggler]="registro"-->
+          <!--                class="p-button-text p-button-rounded p-button-plain"-->
+          <!--                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"-->
+          <!--              ></button>-->
+          <!--            </td>-->
+          <td>
+            <div class="row mb-3">
+              <div class="col-6"><b>Nombre:</b> {{registro.nombre}}</div>
+              <div class="col-6"><b>Año:</b> {{registro.anio}}</div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <b>#</b>
+              </div>
+              <div class="col-3">
+                <b>Fracción básica:</b>
+              </div>
+              <div class="col-3">
+                <b> Impuesto sobre la fracción básica:</b>
+              </div>
+              <div class="col-3">
+                <b>% Impuesto sobre la fracción excedente:</b>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                1
+              </div>
+              <div class="col-3">
+                {{registro.fraccionBasica1|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionBasica1|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionExcedente1|currency}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                2
+              </div>
+              <div class="col-3">
+                {{registro.fraccionBasica2|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionBasica2|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionExcedente2|currency}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                3
+              </div>
+              <div class="col-3">
+                {{registro.fraccionBasica3|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionBasica3|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionExcedente3|currency}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                4
+              </div>
+              <div class="col-3">
+                {{registro.fraccionBasica4|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionBasica4|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionExcedente4|currency}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                5
+              </div>
+              <div class="col-3">
+                {{registro.fraccionBasica5|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionBasica5|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionExcedente5|currency}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                6
+              </div>
+              <div class="col-3">
+                {{registro.fraccionBasica6|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionBasica6|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionExcedente6|currency}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                7
+              </div>
+              <div class="col-3">
+                {{registro.fraccionBasica7|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionBasica7|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionExcedente7|currency}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                8
+              </div>
+              <div class="col-3">
+                {{registro.fraccionBasica8|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionBasica8|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionExcedente8|currency}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                9
+              </div>
+              <div class="col-3">
+                {{registro.fraccionBasica9|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionBasica9|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionExcedente9|currency}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                10
+              </div>
+              <div class="col-3">
+                {{registro.fraccionBasica10|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionBasica10|currency}}
+              </div>
+              <div class="col-3">
+                {{registro.impuestoFraccionExcedente10|currency}}
+              </div>
+            </div>
+
+          </td>
+          <!--          <td>{{ registro.sisHabilitado ? 'Si' : 'No' }}</td>-->
+          <td style="text-align: center">
+            <div>
+
+              <button type="button" class="btn btn-sm btn-warning" (click)="createOrEdit(registro)">
+                Editar
+              </button>
+              <!--              <div class="espaciador"></div>-->
+              <!--              <button type="button"-->
+              <!--                      [class]="!registro.sisHabilitado ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"-->
+              <!--                      (click)="confirmChangeEnable(registro.sisHabilitado, registro)">-->
+              <!--                {{ !registro.sisHabilitado ? 'Habilitar' : 'Deshabilitar' }}-->
+              <!--              </button>-->
+
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">
+            <app-impuesto-renta-perfil [registro]="registro"></app-impuesto-renta-perfil>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+

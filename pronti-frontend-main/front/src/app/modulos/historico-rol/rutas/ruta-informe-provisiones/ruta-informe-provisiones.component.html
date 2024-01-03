@@ -1,0 +1,35 @@
+<app-route-header title="Provisiones" help="Informe de provisiones" imagePath="assets/historico-rol/image.png">
+</app-route-header>
+
+
+<p-breadcrumb [model]="items"></p-breadcrumb>
+<div class="espaciador"></div>
+
+<div class="card-mlab">
+
+    <div class="row">
+
+        <div class="col-6">
+            <label for="periodo">Periodo: </label>
+            <p-autoComplete [(ngModel)]="periodo" [suggestions]="periodosLaboral" (completeMethod)="buscarPeriodoLaboralPorAnio($event)" field="datos" [dropdown]="true"></p-autoComplete>
+        </div>
+        <!-- <div class="col-6">
+
+            <label for="Año">Año: </label>
+            <p-calendar [(ngModel)]="value" view="year" dateFormat="yy"></p-calendar>
+        </div>
+        <div class="col-6">
+
+            <label for="mes">Mes periodo: </label>
+            <p-dropdown [options]="periodosLaboral" [(ngModel)]="periodoLaboralSeleccionado" optionLabel="mes"></p-dropdown>
+        </div> -->
+
+        <div class="col-6">
+            <button type="button" class="btn btn-primary m-4" (click)="confirmar()" [disabled]="!periodo.id">Confirmar</button>
+            <button type="button" class="btn btn-primary m-4" (click)="exportPDF()" [disabled]="desabilitarDescarga">Descargar PDF</button>
+        </div>
+    </div>
+
+
+    <!-- <app-historico-rol-tabla></app-historico-rol-tabla> -->
+</div>

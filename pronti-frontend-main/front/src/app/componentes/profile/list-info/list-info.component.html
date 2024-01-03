@@ -1,0 +1,60 @@
+<mat-tab-group mat-align-tabs="start">
+  <mat-tab *ngFor="let tab of tabArray">
+    <ng-template mat-tab-label>
+      <i [class]="tab.icon"></i>
+      <span class="tab-title">
+            {{ tab.label }}
+        </span>
+    </ng-template>
+    <div class="row m-3">
+      <ng-container *ngFor="let data of tab.data">
+        <div class="col-md-6">
+          <p class="h7 fw-bolder">{{ data.showingName }}:</p>
+          <p *ngIf="data.type === dataTypeString" class="h6 text-muted">{{ record[data.fieldName] }}</p>
+          <p *ngIf="data.type === dataTypeDate" class="h6 text-muted">{{ record[data.fieldName] | date: 'short' }}</p>
+          <p *ngIf="data.type === dataTypeMoney" class="h6 text-muted">{{ record[data.fieldName] | currency }}</p>
+          <p *ngIf="data.type === dataTypeTextArea" class="h6 text-muted">{{ record[data.fieldName] }}</p>
+          <div *ngIf="data.type === dataTypeFile">
+
+            <div *ngIf="record.sisImagen">
+
+              <app-show-file
+                [buffer]="record.sisImagen.buffer"
+                [documentType]="record.sisImagen.tipoDocumento"
+                [fileName]="record.sisImagen.nombreOriginal"
+              >
+              </app-show-file>
+            </div>
+
+
+            <div *ngIf="record.sisArchivo">
+
+
+              <app-show-file
+                [buffer]="record.sisArchivo.buffer"
+                [documentType]="record.sisArchivo.tipoDocumento"
+                [fileName]="record.sisArchivo.nombreOriginal"
+              >
+              </app-show-file>
+            </div>
+            <!--        <img class="img-fluid imagen-tabla" src="assets/comun/pdf.svg" alt="">
+                      <p *ngIf="record[data.fieldName].nombreOriginal">
+                        {{record[data.fieldName].nombreOriginal}}
+                      </p>
+                      <div>
+                        <button class="btn btn-primary" (click)="descargarArchivo()" >
+                         Descargar
+                        </button>
+                      </div>-->
+          </div>
+          <p *ngIf="!record[data.fieldName]"> N/A</p>
+
+        </div>
+
+      </ng-container>
+
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+

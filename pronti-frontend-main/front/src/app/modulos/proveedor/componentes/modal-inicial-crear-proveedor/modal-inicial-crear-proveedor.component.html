@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="mb-4" style="display: flex; justify-content: center">
+    <h4>Crear Proveedor</h4>
+  </div>
+
+  <form [formGroup]="formularioInicialProveedor">
+
+    <div class="row">
+      <div class="col-6 mb-3">
+        <div class="row">
+          <label class="form-label is_required">Tipo Proveedor:* </label>
+        </div>
+        <div class="row">
+          <p-dropdown [formControlName]="'tipoProveedor'" [options]="tiposProveedor" optionValue="code"
+                      optionLabel="name" (onChange)="cambioSelectTipoProveedor($event)"></p-dropdown>
+          <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedProveedor('tipoProveedor')">
+            Tipo de proveedor es requerido.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-6 mb-3" *ngIf="tipoProveedorSeleccionado">
+        <div class="row">
+          <label
+            class="form-label is_required">{{(tipoProveedorSeleccionado === 'E') ? 'Crear datos de empresa' : 'Crear datos de usuario'}}
+            ?*</label>
+        </div>
+        <div class="row">
+          <p-dropdown [formControlName]="'crearDatos'" [options]="opcionesSINO" optionValue="code"
+                      optionLabel="name"></p-dropdown>
+          <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedProveedor('crearDatos')">
+            Campo requerido.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </form>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div style="display: flex; justify-content: end">
+
+    <button class="btn-sm btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    <button class="mx-2 btn-sm btn btn-primary" (click)="continuar()" [disabled]="!formularioInicialProveedor.valid">
+      Continuar
+    </button>
+  </div>
+
+</div>

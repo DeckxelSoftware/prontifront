@@ -1,0 +1,53 @@
+<p-table [value]="pagos"
+         [dataKey]="'id'">
+  <ng-template pTemplate="header">
+    <tr>
+      <th></th>
+      <th>
+        Tipo doc.
+      </th>
+      <th>
+        Num. documento
+      </th>
+      <th>
+        Fecha
+      </th>
+      <th>
+        Observaciones
+      </th>
+      <th>
+        Valor
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-pago let-expanded="expanded">
+    <tr>
+      <td>
+        <button
+          type="button"
+          pButton
+          pRipple
+          [pRowToggler]="pago"
+          class="p-button-text p-button-rounded p-button-plain"
+          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+        ></button>
+      </td>
+      <td>{{pago.tipoDocumento}}</td>
+      <td>{{pago.numeroDocumento}}</td>
+      <td>{{pago.fechaDeposito}}</td>
+      <td>{{pago.observaciones}}</td>
+      <td>{{pago.valor|currency}}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-pago>
+    <tr>
+      <td colspan="6">
+        <app-detalle-pago-tabla [mostrarBotonFactura]="mostrarBotonFacturaDetalles" [pago]="pago"></app-detalle-pago-tabla>
+
+      </td>
+    </tr>
+
+
+  </ng-template>
+
+</p-table>

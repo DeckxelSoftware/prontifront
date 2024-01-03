@@ -1,0 +1,12 @@
+<app-route-header
+[title]="'Informes de vacaciones'"
+[help]="'informes de vacaciones por trabajador'"
+[imagePath]="'assets/cargo-vacacion/image.png'"
+></app-route-header>
+
+<p-breadcrumb [model]="items"></p-breadcrumb>
+
+<div class="espaciador"></div>
+<div class="card-mlab">
+    <app-reporte-vacacion-tabla [mostrarBuscador]="true"></app-reporte-vacacion-tabla>
+</div>

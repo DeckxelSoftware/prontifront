@@ -1,0 +1,45 @@
+<div *ngIf="showHtml">
+  <h1 mat-dialog-title class="text-center">{{ modalTitle }}</h1>
+  <p>{{ modalDescription }}</p>
+  <mat-dialog-content class="mat-typography">
+
+    <div>
+      <app-form-container
+        [matStepperArray]="arrayAccordeon"
+        [fieldsArray]="arrayForms"
+        (fieldChanged)="fieldChanged($event)"
+        (autoCompleteChangedEmitter)="autocompleteChanged($event)"
+      ></app-form-container>
+
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+    </div>
+  </mat-dialog-content>
+
+  <div mat-dialog-actions align="end">
+    <div class="row">
+      <div class="col-12"></div>
+      <button class="btn btn-success btn-sm" [disabled]="submitButtonDisabled"
+              (click)="calcularDebitoCreditoSaldo(arrayForms[0].formGroup)">Calcular
+        saldos
+      </button>
+      <div class="col-md-12 mt-2">
+        <button
+          [disabled]="submitButtonDisabled"
+          class="btn-sm btn btn-primary"
+          (click)="createOrEdit()"
+        >
+          {{this.buttonLabel}}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

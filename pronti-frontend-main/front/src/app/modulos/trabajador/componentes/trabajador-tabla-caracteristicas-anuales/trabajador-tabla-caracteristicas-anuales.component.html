@@ -1,0 +1,132 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+        (click)="searchData()"
+        [disabled]="searchButtonDisabled"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <p-accordion [multiple]="true">
+      <p-accordionTab header="Filtros adicionales">
+        <app-form-container
+          [fieldsArray]="additionalFilters"
+          (fieldChanged)="searchFieldChanged($event)"
+          (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+        ></app-form-container>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+</div>
+<div class="row">
+  <br/>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [rows]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Trabajador</span>
+          <!--          <button class="btn btn-sm btn-success float-end" (click)="createOrEdit()"> Crear</button>-->
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+
+          <th>Detalles</th>
+          <th> Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr
+          [class]="registro.sisHabilitado==='A' ? '' : 'back-deshabilitado'">
+
+          <td>
+            <div class="row">
+              <div class="col-lg-6 col-sm-12 mb-2">
+                <b>Nombre:</b> {{registro.idUsuario.nombres}} {{registro.idUsuario.apellidos}}</div>
+              <div class="col-lg-6 col-sm-12 mb-2"><b>Documento de
+                identidad:</b> {{registro.idUsuario.documentoIdentidad}}
+              </div>
+              <div class="col-lg-6 col-sm-12 mb-2"><b>Fecha
+                ingreso:</b> {{registro.fechaIngreso ? (registro.fechaIngreso|fecha) : 'No registrado'}}</div>
+              <div class="col-lg-6 col-sm-12 mb-2"><b>Ciudad:</b> {{registro.idUsuario.ciudad}}</div>
+              <div class="col-lg-6 col-sm-12 mb-2"><b>Num. afiliación:</b> {{registro.numeroAfiliacion}}</div>
+              <div class="col-lg-6 col-sm-12 mb-2"><b>Discapacidad?:</b>{{registro.discapacidad|siNo}}</div>
+              <div class="col-lg-6 col-sm-12 mb-2"><b>Tipo
+                discapacidad:</b> {{registro.tipoDiscapacidad ? registro.tipoDiscapacidad : 'No registrado'}}</div>
+              <div class="col-lg-6 col-sm-12 mb-2"><b>Tiempo parcial:</b> {{registro.tiempoParcial|siNo}}</div>
+              <div class="col-lg-6 col-sm-12 mb-2"><b>Factor
+                parcial:</b> {{registro.factorParcial ? registro.factorParcial : 'No registrado'}}</div>
+              <div class="col-lg-6 col-sm-12 mb-2"><b>Pasante:</b> {{registro.pasante|siNo}}</div>
+              <div class="col-lg-6 col-sm-12 mb-2"><b>Reingreso:</b> {{registro.reingreso|siNo}}</div>
+              <div class="col-lg-6 col-sm-12 mb-2"><b>Fecha
+                reingreso:</b> {{registro.fechaReingreso ? (registro.fechaReingreso|fecha) : 'No registrado'}}</div>
+
+
+            </div>
+          </td>
+          <td style="text-align: center">
+            <div >
+
+              <button  *ngIf="registro.decimosAnio==='S' && !esDecimoTercero" type="button" class="btn btn-sm btn-warning" (click)="abrirModalCalcularDecimoCuarto(registro)">
+                Calcular
+              </button>
+              <div class="espaciador"></div>
+              <button *ngIf="registro.decimosAnio==='S' && esDecimoTercero" type="button" class="btn btn-sm btn-warning" (click)="abrirModalCalcularDecimoTercero(registro)">
+                Calcular
+              </button>
+              <div class="espaciador"></div>
+            </div>
+
+
+
+          </td>
+        </tr>
+      </ng-template>
+      <!--      <ng-template pTemplate="rowexpansion" let-registro>-->
+      <!--        <tr>-->
+      <!--          &lt;!&ndash; El colspan tiene que ser igual al numero de columnas&ndash;&gt;-->
+      <!--          <td colspan="4">-->
+      <!--            <app-trabajador-perfil [registro]="registro.idUsuario"-->
+      <!--                                   [registroTrabajador]="registro"></app-trabajador-perfil>-->
+      <!--          </td>-->
+
+      <!--        </tr>-->
+      <!--      </ng-template>-->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+

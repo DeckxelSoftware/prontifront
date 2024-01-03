@@ -1,0 +1,40 @@
+<div *ngIf="pago">
+  <div *ngIf="pago.detallePago"
+  >
+    <p-table [value]="pago.detallePago">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Detalle pago</span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            Num. cuota
+          </th>
+          <th>
+            Descripción
+          </th>
+          <th>
+            Valor
+          </th>
+          <th *ngIf="mostrarBotonFactura"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-detalle>
+        <tr>
+          <td>{{detalle.numeroCuota}}</td>
+          <td>
+            {{detalle.tipo|tipoDetallePago}}
+          </td>
+          <td>{{detalle.valor|currency}}</td>
+          <td *ngIf="mostrarBotonFactura" style="text-align: center">
+            <button class="btn btn-primary" (click)="abirModalDetallesFactura(detalle)">
+              Factura
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

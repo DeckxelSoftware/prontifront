@@ -1,0 +1,11 @@
+<p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+
+<app-route-header
+  [title]="'Gestión Autores'" [help]="'Gestione los autores del libro'" [imagePath]="'assets/autor-libro/imagen-principal.png'">
+</app-route-header>
+
+
+<div class="card-mlab">
+  <app-autor-libro-tabla [idLibro]="idLibro"></app-autor-libro-tabla>
+</div>
+

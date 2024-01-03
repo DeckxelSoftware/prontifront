@@ -1,0 +1,106 @@
+<div class="row">
+  <br/>
+  <div *ngIf="cuotas.length>0">
+    <div *ngIf="plan">
+      <div *ngIf="plan.inscripcion">
+        <div *ngIf="cuotas[0].valorCuota">
+          <p class="float-end"><b>Incripción + Primera
+            cuota: </b>{{(calcularValorConDescuento(plan.inscripcion, descuentoInscripcion) + calcularValorConDescuento(cuotas[0].valorCuota, descuentoPrimeraCuota)) |currency}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--<div class="row" *ngIf="esCambioDePlan && tipoCambio==='plazo'">-->
+<!--  <br/>-->
+<!--  <div *ngIf="cuotas.length>0">-->
+<!--    <div *ngIf="plan">-->
+<!--      <div *ngIf="plan.precio">-->
+<!--        <div *ngIf="cuotas[0].valorCuota">-->
+<!--          <div *ngIf="configuracionGeneral">-->
+<!--            <div *ngIf="configuracionGeneral.cuotaAdministrativa">-->
+<!--              <p class="float-end"><b>Cuota-->
+<!--                administrativa: </b>{{ calcularValorConDescuento(configuracionGeneral.cuotaAdministrativa, descuentoRecargo) |currency}}-->
+<!--              </p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--      </div>-->
+
+<!--    </div>-->
+
+<!--  </div>-->
+<!--</div>-->
+
+
+<div class="row" *ngIf="mostrarTabla">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [(rows)]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="paginarDatos($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+      [loading]="cargando"
+      [(first)]="this.skip"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Cuotas</span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>No Cuota</th>
+          <th>Fecha</th>
+          <th>Cuota total</th>
+          <th>Abono Capital</th>
+          <th>Tasa adm.</th>
+          <th> Impuestos</th>
+          <th> Cobrado </th>
+
+          <th> Pasa al nuevo</th>
+          <!--          <th *ngIf="esCambioDePlan">Cuota pasa a nuevo plan</th>-->
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr
+          [class]="registro.sisHabilitado === 'A' ? '' : 'back-deshabilitado'">
+          <td>{{ registro.numeroCuota }}</td>
+          <td>{{ registro.fechaCobro }}</td>
+          <td>{{ registro.valorCuota |currency}}</td>
+          <td>{{ registro.abonoCapital |currency}}</td>
+          <td>{{ registro.valorTasaAdministrativa |currency}}</td>
+          <td>{{ registro.valorImpuesto|currency }}</td>
+          <td>{{ (registro.valorPagadoCuota? registro.valorPagadoCuota : 0) | currency }}</td>
+          <td>{{ registro.pasaANuevoPlan|siNo}}</td>
+          <!--          <td *ngIf="esCambioDePlan"> {{registro.pasaANuevoPlan|siNo}}</td>-->
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="6">
+            <app-cuota-perfil [registro]="registro"></app-cuota-perfil>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="6">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+

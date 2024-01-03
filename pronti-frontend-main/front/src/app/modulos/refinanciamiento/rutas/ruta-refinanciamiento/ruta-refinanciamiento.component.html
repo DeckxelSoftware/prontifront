@@ -1,0 +1,272 @@
+<app-route-header
+  [title]="'Refinanciamiento'"
+  [help]="'Refinanciamiento de contrato'"
+  [imagePath]="'assets/refinanciamiento/image.png'"
+></app-route-header>
+<div class="card-mlab">
+  <p-accordion [multiple]="true" *ngIf="mostrarDatos">
+    <p-accordionTab header="Datos contrato">
+      <div class="row">
+        <div class="col-lg-4 col-sm-12">
+          <label class="form-label" for="numContrato">Num. contrato: </label>
+          <input type="text" id="numContrato" class="form-control" value="{{contrato?.numeroDeContrato }}" disabled>
+        </div>
+        <div class="col-lg-8 col-sm-12">
+          <label class="form-label" for="cliente">Cliente: </label>
+          <input type="text" id="cliente" class="form-control"
+                 value="{{contrato?.nombresCliente}} {{contrato?.apellidosCliente}}" disabled>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <label class="form-label" for="plan">Plan: </label>
+          <input type="text" id="plan" class="form-control"
+                 value="{{contrato?.planSeleccionado}}"
+                 disabled>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <label class="form-label" for="precioSeleccionado">Monto: </label>
+          <input type="text" id="precioSeleccionado" class="form-control"
+                 value="{{contrato?.precioPlanSeleccionado |currency}}"
+                 disabled>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <label class="form-label" for="plazo">Plazo: </label>
+          <input type="text" id="plazo" class="form-control"
+                 value="{{contrato?.plazoMesSeleccionado}}"
+                 disabled>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <label class="form-label" for="fechaInicio">Fecha inicio: </label>
+          <input type="text" id="fechaInicio" class="form-control" value="{{contrato?.fechaInicio|fecha }}" disabled>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <label class="form-label" for="inscripcion">Inscripción: </label>
+          <input type="text" id="inscripcion" class="form-control" value="{{plan?.inscripcion|currency }}" disabled>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <label class="form-label" for="dsctoInscripcion">Dscto. inscripción: </label>
+          <input type="text" id="dsctoInscripcion" class="form-control"
+                 value="{{contrato?.dsctoInscripcion? contrato?.dsctoInscripcion+'%':'0%'}}"
+                 disabled>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <label class="form-label" for="dsctoPrimeraCuota">Dscto. primera cuota: </label>
+          <input type="text" id="dsctoPrimeraCuota" class="form-control"
+                 value="{{contrato?.dsctoPrimeraCuota?contrato?.dsctoPrimeraCuota+'%':'0%'}}"
+                 disabled>
+        </div>
+        <div class="col-12 ">
+          <label class="form-label" for="observacion">Observación: </label>
+          <input type="text" id="observacion" class="form-control"
+                 value="{{contrato.observacion?contrato.observacion:'Sin observación'}}"
+                 disabled>
+        </div>
+      </div>
+
+    </p-accordionTab>
+    <p-accordionTab header="Detalle refinanciamiento" [selected]="true">
+      <div class="row">
+        <div class="col-lg-4 col-sm-12">
+          <label class="form-label" for="valorMora">Valor en mora: </label>
+          <input type="text" id="valorMora" class="form-control"
+                 value="{{valorEnMora|currency}}"
+                 disabled>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <label class="form-label" for="cuotasEnMora">Cuotas en mora: </label>
+          <input type="text" id="cuotasEnMora" class="form-control"
+                 value="{{historico.totalCuotasMoraActual}}"
+                 disabled>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <label class="form-label" for="fechaRefinanciamiento">Fecha refinanciamiento: </label>
+          <input type="text" id="fechaRefinanciamiento" class="form-control"
+                 value="{{fechaRefinanciamiento}}"
+                 disabled>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <label class="form-label" for="totalAPagar">Total a pagar: </label>
+          <input type="text" id="totalAPagar" class="form-control"
+                 value="{{totalCobrarParaRefinanciar|currency}}"
+                 disabled>
+        </div>
+
+      </div>
+
+    </p-accordionTab>
+
+    <p-accordionTab header="Detalle cobro">
+      <div *ngIf="contrato">
+        <div *ngIf="mostrarDatos">
+          <div class=" m-4 text-end">
+            <label class="mx-1"><strong>Valor a cobrar:</strong></label>
+            <p-inputNumber locale="en-US" [(ngModel)]="totalCobroIngresado" mode="decimal"
+                           [minFractionDigits]="2" [maxFractionDigits]="2"
+                           (onBlur)="aplicarValorACobrar()"
+            ></p-inputNumber>
+            <button class=" mx-1 btn btn-sm btn-primary" (click)="aplicarValorACobrar()">Aplicar</button>
+          </div>
+          <p-table [value]="detalleCobros">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>
+                  No. cuota
+                </th>
+                <th>
+                  Descripción
+                </th>
+                <th>
+                  Fecha
+                </th>
+                <th>
+                  Valor
+                </th>
+                <th>
+                  A cobrar
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-cobro>
+              <tr>
+                <td>{{cobro.noCuota}}</td>
+                <td>{{cobro.descripcion}}</td>
+                <td>{{cobro.fecha}}</td>
+                <td>{{cobro.valor|currency}}</td>
+                <td>{{cobro.aCobrar|currency}}</td>
+              </tr>
+            </ng-template>
+
+          </p-table>
+
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Cobro"
+                    *ngIf="totalCobroIngresado === totalCobrarParaRefinanciar "
+    >
+
+      <form [formGroup]="formCobro" *ngIf="!(pagosAcumulados===totalCobrarParaRefinanciar)">
+        <div class="row">
+
+
+          <div class="  col-lg-6 col-sm-12">
+            <label><strong>Tipo documento:</strong></label>
+            <p-autoComplete formControlName="tipoDocumento"
+                            [suggestions]="tipoDeDocumentos"
+                            (completeMethod)="obtenerTipoDeDocumentos($event.query)"
+                            [dropdown]="true"
+                            [emptyMessage]="'No hay registros'"
+                            [showEmptyMessage]="true"
+                            field="nombre"
+            ></p-autoComplete>
+          </div>
+          <div class="  col-lg-6 col-sm-12">
+            <label><strong>Cuenta bancaria:</strong></label>
+            <p-autoComplete formControlName="cuentaBancaria"
+                            [suggestions]="cuentasBancarias"
+                            (completeMethod)="obtenerCuentaBancaria($event.query)"
+                            [dropdown]="true"
+                            [emptyMessage]="'No hay registros'"
+                            [showEmptyMessage]="true"
+                            field="campoMostrar"
+            ></p-autoComplete>
+          </div>
+          <div class="col-lg-6 col-sm-12">
+            <label><strong>No. documento:</strong></label><br>
+            <input style="width:100%" type="text" pInputText formControlName="numeroDocumento">
+          </div>
+          <div class="col-lg-6 col-sm-12">
+            <label><strong>Fecha transacción:</strong></label><br>
+            <input style="width:100%" type="date" pInputText formControlName="fechaDeposito">
+          </div>
+
+
+          <div class="col-lg-6 col-sm-12">
+            <label><strong>Valor:</strong></label><br>
+            <p-inputNumber locale="en-US" formControlName="valor" mode="decimal"
+                           [minFractionDigits]="2" [maxFractionDigits]="2"
+            ></p-inputNumber>
+          </div>
+          <div class="col-12">
+            <label><strong>Observaciones:</strong></label><br>
+            <input pInputText
+                   formControlName="observaciones"
+                   style="width:100%"
+            >
+          </div>
+        </div>
+      </form>
+
+      <div class=" m-4 text-end">
+        <button *ngIf="!(pagosAcumulados===totalCobrarParaRefinanciar)" class="btn btn-sm btn-primary"
+                [disabled]="!formCobro.valid" (click)="agregarCobro()">Agregar
+        </button>
+      </div>
+      <div class="mt-2">
+        <p-table [value]="pagos"
+                 [dataKey]="'numeroDocumento'">
+          <ng-template pTemplate="header">
+            <tr>
+              <th></th>
+              <th>
+                Tipo doc.
+              </th>
+              <th>
+                Num. documento
+              </th>
+              <th>
+                Fecha
+              </th>
+              <th>
+                Observaciones
+              </th>
+              <th>
+                Valor
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-pago let-expanded="expanded">
+            <tr>
+              <td>
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  [pRowToggler]="pago"
+                  class="p-button-text p-button-rounded p-button-plain"
+                  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+                ></button>
+              </td>
+              <td>{{pago.tipoDocumento}}</td>
+              <td>{{pago.numeroDocumento}}</td>
+              <td>{{pago.fechaDeposito}}</td>
+              <td>{{pago.observaciones}}</td>
+              <td>{{pago.valor|currency}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="rowexpansion" let-pago>
+            <tr>
+              <td colspan="6">
+                <app-detalle-pago-tabla [pago]="pago"></app-detalle-pago-tabla>
+
+              </td>
+            </tr>
+
+
+          </ng-template>
+
+        </p-table>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+</div>
+<div class="mt-2" style="display: flex; justify-content: end">
+  <button class="btn mx-3 btn-sm btn-danger" (click)="navegarAContratos()">
+    Cancelar
+  </button>
+  <button class="btn btn-sm btn-success"
+          [disabled]="(pagosAcumulados!==totalCobroIngresado) || pagos.length===0" (click)="crearRefinanciamiento()">
+    Aceptar
+  </button>
+</div>
+
+

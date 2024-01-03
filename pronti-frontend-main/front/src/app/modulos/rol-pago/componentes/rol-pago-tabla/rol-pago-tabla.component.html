@@ -1,0 +1,179 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container [fieldsArray]="searchBarFormFields" (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-primary btn-sm float-end boton-busqueda" (click)="searchData()"
+        [disabled]="searchButtonDisabled">
+        Buscar
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <br />
+</div>
+
+
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table [value]="tableData" [dataKey]="'id'" [rows]="startingRows" [paginator]="true" [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)" [totalRecords]="totalRecords" [rowsPerPageOptions]="rowsPerPage">
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Rol Pago</span>
+          <button class="btn btn-sm btn-success float-end m-1" (click)="createOrEdit()" *ngIf="!ocultarBotonesGestion">
+            Crear</button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Detalles</th>
+          <th>Habilitado</th>
+          <th> Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr [class]="registro.sisHabilitado ? '' : 'back-deshabilitado'">
+          <!--          <td>-->
+          <!--            <button-->
+          <!--              type="button"-->
+          <!--              pButton-->
+          <!--              pRipple-->
+          <!--              [pRowToggler]="registro"-->
+          <!--              class="p-button-text p-button-rounded p-button-plain"-->
+          <!--              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"-->
+          <!--            ></button>-->
+          <!--          </td>-->
+          <td>
+            <div class="row" *ngIf="!mostrarHistoricoRol">
+              <div class="col-lg-12 col-sm-12">
+                <b>Trabajador:</b>{{registro.idHistorialLaboral.idTrabajador.idUsuario.nombres}}
+                {{registro.idHistorialLaboral.idTrabajador.idUsuario.apellidos}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Sueldo:</b>{{registro.sueldo|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Bonificación:</b>{{registro.bonificacion|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Movilización especial:</b>{{registro.movilizacionEspecial|currency}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Componente salarial
+                  unificado:</b>{{registro.compSalarialUnif|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Horas extra:</b>{{registro.totalHorasExtra}}</div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Comisiones:</b>{{registro.idPeriodoLaboral.detalleNovedadRolPagoCollection|valorDetalleNovedadRol:'AI':'comisión'}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Otros ingresos:</b>{{registro.otrosIngresos|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Retenciones judiciales:</b>{{registro.retencionesJudiciales|currency}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Póliza personal:</b>{{registro.polizaPersonal|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Préstamos
+                  IESS:</b>{{registro.idPeriodoLaboral.detalleNovedadRolPagoCollection|valorDetalleNovedadRol:'AE':'préstamo
+                iess'}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Aportes al IESS:</b>{{registro.aporteIess|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Impuesto a la renta:</b>{{registro.impuestoRenta|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Dscto. por faltas:</b>{{registro.descuentosPorFaltas|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Dscto. atrasos:</b>{{registro.descuentosPorAtrasos|currency}}</div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Anticipos:</b>{{registro.idPeriodoLaboral.detalleNovedadRolPagoCollection|valorDetalleNovedadRol:'AE':'anticipos'}}
+              </div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Multas:</b>{{registro.idPeriodoLaboral.detalleNovedadRolPagoCollection|valorDetalleNovedadRol:'AE':'multa'}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Otros
+                  descuentos:</b>{{registro.idPeriodoLaboral.detalleNovedadRolPagoCollection|valorDetalleNovedadRol:'AE':'otros
+                descuentos'}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Total ingresos:</b>{{registro.totalIngresos|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Total egresos:</b>{{registro.totalEgresos|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Total a pagar:</b>{{registro.totalAPagar|currency}}</div>
+            </div>
+
+            <div class="row" *ngIf="mostrarHistoricoRol">
+              <div class="col-lg-12 col-sm-12">
+                <b>Trabajador:</b>{{registro.idHistorialLaboral.idTrabajador.idUsuario.nombres}}
+                {{registro.idHistorialLaboral.idTrabajador.idUsuario.apellidos}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Sueldo:</b>{{registro.idHistoricoRol.sueldo|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Bonificación:</b>{{registro.idHistoricoRol.bonificacion|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Movilización especial:</b>{{registro.idHistoricoRol.movilizacionEspecial|currency}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Componente salarial
+                  unificado:</b>{{registro.idHistoricoRol.compSalarialUnif|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Horas extra:</b>{{registro.idHistoricoRol.totalHorasExtra}}</div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Comisiones:</b>{{registro.idPeriodoLaboral.detalleNovedadRolPagoCollection|valorDetalleNovedadRol:'AI':'comisión'}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Otros ingresos:</b>{{registro.idHistoricoRol.otrosIngresos|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Retenciones judiciales:</b>{{registro.idHistoricoRol.retencionesJudiciales|currency}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Póliza personal:</b>{{registro.idHistoricoRol.polizaPersonal|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Préstamos
+                  IESS:</b>{{registro.idPeriodoLaboral.detalleNovedadRolPagoCollection|valorDetalleNovedadRol:'AE':'préstamo
+                iess'}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Aportes al IESS:</b>{{registro.idHistoricoRol.aporteIess|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Impuesto a la renta:</b>{{registro.idHistoricoRol.impuestoRenta|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Dscto. por faltas:</b>{{registro.idHistoricoRol.descuentosPorFaltas|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Dscto. atrasos:</b>{{registro.idHistoricoRol.descuentosPorAtrasos|currency}}</div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Anticipos:</b>{{registro.idPeriodoLaboral.detalleNovedadRolPagoCollection|valorDetalleNovedadRol:'AE':'anticipos'}}
+              </div>
+              <div class="col-lg-4 col-sm-12">
+                <b>Multas:</b>{{registro.idPeriodoLaboral.detalleNovedadRolPagoCollection|valorDetalleNovedadRol:'AE':'multa'}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Otros
+                  descuentos:</b>{{registro.idPeriodoLaboral.detalleNovedadRolPagoCollection|valorDetalleNovedadRol:'AE':'otros
+                descuentos'}}
+              </div>
+              <div class="col-lg-4 col-sm-12"><b>Total ingresos:</b>{{registro.idHistoricoRol.totalIngresos|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Total egresos:</b>{{registro.idHistoricoRol.totalEgresos|currency}}</div>
+              <div class="col-lg-4 col-sm-12"><b>Total a pagar:</b>{{registro.idHistoricoRol.totalAPagar|currency}}</div>
+            </div>
+          </td>
+          <td>{{ registro.sisHabilitado ? 'Si' : 'No' }}</td>
+          <td style="text-align: center">
+            <div>
+
+              <button type="button" *ngIf="!ocultarBotonesGestion" class="btn btn-sm btn-warning"
+                (click)="createOrEdit(registro)">
+                Editar
+              </button>
+              <div class="espaciador"></div>
+              <button *ngIf="!ocultarBotonesGestion" type="button"
+                [class]="!registro.sisHabilitado ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"
+                (click)="confirmChangeEnable(registro.sisHabilitado, registro)">
+                {{ !registro.sisHabilitado ? 'Habilitar' : 'Deshabilitar' }}
+              </button>
+
+              <div class="espaciador"></div>
+              <button type="button" class="btn btn-sm btn-secondary" (click)="exportarPdf(registro)">
+                Exportar
+              </button>
+
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">
+            <app-rol-pago-perfil [registro]="registro"></app-rol-pago-perfil>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="4">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

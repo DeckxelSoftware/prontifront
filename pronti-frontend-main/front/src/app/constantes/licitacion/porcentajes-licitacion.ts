@@ -1,0 +1,3 @@
+export const PORCENTAJE_PLAN_AUTO_CSD = 0.3;
+export const PORCENTAJE_PLAN_AUTO_NO_CSD = 0.25;
+export const PORCENTAJE_PLAN_PRONTI = 0.4;

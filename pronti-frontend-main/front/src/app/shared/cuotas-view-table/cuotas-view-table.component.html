@@ -1,0 +1,70 @@
+<div class="row">
+  <br/>
+  <div>
+    <p class="float-end">
+      <b>{{labelSuperior}}: </b>
+      {{datoSuperior}}
+    </p>
+  </div>
+  <div>
+    <p class="float-end" *ngIf="(dataViewCuotasEmitters.labelSuperior2  | async) !== ''">
+      <b>{{dataViewCuotasEmitters.labelSuperior2 | async}}: </b>
+      {{dataViewCuotasEmitters.datoSuperior2| async }}
+    </p>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [(rows)]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="paginarDatos($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+      [loading]="cargando"
+      [(first)]="this.skip"
+    >
+
+      <ng-template pTemplate="header">
+        <tr *ngIf="columnas.length > 0">
+          <th *ngFor="let columna of columnas">
+            {{columna.nombre}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+
+        <tr *ngIf="cuotas.length > 0">
+          <td *ngFor="let col of columnas">
+            <!--            <div *ngIf="col.field === 'valorCuota'">{{registro.valorCuota | currency}}</div>-->
+            <!--            <div *ngIf="col.field === 'abonoCapital'">{{registro.abonoCapital | currency}}</div>-->
+            <!--            <div-->
+            <!--              *ngIf="col.field === 'valorTasaAdministrativa'">{{registro.valorTasaAdministrativa | currency}}</div>-->
+            <!--            <div *ngIf="col.field === 'valorImpuesto'">{{registro.valorImpuesto | currency}}</div>-->
+            <!--            <div *ngIf="col.field === 'pasaANuevoPlan'"> {{registro.pasaANuevoPlan | siNo}}</div>-->
+            <div
+              *ngIf="col.field==='valorCuota' || col.field ==='abonoCapital' || col.field ==='valorTasaAdministrativa' || col.field ==='valorImpuesto' || col.field === 'valorPorCobrar' || col.field ==='valorPagadoCuota'; else otro">
+              {{registro[col.field] | currency}}
+            </div>
+            <ng-template #otro>
+              {{registro[col.field]}}
+            </ng-template>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate=" emptymessage
+            ">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="6">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+.botones-usuario {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    button {
+        margin-top: 5px;
+        width: 80%;
+    }
+}
+

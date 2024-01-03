@@ -1,0 +1,15 @@
+export enum FormPrestamoEnum {
+    // nombre = 'nombre',
+    idTrabajador = 'idTrabajador',
+    tipoPrestamo = 'tipoPrestamo',
+    fechaPrestamo = 'fechaPrestamo',
+    comprobanteEgreso = 'comprobanteEgreso',
+    valor = 'valor',
+    cuotas = 'cuotas',
+    tasaInteres = 'tasaInteres',
+    concepto = 'concepto',
+    estado = 'estado',
+    modalidadDescuento = 'modalidadDescuento',
+    totalPagado = 'totalPagado',
+    totalSaldo = 'totalSaldo',
+}

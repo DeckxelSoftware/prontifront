@@ -1,0 +1,106 @@
+<div class="espaciador"></div>
+<p-breadcrumb [model]="items"></p-breadcrumb>
+<app-route-header title="Informe clientes" help="" imagePath="/assets/cliente/imagen-principal.png"></app-route-header>
+<div class="card-mlab">
+  <!--  <app-prestamo-tabla></app-prestamo-tabla>-->
+  <div class="card-mlab">
+
+    <div class="row">
+      <div class="col-sm-10">
+        <app-form-container
+          [fieldsArray]="searchBarFormFields"
+          (fieldChanged)="searchFieldChanged($event)"
+          (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+        ></app-form-container>
+      </div>
+      <div class="col-sm-2">
+        <button
+          type="button"
+          class="btn btn-primary btn-sm float-end boton-busqueda"
+          (click)="buscarDatosYGenerarExcel()"
+          [disabled]="searchButtonDisabled"
+        >
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <table id="tablaContratos" [hidden]="true">
+    <tr>
+      <th>Documento identidad</th>
+      <th>Nombre</th>
+      <th>Número de contrato</th>
+      <th>Valor operación</th>
+      <th>Fecha contrato</th>
+      <th>Capital pagado</th>
+      <th>Capital pendiente</th>
+      <th>Plazo</th>
+      <th>Por vencer</th>
+      <th>Cuotas pagadas</th>
+      <th>Cuotas por pagar</th>
+      <th>Cuota mensual</th>
+      <th>Vendedor</th>
+      <th>Teléfono</th>
+      <th>Cuotas vencidas desde último pago</th>
+      <th>Periodo cobro</th>
+      <th>Grupo</th>
+      <th>Observación</th>
+      <th>Adjudicado</th>
+      <th>Adjudicado</th>
+      <th>Pre adjudicado</th>
+      <th>Pre adjudicado comprado</th>
+      <th>Pre adjudicado buscando</th>
+      <th>Estado</th>
+      <th>Valor total</th>
+      <th>Fecha de entrega V.</th>
+      <th>Patio</th>
+      <th>Marca</th>
+      <th>Modelo</th>
+      <th>Chasis</th>
+      <th>Placa</th>
+      <th>Año</th>
+      <th>Número de cheque</th>
+      <th>Orden compra</th>
+
+    </tr>
+    <tr *ngFor="let contrato of contratos">
+      <td>{{contrato.idClienteEnGrupo?.idCliente.idUsuario.documentoIdentidad}}</td>
+      <td>{{contrato.nombresCliente}} {{contrato.apellidosCliente}}</td>
+      <td>{{contrato.numeroDeContrato}}</td>
+      <td>{{contrato.precioPlanSeleccionado|currency}}</td>
+      <td>{{contrato.fechaInicio|fecha}}</td>
+      <td>{{(contrato|ultimoHistoricoContrato).abonosCapitalActual|currency}}</td>
+      <td>{{(contrato|ultimoHistoricoContrato).saldoCapital|currency}}</td>
+      <td>{{contrato.plazoMesSeleccionado}}</td>
+      <td>{{(fechaActual |cantidadDiasEntreFechas:((contrato|ultimoHistoricoContrato)|cuotaActualFecha:contrato):false)}}</td>
+      <td>{{(contrato|ultimoHistoricoContrato).totalCuotasCobradas}}</td>
+      <td>{{contrato?.plazoMesSeleccionado|cuotasPorPagar : ((contrato|ultimoHistoricoContrato).totalCuotasCobradas)}}</td>
+      <td>{{contrato.cuotaActual|currency}}</td>
+      <td>{{contrato.idVendedor?.idUsuario?.nombres}} {{contrato.idVendedor?.idUsuario?.apellidos}}</td>
+      <td>{{contrato.idClienteEnGrupo?.idCliente.idUsuario.medioContacto1}}</td>
+      <td>{{(contrato|ultimoHistoricoContrato).totalCuotasMoraActual}}</td>
+      <td>{{contrato.fechaIniciaCobro|fecha}}</td>
+      <td>{{contrato.idClienteEnGrupo.idGrupo.nombre}}</td>
+      <td>{{contrato.observacion}}</td>
+      <td>{{contrato.estado === 'ADJ' ? 'SI' : 'NO'}}</td>
+      <td>{{contrato.estado === 'PAD' ? 'SI' : 'NO'}}</td>
+      <td>{{contrato.estado === 'PAC' ? 'SI' : 'NO'}}</td>
+      <td>{{contrato.estado === 'PAB' ? 'SI' : 'NO'}}</td>
+      <td>{{contrato.estado|estadoContrato}}</td>
+      <td>{{contrato.cuotaActual}}</td>
+      <td>{{contrato|fechaAdjudicacion}}</td>
+      <td>{{contrato|fechaEntregaVehiculo}}</td>
+      <td>{{contrato|patioContrato}}</td>
+      <td>{{contrato|campoOrdenCompra:'marca'}}</td>
+      <td>{{contrato|campoOrdenCompra:'modelo'}}</td>
+      <td>{{contrato|campoOrdenCompra:'chasis'}}</td>
+      <td>{{contrato|campoOrdenCompra:'placa'}}</td>
+      <td>{{contrato|campoOrdenCompra:'anio'}}</td>
+      <td>{{contrato|campoOrdenCompra:'numeroCheque'}}</td>
+      <td>{{contrato|campoOrdenCompra:'numeroOrdenContrato'}}</td>
+
+    </tr>
+  </table>
+</div>
+

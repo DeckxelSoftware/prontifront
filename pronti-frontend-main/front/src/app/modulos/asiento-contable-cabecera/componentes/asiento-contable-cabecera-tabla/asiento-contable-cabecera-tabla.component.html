@@ -1,0 +1,267 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+        (click)="searchData()"
+        [disabled]="searchButtonDisabled"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+
+
+<!--  <div class="row" *ngIf="esGestionTransaccionContable">-->
+<!--    <div class="col-sm-10">-->
+<!--      <app-form-container-->
+<!--        [fieldsArray]="searchBarGestionTransaccion"-->
+<!--        (fieldChanged)="searchFieldChanged($event)"-->
+<!--        (autoCompleteChangedEmitter)="searchAutoComplete($event)"-->
+<!--      ></app-form-container>-->
+<!--    </div>-->
+<!--    <div class="col-sm-2">-->
+<!--      <button-->
+<!--        type="button"-->
+<!--        class="btn btn-primary btn-sm float-end boton-busqueda"-->
+<!--        (click)="searchData()"-->
+<!--        [disabled]="searchButtonDisabled"-->
+<!--      >-->
+<!--        Buscar-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+</div>
+<div class="row">
+  <br/>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [rows]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Asiento Contable</span>
+          <button class="btn btn-sm btn-success float-end" (click)="createOrEdit()"> Crear</button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th>Asiento contable</th>
+          <th>Tipo transacción</th>
+          <th>Estados</th>
+          <th> Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr
+          [class]="registro.sisHabilitado === 'A' ? '' : 'back-deshabilitado'">
+          <td>
+            <button
+              type="button"
+              pButton
+              pRipple
+              [pRowToggler]="registro"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            ></button>
+          </td>
+
+          <td>
+
+            <p><b>Beneficiario: </b>{{ registro.beneficiario}}</p>
+            <p><b>Tipo asiento contable: </b>{{ registro.tipoAsientoContable  | tipoAsientoContable}}</p>
+            <p><b>Fecha: </b>{{ registro.fecha }}</p>
+            <p><b>Código referencia: </b>{{ registro.codigoReferencialAsientoContable }}</p>
+          </td>
+          <td>{{ registro.tipoTransaccion | tipoTransaccion}}</td>
+          <td>
+            <p><b>Habilitado: </b>{{ registro.sisHabilitado ? 'Si' : 'No' }}</p>
+            <p><b>Asiento cerrado: </b>{{ registro.asientoCerrado | siNo }}</p>
+          </td>
+          <td style="text-align: center">
+            <div>
+
+              <button type="button" class="btn btn-sm btn-warning" (click)="createOrEdit(registro)">
+                Editar
+              </button>
+              <div class="espaciador"></div>
+              <button type="button"
+                      [class]="registro.sisHabilitado === 'A' ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"
+                      (click)="confirmChangeEnable(registro.sisHabilitado === 'A', registro)">
+                {{ registro.sisHabilitado === 'I' ? 'Habilitar' : 'Deshabilitar' }}
+              </button>
+
+              <div class="espaciador"></div>
+
+              <button class="btn btn-secondary"
+                      (click)="irAGestion(registro.id, ['asiento-contable-det-adicional-modulo'])">
+                Asiento contable detalle ad.
+              </button>
+
+              <div class="espaciador"></div>
+
+              <button class="btn btn-secondary"
+                      (click)="irAGestion(registro.id, ['transaccion-asiento-contable-modulo','transaccion-contable-contabilidad'])">
+                Transacciónes contables
+              </button>
+
+
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="5">
+            <app-asiento-contable-cabecera-perfil [registro]="registro"></app-asiento-contable-cabecera-perfil>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="5">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+<!-- Mostrar en gestion transacciones contables-->
+<!--  <div class="col-sm-12" *ngIf="esGestionTransaccionContable">-->
+<!--    <p-table-->
+<!--      [value]="tableData"-->
+<!--      [dataKey]="'id'"-->
+<!--      [rows]="startingRows"-->
+<!--      [paginator]="true"-->
+<!--      [lazy]="true"-->
+<!--      (onLazyLoad)="lazyLoad($event)"-->
+<!--      [totalRecords]="totalRecords"-->
+<!--      [rowsPerPageOptions]="rowsPerPage"-->
+<!--    >-->
+
+<!--      <ng-template pTemplate="caption">-->
+<!--        <div class="p-d-flex p-ai-center p-jc-between">-->
+<!--          <span class="fw-bolder texto-titulo-tabla">Asiento Contable</span>-->
+<!--          <button class="btn btn-sm btn-success float-end" (click)="createOrEdit()"> Crear</button>-->
+<!--        </div>-->
+<!--      </ng-template>-->
+<!--      <ng-template pTemplate="header">-->
+<!--        <tr>-->
+<!--          <th>#</th>-->
+<!--          <th>Identificador</th>-->
+<!--          <th>Debe | Haber</th>-->
+<!--          <th>Serie</th>-->
+<!--          <th>Num.Factura</th>-->
+<!--          <th>Acciones</th>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--      <ng-template pTemplate="body" let-registro let-expanded="expanded">-->
+<!--        <tr-->
+<!--          [class]="registro.sisHabilitado === 'A' ? '' : 'back-deshabilitado'">-->
+<!--          &lt;!&ndash;          <td>&ndash;&gt;-->
+<!--          &lt;!&ndash;            <button&ndash;&gt;-->
+<!--          &lt;!&ndash;              type="button"&ndash;&gt;-->
+<!--          &lt;!&ndash;              pButton&ndash;&gt;-->
+<!--          &lt;!&ndash;              pRipple&ndash;&gt;-->
+<!--          &lt;!&ndash;              [pRowToggler]="registro"&ndash;&gt;-->
+<!--          &lt;!&ndash;              class="p-button-text p-button-rounded p-button-plain"&ndash;&gt;-->
+<!--          &lt;!&ndash;              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"&ndash;&gt;-->
+<!--          &lt;!&ndash;            ></button>&ndash;&gt;-->
+<!--          &lt;!&ndash;          </td>&ndash;&gt;-->
+<!--          <td>-->
+<!--            {{registro.id}}-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{registro.codigoReferenciaAsientoContable}}-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <p><b>Debe: </b>{{registro.valorCredito | currency}}</p>-->
+<!--            <p><b>Haber: </b>{{registro.valorDebito | currency}}</p>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            {{registro.serie}}-->
+<!--          </td>-->
+
+<!--          <td>-->
+<!--            <p><b>Tipo asiento contable: </b>{{ registro.tipoAsientoContable  | tipoAsientoContable}}</p>-->
+<!--            <p><b>Fecha: </b>{{ registro.fecha }}</p>-->
+<!--            <p><b>Código referencia: </b>{{ registro.codigoReferencialAsientoContable }}</p>-->
+<!--          </td>-->
+<!--          <td>{{ registro.tipoTransaccion | tipoTransaccion}}</td>-->
+<!--          <td>-->
+<!--            <p><b>Habilitado: </b>{{ registro.sisHabilitado ? 'Si' : 'No' }}</p>-->
+<!--            <p><b>Asiento cerrado: </b>{{ registro.asientoCerrado | siNo }}</p>-->
+<!--          </td>-->
+<!--          <td style="text-align: center">-->
+<!--            <div>-->
+
+<!--              <button type="button" class="btn btn-sm btn-warning" (click)="createOrEdit(registro)">-->
+<!--                Editar-->
+<!--              </button>-->
+<!--              <div class="espaciador"></div>-->
+<!--              <button type="button"-->
+<!--                      [class]="registro.sisHabilitado === 'A' ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"-->
+<!--                      (click)="confirmChangeEnable(registro.sisHabilitado === 'A', registro)">-->
+<!--                {{ registro.sisHabilitado === 'I' ? 'Habilitar' : 'Deshabilitar' }}-->
+<!--              </button>-->
+
+<!--              <div class="espaciador"></div>-->
+
+<!--              <button class="btn btn-secondary"-->
+<!--                      (click)="irAGestionDetalleAd(registro.id, 'asiento-contable-det-adicional-modulo')">-->
+<!--                Asiento contable detalle ad.-->
+<!--              </button>-->
+
+<!--              <div class="espaciador"></div>-->
+
+<!--              <button class="btn btn-secondary"-->
+<!--                      (click)="irAGestionDetalleAd(registro.id, 'transaccion-asiento-contable-modulo')">-->
+<!--                Transacción asiento contable-->
+<!--              </button>-->
+
+
+<!--            </div>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--      <ng-template pTemplate="rowexpansion" let-registro>-->
+<!--        <tr>-->
+<!--          &lt;!&ndash; El colspan tiene que ser igual al numero de columnas&ndash;&gt;-->
+<!--          <td colspan="5">-->
+<!--            <app-asiento-contable-cabecera-perfil [registro]="registro"></app-asiento-contable-cabecera-perfil>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--      <ng-template pTemplate="emptymessage">-->
+<!--        <tr>-->
+<!--          &lt;!&ndash; El colspan tiene que ser igual al numero de columnas&ndash;&gt;-->
+<!--          <td colspan="5">No hay información.</td>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--    </p-table>-->
+<!--  </div>-->
+</div>
+
+

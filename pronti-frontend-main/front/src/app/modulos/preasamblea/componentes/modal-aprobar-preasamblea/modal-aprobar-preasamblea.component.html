@@ -1,0 +1,42 @@
+
+<p-accordion [multiple]="true">
+
+  <p-accordionTab header="Datos plan" [selected]="true">
+
+    <form [formGroup]="formPlan">
+      <formly-form [form]="formPlan" [fields]="fieldsPlan" [model]="modelPlan"></formly-form>
+
+    </form>
+
+  </p-accordionTab>
+  <p-accordionTab header="Datos contrato" [selected]="true">
+    <form [formGroup]="formContrato">
+      <formly-form [form]="formContrato" [fields]="fieldsContrato" [model]="modelContrato"></formly-form>
+
+    </form>
+
+  </p-accordionTab>
+
+
+  <p-accordionTab header="Datos cliente" [selected]="true">
+
+    <form [formGroup]="formCliente">
+      <formly-form [form]="formCliente" [fields]="fieldsCliente" [model]="modelCliente"></formly-form>
+    </form>
+
+  </p-accordionTab>
+  <p-accordionTab header="Detalle de preasamblea" [selected]="true">
+
+    <form [formGroup]="formPreasamblea">
+      <formly-form [form]="formPreasamblea" [fields]="fieldsPreasamblea" [model]="modelPreasamblea"></formly-form>
+    </form>
+
+  </p-accordionTab>
+
+</p-accordion>
+<div class="botones-accion-contrato">
+  <button type="button" class="btn btn-secondary" (click)="cancelarAprobarPreasamblea()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="validarBotonCrear()"
+          (click)="confirmarAprobarAsamblea()">Confirmar
+  </button>
+</div>

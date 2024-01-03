@@ -1,0 +1,21 @@
+<div class="card-mlab">
+  <!--  <pre>{{asientoContableCabecera | json}}</pre>-->
+  <div class="row" *ngIf="mostrarCard">
+    <div class="col-8">
+
+      <p><b>Saldo: </b>{{asientoContableCabecera.totalSaldoActualFecha | currency}}</p>
+      <div>
+        <button class="btn btn-primary" (click)="eventoCerrarAsientoContable()">Cerrar Asiento Contable</button>
+      </div>
+    </div>
+    <div class="col-4">
+      <p><b>Total Haber: </b>{{asientoContableCabecera.totalCredito | currency }}</p>
+      <p><b>Total Debe: </b>{{asientoContableCabecera.totalDebito | currency}}</p>
+      <hr>
+      <p><b>Diferencia: </b>
+        {{diferenciaAsientoContable() | currency}}
+      </p>
+    </div>
+  </div>
+
+</div>

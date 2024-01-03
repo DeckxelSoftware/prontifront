@@ -1,0 +1,31 @@
+<app-route-header
+  [title]="'Balance resultados'"
+  [help]="''"
+  [imagePath]="'assets/ingresos-descuentos-fijos/image-ingresos.png'"
+></app-route-header>
+
+<p-breadcrumb [model]="items"></p-breadcrumb>
+
+<div class="espaciador"></div>
+<div class="card-mlab">
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+
+        (click)="buscarYGenerarPdf()"
+      >
+        Confirmar
+      </button>
+    </div>
+  </div>
+</div>
+<!--[disabled]="confirmarDeshabilitado"-->

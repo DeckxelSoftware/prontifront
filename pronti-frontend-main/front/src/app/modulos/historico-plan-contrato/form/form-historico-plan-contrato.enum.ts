@@ -1,0 +1,16 @@
+export enum FormHistoricoPlanContratoEnum {
+  totalInscripcionPlan = 'totalInscripcionPlan',
+  valorDsctoInscripcion = 'valorDsctoInscripcion',
+  totalCobroInscripcion = 'totalCobroInscripcion',
+  capitalTotal = 'capitalTotal',
+  capitalPorRefinanciamiento = 'capitalPorRefinanciamiento',
+  abonosCapitalActual = 'abonosCapitalActual',
+  saldoCapital = 'saldoCapital',
+  valorTasaAdministrativa = 'valorTasaAdministrativa',
+  totalTasaAdministrativaCobrada = 'totalTasaAdministrativaCobrada',
+  totalCuotasCobradas = 'totalCuotasCobradas',
+  totalCuotasMoraActual = 'totalCuotasMoraActual',
+  totalCuotasMora = 'totalCuotasMora',
+  idContrato = 'idContrato',
+  idPlan = 'idPlan',
+}

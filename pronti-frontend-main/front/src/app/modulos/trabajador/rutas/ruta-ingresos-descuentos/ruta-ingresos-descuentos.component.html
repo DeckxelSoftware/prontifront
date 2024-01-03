@@ -1,0 +1,22 @@
+
+<app-route-header
+  [title]="'Gestión de ingresos y descuentos fijos'"
+  [help]="'Gestione los ingresos y  descuentos de los trabajadores'"
+  [imagePath]="'assets/ingresos-descuentos-fijos/image-descuentos.png'"
+></app-route-header>
+
+<p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+<div class="espaciador"></div>
+<p-tabView>
+  <p-tabPanel header="Ingresos">
+    <app-ingreso-tabla></app-ingreso-tabla>
+  </p-tabPanel>
+  <p-tabPanel header="Descuentos">
+    <app-descuento-tabla></app-descuento-tabla>
+  </p-tabPanel>
+  <p-tabPanel header="Beneficios">
+    <app-beneficio-tabla></app-beneficio-tabla>
+  </p-tabPanel>
+</p-tabView>
+
+

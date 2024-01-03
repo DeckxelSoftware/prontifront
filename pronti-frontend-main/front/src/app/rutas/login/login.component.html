@@ -1,0 +1,64 @@
+<div class="justify-content-center mt-5">
+
+  <div class="row">
+
+    <div class="col-lg-8 col-sm-12 justify-content-center p-2 bd-highlight">
+      <div class="card" *ngIf="!mostrarCardResetPassword">
+
+        <h3 class="text-center">Ingrese sus credenciales</h3>
+        <app-form-container
+          [fieldsArray]="formulario"
+          (fieldChanged)="searchFieldChanged($event)"
+        >
+
+        </app-form-container>
+
+
+
+
+
+        <div class="text-end">
+          <span  (click)="mostrarCardOlvidoPassword()">¿Olvidaste tu contraseña?</span>
+        </div>
+
+        <button type="button" class="mt-3 btn" (click)="autenticar()" [disabled]="botonDeshabilitado">
+          Ingresar
+        </button>
+      </div>
+
+      <div class="card" *ngIf="mostrarCardResetPassword">
+
+        <h5>Ingresa un correo electrónico válido al que se le enviará la nueva contraseña.</h5>
+        <app-form-container
+          [fieldsArray]="formularioResetPassword"
+          (fieldChanged)="searchFieldChangedReset($event)"
+        >
+
+        </app-form-container>
+
+        <div class="botones-reset">
+          <button type="button" class="mt-3 btn" (click)="regresarLogin()">
+            Cancelar
+          </button>
+
+          <button type="button" class="mt-3 btn" (click)="validarCorreoUsuario()"  [disabled]="botonResetDeshabilitado">
+            Resetear contraseña
+          </button>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+    <div class="col-lg-4  col-sm-12 justify-content-center ">
+      <div class="imagen-login">
+        <img src="assets/logo.png" alt="" class="imagenSeguroLogin" width="100%">
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

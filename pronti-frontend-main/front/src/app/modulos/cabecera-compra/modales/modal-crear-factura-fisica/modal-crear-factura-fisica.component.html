@@ -1,0 +1,290 @@
+<div mat-dialog-title> Factura de compra electrónica</div>
+<div mat-dialog-content>
+  <p-accordion>
+    <p-accordionTab header="Datos factura" [selected]="true">
+      <form [formGroup]="formFactura">
+        <div class="row">
+
+          <div class="col-sm-12 col-md-6">
+            <label>Tipo de documento</label>
+            <p-autoComplete [showEmptyMessage]="true" [emptyMessage]="'No se encontraron registros'" field="nombre"
+                            [formControlName]="'tipoDocumento'"
+                            [suggestions]="opciones"
+                            (completeMethod)="buscarListaValoresDetalle(listaValoresEnum.tipoDocumento,$event.query)"
+                            [dropdown]="true"></p-autoComplete>
+          </div>
+          <div class="col-sm-12 col-md-6 ">
+            <label>Términos de pago</label>
+            <p-autoComplete ariaLabel="Terminos de pago" [showEmptyMessage]="true"
+                            [emptyMessage]="'No se encontraron registros'" field="nombre"
+                            [formControlName]="'terminosPago'" [suggestions]="opciones"
+                            (completeMethod)="buscarListaValoresDetalle(listaValoresEnum.terminosPago,$event.query)"
+                            [dropdown]="true"></p-autoComplete>
+          </div>
+          <div class="col-sm-12 col-md-6 ">
+            <label>Agencia</label>
+            <p-autoComplete ariaLabel="Agencia" [showEmptyMessage]="true"
+                            [emptyMessage]="'No se encontraron registros'" field="nombre"
+                            [formControlName]="'idAgencia'" [suggestions]="opcionesAgencia"
+                            (completeMethod)="buscarAgencia($event.query)"
+                            [dropdown]="true"></p-autoComplete>
+          </div>
+          <div class="col-sm-12 col-md-6 ">
+            <label>Proveedor</label>
+            <p-autoComplete ariaLabel="Proveedor" [showEmptyMessage]="true"
+                            [emptyMessage]="'No se encontraron registros'" field="nombreMostrar"
+                            [formControlName]="'nombreProveedor'" [suggestions]="opcionesProveedor"
+                            (completeMethod)="buscarProveedor($event.query)"
+                            [forceSelection]="true"
+                            (onSelect)="establecerRucProveedor($event)"
+                            (onClear)="resetRucProveedor($event)"
+                            [dropdown]="true"></p-autoComplete>
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <label>Recurso</label>
+            <p-autoComplete [showEmptyMessage]="true" [emptyMessage]="'No se encontraron registros'" field="nombre"
+                            [formControlName]="'idRecurso'"
+                            [suggestions]="opcionesRecurso"
+                            (completeMethod)="buscarRecurso($event.query)"
+                            [dropdown]="true"></p-autoComplete>
+          </div>
+          <div class="mt-2"></div>
+          <div class="col-sm-12 col-md-4">
+            <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+              <mat-label>RUC</mat-label>
+              <input matInput [formControlName]="'rucProveedor'">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-4">
+            <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+              <mat-label>Num. documento</mat-label>
+              <input matInput [formControlName]="'numeroDocumento'">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-8">
+            <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+              <mat-label>Autorización</mat-label>
+              <input matInput [formControlName]="'autorizacion'">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-4">
+            <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+              <mat-label>Serie</mat-label>
+              <input matInput [formControlName]="'serie'">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-4">
+            <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+              <mat-label>Fecha recepción</mat-label>
+              <input [formControlName]="'fechaRecepcion'" matInput [matDatepicker]="pickerFechaRecepcion">
+              <mat-datepicker-toggle matSuffix [for]="pickerFechaRecepcion"></mat-datepicker-toggle>
+              <mat-datepicker #pickerFechaRecepcion></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+
+          <div class="col-sm-12 col-md-4">
+            <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+              <mat-label>Fecha emisión</mat-label>
+              <input matInput [formControlName]="'fechaEmision'" [matDatepicker]="pickerFechaEmision">
+              <mat-datepicker-toggle matSuffix [for]="pickerFechaEmision"></mat-datepicker-toggle>
+              <mat-datepicker #pickerFechaEmision></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-4">
+            <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+              <mat-label>Fecha vencimiento</mat-label>
+              <input [formControlName]="'fechaVencimiento'" matInput [matDatepicker]="pickerFechaVencimiento">
+              <mat-datepicker-toggle matSuffix [for]="pickerFechaVencimiento"></mat-datepicker-toggle>
+              <mat-datepicker #pickerFechaVencimiento></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <!--      <div class="col-sm-12 col-md-4">-->
+          <!--        <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">-->
+          <!--          <mat-label>Versión</mat-label>-->
+          <!--          <input matInput [formControlName]="'version'">-->
+          <!--        </mat-form-field>-->
+          <!--      </div>-->
+        </div>
+
+      </form>
+      <div class="text-end">
+        <button class="btn btn-primary" (click)="establecerDatosFactura()" [disabled]="!formFactura.valid"
+                [hidden]="mostrarTabs">Confirmar
+        </button>
+      </div>
+    </p-accordionTab>
+    <!--    *ngIf="mostrarTabs"-->
+    <p-accordionTab header="Detalles/Impuestos/Documento">
+      <mat-tab-group mat-align-tabs="start">
+
+
+        <mat-tab label="Detalle" style="overflow: visible">
+
+
+          <form [formGroup]="formDetalle" *ngIf="mostrarFormDetalle" class="mt-4">
+            <div class="row">
+              <div class="col-sm-12 col-md-8">
+                <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+                  <mat-label>Descripción</mat-label>
+                  <input matInput [formControlName]="'descripcion'">
+                </mat-form-field>
+              </div>
+
+              <div class="col-sm-12 col-md-4">
+                <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+                  <mat-label>Cantidad factura</mat-label>
+                  <input type="number" matInput [formControlName]="'cantidadFactura'">
+                </mat-form-field>
+              </div>
+
+              <div class="col-sm-12 col-md-4">
+                <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+                  <mat-label>Precio factura</mat-label>
+                  <input type="number" matInput [formControlName]="'precioFactura'">
+                </mat-form-field>
+              </div>
+
+              <div class="col-sm-12 col-md-4">
+                <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+                  <mat-label>Descuento</mat-label>
+                  <input type="number" matInput [formControlName]="'descuento'">
+                </mat-form-field>
+              </div>
+
+              <div class="col-sm-12 col-md-4">
+                <mat-form-field style="width: 100%" appearance="outline" [floatLabel]="'always'">
+                  <mat-label>Importe</mat-label>
+                  <input type="number" matInput [formControlName]="'importe'">
+                </mat-form-field>
+              </div>
+
+            </div>
+
+
+          </form>
+
+
+          <div style="text-align: end" class=" m-2">
+            <button class="btn btn-primary" [hidden]="mostrarFormDetalle"
+                    (click)="mostrarFormDetalle=!mostrarFormDetalle">
+              Agregar
+            </button>
+            <button class="btn btn-primary" [hidden]="!mostrarFormDetalle"
+                    (click)="mostrarFormDetalle=!mostrarFormDetalle; resetCamposDetalle()">
+              Cancelar
+            </button>
+            <button class=" mx-2 btn btn-success" [disabled]="!formDetalle.valid" (click)="agregarDetalle()"
+                    [hidden]="!mostrarFormDetalle">
+              Aceptar
+            </button>
+          </div>
+          <p-table class="mt-2" [value]="datosTablaDetalle" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Recurso</th>
+                <th>Descripción</th>
+                <th>Cantidad Factura</th>
+                <th>Precio Factura</th>
+                <th>Descuento</th>
+                <th>Tasa imponible</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-info>
+              <tr>
+                <td>{{info.recurso}}</td>
+                <td>{{info.descripcion}}</td>
+                <td>{{info.cantidadFactura}}</td>
+                <td>{{info.precioFactura|currency}}</td>
+                <td>{{info.descuento|currency}}</td>
+                <td>{{info.importe|currency}}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+          <div class="row mt-3" style="width: 100%">
+            <div class="col-sm-12 col-md-2">
+              <strong>Sub Total</strong>
+              <br>
+              {{subtotal|currency}}
+            </div>
+            <div class="col-sm-12 col-md-2">
+              <strong>Impuestos</strong>
+              <br>
+              {{impuestos|currency}}
+            </div>
+            <div class="col-sm-12 col-md-2">
+              <strong>Total factura</strong>
+              <br>
+              {{totalFactura|currency}}
+            </div>
+            <div class="col-sm-12 col-md-2">
+              <strong>Retenciones</strong>
+              <br>
+              <input (change)="calcularAPagar()" style="width: 100%" [(ngModel)]="retenciones" type="number">
+
+            </div>
+            <div class="col-sm-12 col-md-2">
+              <strong>A pagar</strong>
+              <br>
+              {{aPagar|currency}}
+            </div>
+
+          </div>
+
+        </mat-tab>
+        <mat-tab label="Impuesto">
+
+          <p-table id="tableImpuestos" class="mt-2" [value]="datosTablaImpuestos" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Línea impuesto</th>
+                <th>Porcentaje</th>
+                <th>Base imponible</th>
+                <th>Valor del impuesto</th>
+                <th>Cuenta</th>
+
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-info>
+              <tr>
+                <td>{{info.lineaImpuesto}}</td>
+                <td>{{info.porcentaje}}</td>
+                <td>{{info.tasaImponible|currency}}</td>
+                <td>{{info.valorImpuesto|currency}}</td>
+                <td>{{info.cuentaContable}}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </mat-tab>
+        <mat-tab label="Documentos">
+          <p-fileUpload #upload chooseIcon='pi pi-search'
+                        [customUpload]="true"
+                        chooseLabel="Seleccionar"
+                        [showUploadButton]="false"
+                        [showCancelButton]="false"
+                        (uploadHandler)="obtenerArchivo($event)"
+                        accept="application/pdf"
+          >
+
+          </p-fileUpload>
+
+
+        </mat-tab>
+
+
+      </mat-tab-group>
+    </p-accordionTab>
+  </p-accordion>
+
+</div>
+
+<div mat-dialog-actions style="justify-content: end;">
+  <div class="justify-content-end">
+    <button class="btn btn-warning mx-1">Cancelar</button>
+    <button class="btn btn-primary"
+            [disabled]="!(datosTablaDetalle.length>0 && datosTablaImpuestos.length>0 && upload.files.length>0)"
+            (click)="crear()">Aceptar
+    </button>
+  </div>
+
+</div>

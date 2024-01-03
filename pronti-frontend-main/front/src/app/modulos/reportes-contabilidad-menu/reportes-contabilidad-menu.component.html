@@ -1,0 +1,35 @@
+<div class="espaciador"></div>
+<p-breadcrumb [model]="items"></p-breadcrumb>
+<div class="espaciador"></div>
+<div class="row">
+  <div class="col-4 cards-menu">
+    <a routerLink="contrato-modulo/informe-clientes">
+      <p-card header="Clientes" subheader="Informe de clientes"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/cliente/imagen-principal.png" alt="card-informe-cliente" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-4 cards-menu">
+    <a routerLink="contrato-modulo/informe-asamblea">
+      <p-card header="Asamblea" subheader="Informe de asamblea"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/preasamblea/image.png" alt="card-informe-asamblea" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-4 cards-menu">
+    <a routerLink="trabajador-modulo/informe-nomina">
+      <p-card header="Nómina" subheader="Informe de nómina"
+              styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/trabajador/image.png" alt="card-informe-nomina" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+</div>

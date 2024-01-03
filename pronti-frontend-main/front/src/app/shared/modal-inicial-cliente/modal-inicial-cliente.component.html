@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="mb-4" style="display: flex; justify-content: center">
+    <h4>Crear Proveedor</h4>
+  </div>
+
+  <form [formGroup]="formularioInicialCliente">
+
+    <div class="row">
+      <div class="col-6 mb-3">
+        <div class="row">
+          <label class="form-label is_required">Tipo Cliente:* </label>
+        </div>
+        <div class="row">
+          <p-dropdown [formControlName]="'tipoCliente'" [options]="tiposCliente" optionValue="code"
+                      optionLabel="name" (onChange)="cambioSelectTipoCliente($event)"></p-dropdown>
+          <div class="alert alert-warning" *ngIf="mostrarErrorRequiredTouchedCliente('tipoCliente')">
+            Tipo de Cliente es requerido.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </form>
+  <div style="display: flex; justify-content: end">
+    <button class="btn-sm btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    <button class="mx-2 btn-sm btn btn-primary" (click)="continuar()" [disabled]="!formularioInicialCliente.valid">
+      Continuar
+    </button>
+  </div>
+
+</div>

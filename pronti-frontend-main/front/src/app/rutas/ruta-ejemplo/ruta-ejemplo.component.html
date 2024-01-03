@@ -1,0 +1,24 @@
+<h1>Ejemplo</h1>
+
+
+<app-show-file
+  [buffer]="archivoAMostrar.buffer"
+  [documentType]="archivoAMostrar.documentType"
+  [fileName]="archivoAMostrar.fileName"
+
+  [sliceEnd]="archivoAMostrar.sliceEnd"
+  [sliceStart]="archivoAMostrar.sliceStart"
+
+></app-show-file>
+
+<app-show-file
+  [buffer]="archivoAMostrar.buffer"
+  [documentType]="archivoAMostrar.documentType"
+  [fileName]="archivoAMostrar.fileName"
+></app-show-file>
+
+<app-form-container
+  [fieldsArray]="formulario"
+  (fieldChanged)="searchFieldChanged($event)"
+  (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+></app-form-container>

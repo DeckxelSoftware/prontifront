@@ -1,0 +1,131 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+        (click)="searchData()"
+        [disabled]="searchButtonDisabled"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <br/>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [rows]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between" >
+          <span class="fw-bolder texto-titulo-tabla">Prestamo</span>
+          <button *ngIf="!esRutaInforme" class="btn btn-sm btn-success float-end" (click)="createOrEdit();create=true; esEditarPago=false"> Crear</button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th>Información</th>
+          <th>Habilitado</th>
+          <th *ngIf="!esRutaInforme">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr
+          [class]="registro.sisHabilitado === 'A' ? '' : 'back-deshabilitado'">
+          <td>
+            <button
+              type="button"
+              pButton
+              pRipple
+              [pRowToggler]="registro"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            ></button>
+          </td>
+          <td>
+            <!--            {{registro|json}}-->
+            <p>
+              <b>Trabajador: </b>{{registro.idTrabajador?.idUsuario?.nombres}} {{registro.idTrabajador?.idUsuario?.apellidos}}
+            </p>
+            <p><b>Tipo: </b>{{registro.tipoPrestamo}}</p>
+            <p><b>Fecha: </b>{{registro.fechaPrestamo}}</p>
+            <p><b>Valor: </b>{{registro.valor}}</p>
+            <p><b>Estado: </b>{{registro.estado|estadoPrestamo}}</p>
+          </td>
+
+          <td>
+            <p><b>Habilitado: </b>{{ registro.sisHabilitado === 'A' ? 'Si' : 'No' }}</p>
+
+          </td>
+          <td  *ngIf="!esRutaInforme" style="text-align: center">
+            <div>
+
+              <button type="button" class="btn btn-sm btn-warning"
+                      (click)="createOrEdit(registro); create=false; esEditarPago=false">
+                Editar
+              </button>
+              <div class="espaciador"></div>
+              <button type="button"
+                      [class]="registro.sisHabilitado === 'A'  ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"
+                      (click)="confirmChangeEnable(registro.sisHabilitado === 'A' , registro)">
+                {{ registro.sisHabilitado === 'A' ? 'Habilitar' : 'Deshabilitar' }}
+              </button>
+              <div class="espaciador"></div>
+              <button type="button"
+                      class="btn btn-sm btn-secondary"
+                      (click)="navegar(registro.id ,'abono-modulo')">
+                Estado de cuenta
+              </button>
+              <div class="espaciador"></div>
+              <button *ngIf="registro.estado==='PNT'" type="button" class="btn btn-sm btn-warning"
+                      (click)="editarPago(registro);create=false; esEditarPago=true">
+                Editar Pagos
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="5">
+            <app-prestamo-perfil [registro]="registro"></app-prestamo-perfil>
+            <div class="mt-3"></div>
+            <app-abono-prestamo-tabla [idPrestamoInput]="registro.id"></app-abono-prestamo-tabla>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="5">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+

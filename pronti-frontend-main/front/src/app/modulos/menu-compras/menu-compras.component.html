@@ -1,0 +1,22 @@
+<p-breadcrumb [model]="items"></p-breadcrumb>
+<div class="espaciador"></div>
+<div class="row">
+  <div class="col-4 cards-menu">
+    <a routerLink="cabecera-compra-modulo/factura-electronica">
+      <p-card header="Factura" subheader="Factura de compra electrónica" styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/factura/image.png" alt="card-factura-compra-electronica" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+  <div class="col-4 cards-menu">
+    <a routerLink="cabecera-compra-modulo/factura-fisica">
+      <p-card header="Factura física" subheader="Factura de compra física" styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+          <img src="assets/factura/image.png" alt="card-factura-fisica" class="imagen-card">
+        </ng-template>
+      </p-card>
+    </a>
+  </div>
+</div>

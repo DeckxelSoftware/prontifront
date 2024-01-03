@@ -1,0 +1,104 @@
+<app-route-header
+  [title]="'Informe de nómina'"
+  [help]="''"
+  [imagePath]="'assets/trabajador/image.png'"
+></app-route-header>
+<div class="espaciador"></div>
+<p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+<div class="card-mlab">
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+        (click)="buscarYGenerarExcel()"
+      >
+        Confirmar
+      </button>
+    </div>
+  </div>
+</div>
+<table id="tablaInformeNomina" [hidden]="true" >
+  <tr>
+    <th id="info" colspan="2" scope="colgroup"></th>
+    <th id="adicionales" colspan="2" scope="colgroup">Adicionales</th>
+    <th id="ingresos" colspan="10" scope="colgroup">Ingresos</th>
+    <th id="egresos" colspan="8" scope="colgroup">Egresos</th>
+    <th id="pago" colspan="1" scope="colgroup">Pago</th>
+    <th id="proviciones" colspan="8" scope="colgroup">Provisiones</th>
+  </tr>
+  <tr>
+    <th>Mes</th>
+    <th>Nombres</th>  <!--sin etiqueta-->
+    <th>Sueldo registrado</th>
+    <th>Días laborados</th> <!--Adicionales-->
+    <th>Sueldo</th>
+    <th>Horas extra</th>
+    <th>Transporte</th>
+    <th>Comisiones</th>
+    <th>Bono</th>
+    <th>Fondos de reserva</th>
+    <th>Otros ingresos</th>
+    <th>Décimo tercero</th>
+    <th>Décimo cuarto</th>
+    <th>Total ingresos</th><!--ingresos-->
+    <th>Aporte IESS</th>
+    <th>Préstamo IESS</th>
+    <th>Anticipos</th>
+    <th>Otros descuentos</th>
+    <th>Impuesto renta</th>
+    <th>Prestamos empresa</th>
+    <th>Celular</th>
+    <th>Total descuentos</th><!--egresos-->
+    <th>A pagar</th>
+    <th>Fecha ingreso</th>
+    <th>Ingresos gravados</th>
+    <th>Décimo tercero</th>
+    <th>Décimo cuarto</th>
+    <th>Vacaciones</th>
+    <th>Aporte patronal</th>
+    <th>Fondos reserva</th>
+    <th>Costo empresa</th>
+  </tr>
+  <tr *ngFor="let dato of datosTabla">
+    <td>{{dato.mes}}</td>
+    <td>{{dato.nombre}}</td>
+    <td>{{dato.sueldoRegistrado}}</td>
+    <td>{{dato.diasLaborados}}</td>
+    <td>{{dato.sueldo}}</td>
+    <td>{{dato.horasExtra}}</td>
+    <td>{{dato.transporte}}</td>
+    <td>{{dato.comisiones}}</td>
+    <td>{{dato.bono}}</td>
+    <td>{{dato.fondosReservaRol}}</td>
+    <td>{{dato.otrosIngresos}}</td>
+    <td>{{dato.decTerceroRol}}</td>
+    <td>{{dato.decCuartoRol}}</td>
+    <td>{{dato.totalIngresos}}</td>
+    <td>{{dato.aporteIess}}</td>
+    <td>{{dato.prestamoIess}}</td>
+    <td>{{dato.anticipos}}</td>
+    <td>{{dato.otrosDescuentos}}</td>
+    <td>{{dato.impuestoRenta}}</td>
+    <td>{{dato.prestamosEmpresa}}</td>
+    <td>{{dato.celular}}</td>
+    <td>{{dato.totalDescuentos}}</td>
+    <td>{{dato.pago}}</td>
+    <td>{{dato.fechaIngreso}}</td>
+    <td>{{dato.ingresosGravados}}</td>
+    <td>{{dato.decTerceroProv}}</td>
+    <td>{{dato.decCuartoProv}}</td>
+    <td>{{dato.vacaciones}}</td>
+    <td>{{dato.aportePatronal}}</td>
+    <td>{{dato.fondosReservaProv}}</td>
+    <td>{{dato.costoEmpresa}}</td>
+  </tr>
+</table>
+

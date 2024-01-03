@@ -1,0 +1,120 @@
+<div class="espaciador"></div>
+<p-breadcrumb [model]="items"></p-breadcrumb>
+
+<h2 class="text-center">{{titulo}}</h2>
+
+<p-accordion [multiple]="true">
+  <p-accordionTab header="Plan">
+
+
+    <div class="row">
+      <div class="col-6">
+        <p-fieldset legend="Plan 1" [collapsed]="collapsePlan1" [toggleable]="true">
+          <form [formGroup]="formPlanUnificacion" (ngSubmit)="onSubmit(modelPlanUno)">
+            <formly-form [form]="formPlanUnificacion" [fields]="fieldPlanUnificacion"
+                         [model]="modelPlanUno"></formly-form>
+          </form>
+        </p-fieldset>
+      </div>
+      <div class="col-6">
+        <p-fieldset legend="Plan 2" [collapsed]="collapsePlan2" [toggleable]="true">
+
+          <div class="text-center" *ngIf="!mostrarTablaContrato">
+            <button class="btn btn-warning btn-sm" (click)="abrirModalContrato()">Buscar contrato
+            </button>
+          </div>
+          <form [formGroup]="formPlanUnificacionDos" *ngIf="contratoStorageService.seleccionoContrato | async">
+            <formly-form [form]="formPlanUnificacionDos" [fields]="fieldPlanUnificacionDos"
+                         [model]="modelPlanDos"></formly-form>
+          </form>
+        </p-fieldset>
+      </div>
+
+      <div class="col-12" *ngIf="mostrarDataPlan3">
+        <p-fieldset legend="Plan Unificado">
+          <form [formGroup]="formPlanUnificacionTres">
+            <formly-form [form]="formPlanUnificacionTres" [fields]="fieldPlanUnificacionTres"
+                         [model]="modelPlanTres"></formly-form>
+          </form>
+        </p-fieldset>
+
+      </div>
+<!--      <button class="btn" (click)="verData()">VER DATA</button>-->
+    </div>
+
+
+    <div class="text-center">
+      <div class="espaciador"></div>
+      <button class="btn btn-primary" (click)="mostrarTablaPlan = true">
+        Seleccionar Plan
+      </button>
+    </div>
+
+
+
+    <app-plan-tabla *ngIf="mostrarTablaPlan" [vieneDesdeContrato]="true"
+                    (seleccionoPlan)="mostrarPlanSeleccionado($event)"></app-plan-tabla>
+    <div>
+      <p [ngClass]="{'color-red': nuevaInscripcion < 0}"><b>Inscripción: </b>{{ nuevaInscripcion | currency}}</p>
+      <p><b>Cuota: </b>{{cuotaPlan | currency}}</p>
+      <p><b>Total: </b> {{(nuevaInscripcion + cuotaPlan) | currency}} </p>
+    </div>
+
+  </p-accordionTab>
+  <p-accordionTab header="Contrato">
+    <!--    <app-form-container-->
+    <!--      [fieldsArray]="formularioContrato"-->
+    <!--      (fieldChanged)="searchFieldChanged($event)"-->
+    <!--      (autoCompleteChangedEmitter)="searchAutoComplete($event)"-->
+    <!--    ></app-form-container>-->
+    <form [formGroup]="formContrato" (ngSubmit)="onSubmit(modelContrato)">
+      <formly-form [form]="formContrato" [fields]="fieldsContrato" [model]="modelContrato"></formly-form>
+
+      <!--      <button type="submit" class="btn btn-default">Submit</button>-->
+    </form>
+
+
+  </p-accordionTab>
+
+
+  <p-accordionTab header="Cliente">
+
+    <app-cliente-tabla *ngIf="mostrarTablaCliente" [vieneDesdeContrato]="true"></app-cliente-tabla>
+
+
+    <form [formGroup]="formCliente" (ngSubmit)="onSubmit(modelCliente)">
+      <formly-form [form]="formCliente" [fields]="fieldsCliente" [model]="modelCliente"></formly-form>
+    </form>
+
+  </p-accordionTab>
+  <p-accordionTab header="Vendedor">
+
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="mostrarTablaVendedor = true" *ngIf="!mostrarTablaVendedor">Seleccionar
+        vendedor
+      </button>
+    </div>
+
+    <!--    <p-autoComplete  [suggestions]="vendedores" (completeMethod)="buscarVendedores($event)"
+                         [dropdown]="true"
+                         field="label"
+                         (onSelect)="eventoSelectVendedor($event)"></p-autoComplete>-->
+
+    <app-vendedor-tabla *ngIf="mostrarTablaVendedor" [vieneDesdeContrato]="true"
+                        (seleccionoVendedor)="mostrarVendedorSeleccionado($event)"></app-vendedor-tabla>
+
+    <form [formGroup]="formVendedor" (ngSubmit)="onSubmit(modelVendedor)">
+      <formly-form [form]="formVendedor" [fields]="fieldsVendedor" [model]="modelVendedor"></formly-form>
+
+      <!--      <button type="submit" class="btn btn-default">Submit</button>-->
+    </form>
+  </p-accordionTab>
+
+  <p-accordionTab header="Cuotas">
+    <app-cuota-unificacion-tabla></app-cuota-unificacion-tabla>
+    <app-cuotas-view-table></app-cuotas-view-table>
+  </p-accordionTab>
+</p-accordion>
+<button type="button" class="btn btn-primary float-end" [disabled]="!validarBotonUnificar()" (click)="enviarObjetoUnificacion()">Crear</button>
+<button type="button" class="btn btn-danger float-end" (click)="cancelarCrearContrato()">Cancelar</button>
+

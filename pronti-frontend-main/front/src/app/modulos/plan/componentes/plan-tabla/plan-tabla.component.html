@@ -1,0 +1,154 @@
+<div class="card-mlab">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <app-form-container
+        [fieldsArray]="searchBarFormFields"
+        (fieldChanged)="searchFieldChanged($event)"
+        (autoCompleteChangedEmitter)="searchAutoComplete($event)"
+      ></app-form-container>
+    </div>
+    <div class="col-sm-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm float-end boton-busqueda"
+        (click)="searchData()"
+        [disabled]="searchButtonDisabled"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <br/>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <p-table
+      [value]="tableData"
+      [dataKey]="'id'"
+      [rows]="startingRows"
+      [paginator]="true"
+      [lazy]="true"
+      (onLazyLoad)="lazyLoad($event)"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="rowsPerPage"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="fw-bolder texto-titulo-tabla">Plan</span>
+          <p-fileUpload *ngIf="!vieneDesdeContrato" #upload class="float-end mx-2 "
+                        styleClass="upload"
+                        [mode]="'basic'" [chooseLabel]="'Importar'"
+                        [customUpload]="true" (uploadHandler)="manejarUpload($event)"
+                        [maxFileSize]="10000000"
+                        [invalidFileSizeMessageDetail]="'El archivo debe pesar menos de 10 MB'"
+                        [invalidFileSizeMessageSummary]="'ERROR'"
+                        [fileLimit]="1"
+
+          ></p-fileUpload>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <!--          <th></th>-->
+          <th>Detalles</th>
+          <th>Habilitado</th>
+          <th> Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-registro let-expanded="expanded">
+        <tr
+          [class]="(registro.sisHabilitado==='A') ? '' : 'back-deshabilitado'">
+          <!--          <td>-->
+          <!--            <button-->
+          <!--              type="button"-->
+          <!--              pButton-->
+          <!--              pRipple-->
+          <!--              [pRowToggler]="registro"-->
+          <!--              class="p-button-text p-button-rounded p-button-plain"-->
+          <!--              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"-->
+          <!--            ></button>-->
+          <!--          </td>-->
+          <td>
+            <div class="row">
+              <div class="col-lg-6 col-sm-12">
+                <p><b>Modelo:</b> {{registro.modelo}}</p>
+              </div>
+              <div class="col-lg-6 col-sm-12">
+                <p><b>Precio:</b> {{registro.precio|currency}} </p>
+              </div>
+              <div class="col-12">
+                <p><b>Valor Cuotas</b></p>
+              </div>
+              <div class="col-lg-6 col-sm-12">
+                <p><b>12:</b> {{registro.cuotaMes12|currency}}</p>
+              </div>
+              <div class="col-lg-6 col-sm-12">
+                <p><b>24:</b> {{registro.cuotaMes24|currency}}</p>
+              </div>
+              <div class="col-lg-6 col-sm-12">
+                <p><b>36:</b> {{registro.cuotaMes36|currency}}</p>
+              </div>
+              <div class="col-lg-6 col-sm-12">
+                <p><b>48:</b> {{registro.cuotaMes48|currency}}</p>
+              </div>
+              <div class="col-lg-6 col-sm-12">
+                <p><b>60:</b> {{registro.cuotaMes60|currency}}</p>
+              </div>
+              <div class="col-lg-6 col-sm-12">
+                <p><b>72:</b> {{registro.cuotaMes72|currency}}</p>
+              </div>
+              <div class="col-lg-6 col-sm-12">
+                <p><b>84:</b> {{registro.cuotaMes84|currency}}</p>
+              </div>
+            </div>
+            <!--            <p><b>Tasa administrativa:</b> {{registro.tasaAdministrativa}}% </p>-->
+
+          </td>
+          <td>{{ registro.sisHabilitado === 'A' ? 'Si' : 'No' }}</td>
+          <td style="text-align: center">
+            <div>
+
+              <button  *ngIf="!vieneDesdeContrato" type="button" class="btn btn-sm btn-secondary" (click)="createOrEdit(registro)">
+                Editar
+              </button>
+              <div class="espaciador"></div>
+              <button *ngIf="vieneDesdeContrato" type="button" class="btn btn-sm btn-primary"
+                      (click)="seleccionarPlan(registro)">
+                Seleccionar Plan
+              </button>
+              <div class="espaciador"></div>
+              <button *ngIf="!vieneDesdeContrato" type="button"
+                      [class]="!(registro.sisHabilitado==='A') ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-danger'"
+                      (click)="confirmChangeEnable(registro.sisHabilitado==='A', registro)">
+                {{ !(registro.sisHabilitado === 'A') ? 'Habilitar' : 'Deshabilitar' }}
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-registro>
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="3">
+            <app-plan-perfil [registro]="registro"></app-plan-perfil>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- El colspan tiene que ser igual al numero de columnas-->
+          <td colspan="3">No hay información.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+

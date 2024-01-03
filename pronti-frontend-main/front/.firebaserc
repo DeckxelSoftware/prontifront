@@ -1,0 +1,24 @@
+{
+  "projects": {
+    "db--cpa": "db--cpa"
+  },
+  "targets": {
+    "db--cpa": {
+      "hosting": {
+        "db--cpa": [
+          "db--cpa"
+        ],
+        "prontiauto-produccion": [
+          "prontiauto-produccion"
+        ]
+      }
+    },
+    "prontiauto-produccion": {
+      "hosting": {
+        "prontiauto-produccion": [
+          "prontiauto-produccion"
+        ]
+      }
+    }
+  }
+}
